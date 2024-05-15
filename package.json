@@ -1,0 +1,45 @@
+{
+  "name": "style-processing",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "clean": "rimraf ./.tensile",
+    "postinstall": "patch-package",
+    "bench:button": "yarn clean && webpack --mode production --entry src/with-style-processing/Button.bench.tsx --config ./webpack.config.cjs && tensile --config ./tensile.config.mjs --file ./.tensile/src/with-style-processing/Button.bench.js",
+    "bench:spinbutton": "yarn clean && webpack --mode production --entry src/with-style-processing/SpinButton.bench.tsx --config ./webpack.config.cjs && tensile --config ./tensile.config.mjs --file ./.tensile/src/with-style-processing/SpinButton.bench.js",
+    "bench:combobox": "yarn clean && webpack --mode production --entry src/with-style-processing/Combobox.bench.tsx --config ./webpack.config.cjs && tensile --config ./tensile.config.mjs --file ./.tensile/src/with-style-processing/Combobox.bench.js",
+    "bench-no-process:button": "yarn clean && webpack --mode production --entry src/no-style-processing/Button.bench.tsx --config ./webpack.config.cjs && tensile --config ./tensile.config.mjs --file ./.tensile/src/no-style-processing/Button.bench.js",
+    "bench-no-process:spinbutton": "yarn clean && webpack --mode production --entry src/no-style-processing/SpinButton.bench.tsx --config ./webpack.config.cjs && tensile --config ./tensile.config.mjs --file ./.tensile/src/no-style-processing/SpinButton.bench.js",
+    "bench-no-process:combobox": "yarn clean && webpack --mode production --entry src/no-style-processing/Combobox.bench.tsx --config ./webpack.config.cjs && tensile --config ./tensile.config.mjs --file ./.tensile/src/no-style-processing/Combobox.bench.js"
+  },
+  "dependencies": {
+    "@fluentui/react-button": "^9.3.79",
+    "@fluentui/react-combobox": "^9.11.3",
+    "@fluentui/react-portal": "^9.4.24",
+    "@fluentui/react-provider": "^9.15.1",
+    "@fluentui/react-spinbutton": "^9.2.74",
+    "@fluentui/react-theme": "^9.1.19",
+    "react-button@npm:@fluentui/react-button": "^9.3.79",
+    "react-combobox@npm:@fluentui/react-combobox": "^9.11.3",
+    "react-portal@npm:@fluentui/react-portal": "^9.4.24",
+    "react-provider@npm:@fluentui/react-provider": "^9.15.1",
+    "react-spinbutton@npm:@fluentui/react-spinbutton": "^9.2.74",
+    "react-theme@npm:@fluentui/react-theme": "^9.1.19",
+    "@tensile-perf/react": "^0.1.13",
+    "patch-package": "^8.0.0",
+    "postinstall-postinstall": "^2.1.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@swc/core": "^1.5.7",
+    "rimraf": "^5.0.7",
+    "swc-loader": "^0.2.6",
+    "webpack": "^5.91.0",
+    "webpack-cli": "^5.1.4"
+  },
+  "resolutions": {
+    "@tensile-perf/**/chromedriver": "124.0.3"
+  }
+}

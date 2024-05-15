@@ -1,0 +1,1551 @@
+diff --git a/node_modules/@fluentui/react-spinbutton/lib-commonjs/components/SpinButton/useSpinButtonStyles.styles.js b/node_modules/@fluentui/react-spinbutton/lib-commonjs/components/SpinButton/useSpinButtonStyles.styles.js
+index 55dc1cc..82fa61e 100644
+--- a/node_modules/@fluentui/react-spinbutton/lib-commonjs/components/SpinButton/useSpinButtonStyles.styles.js
++++ b/node_modules/@fluentui/react-spinbutton/lib-commonjs/components/SpinButton/useSpinButtonStyles.styles.js
+@@ -17,6 +17,7 @@ _export(exports, {
+     }
+ });
+ const _react = require("@griffel/react");
++const _reacttheme = require("@fluentui/react-theme");
+ const spinButtonClassNames = {
+     root: 'fui-SpinButton',
+     input: 'fui-SpinButton__input',
+@@ -30,483 +31,404 @@ const fieldHeights = {
+     small: '24px',
+     medium: '32px'
+ };
+-const useRootClassName = /*#__PURE__*/ (0, _react.__resetStyles)("rkqmps4", "r1trw52p", {
+-    r: [
+-        ".rkqmps4{display:inline-grid;grid-template-columns:1fr 24px;grid-template-rows:1fr 1fr;column-gap:var(--spacingHorizontalXS);row-gap:0;position:relative;isolation:isolate;background-color:var(--colorNeutralBackground1);min-height:32px;padding:0 0 0 var(--spacingHorizontalMNudge);border-radius:var(--borderRadiusMedium);}",
+-        ".rkqmps4::before{content:\"\";box-sizing:border-box;position:absolute;top:0;right:0;bottom:0;left:0;pointer-events:none;z-index:10;border:1px solid var(--colorNeutralStroke1);border-bottom-color:var(--colorNeutralStrokeAccessible);border-radius:var(--borderRadiusMedium);}",
+-        ".rkqmps4::after{box-sizing:border-box;content:\"\";position:absolute;right:0;bottom:0;left:0;z-index:20;height:max(2px, var(--borderRadiusMedium));border-bottom-left-radius:var(--borderRadiusMedium);border-bottom-right-radius:var(--borderRadiusMedium);border-bottom:2px solid var(--colorCompoundBrandStroke);clip-path:inset(calc(100% - 2px) 0 0 0);transform:scaleX(0);transition-property:transform;transition-duration:var(--durationUltraFast);transition-delay:var(--curveAccelerateMid);}",
+-        ".rkqmps4:focus-within::after{transform:scaleX(1);transition-property:transform;transition-duration:var(--durationNormal);transition-delay:var(--curveDecelerateMid);}",
+-        ".rkqmps4:focus-within:active::after{border-bottom-color:var(--colorCompoundBrandStrokePressed);}",
+-        ".rkqmps4:focus-within{outline:2px solid transparent;}",
+-        ".r1trw52p{display:inline-grid;grid-template-columns:1fr 24px;grid-template-rows:1fr 1fr;column-gap:var(--spacingHorizontalXS);row-gap:0;position:relative;isolation:isolate;background-color:var(--colorNeutralBackground1);min-height:32px;padding:0 var(--spacingHorizontalMNudge) 0 0;border-radius:var(--borderRadiusMedium);}",
+-        ".r1trw52p::before{content:\"\";box-sizing:border-box;position:absolute;top:0;left:0;bottom:0;right:0;pointer-events:none;z-index:10;border:1px solid var(--colorNeutralStroke1);border-bottom-color:var(--colorNeutralStrokeAccessible);border-radius:var(--borderRadiusMedium);}",
+-        ".r1trw52p::after{box-sizing:border-box;content:\"\";position:absolute;left:0;bottom:0;right:0;z-index:20;height:max(2px, var(--borderRadiusMedium));border-bottom-right-radius:var(--borderRadiusMedium);border-bottom-left-radius:var(--borderRadiusMedium);border-bottom:2px solid var(--colorCompoundBrandStroke);clip-path:inset(calc(100% - 2px) 0 0 0);transform:scaleX(0);transition-property:transform;transition-duration:var(--durationUltraFast);transition-delay:var(--curveAccelerateMid);}",
+-        ".r1trw52p:focus-within::after{transform:scaleX(1);transition-property:transform;transition-duration:var(--durationNormal);transition-delay:var(--curveDecelerateMid);}",
+-        ".r1trw52p:focus-within:active::after{border-bottom-color:var(--colorCompoundBrandStrokePressed);}",
+-        ".r1trw52p:focus-within{outline:2px solid transparent;}"
+-    ],
+-    s: [
+-        "@media screen and (prefers-reduced-motion: reduce){.rkqmps4::after{transition-duration:0.01ms;transition-delay:0.01ms;}}",
+-        "@media screen and (prefers-reduced-motion: reduce){.rkqmps4:focus-within::after{transition-duration:0.01ms;transition-delay:0.01ms;}}",
+-        "@media screen and (prefers-reduced-motion: reduce){.r1trw52p::after{transition-duration:0.01ms;transition-delay:0.01ms;}}",
+-        "@media screen and (prefers-reduced-motion: reduce){.r1trw52p:focus-within::after{transition-duration:0.01ms;transition-delay:0.01ms;}}"
+-    ]
++const useRootClassName = (0, _react.makeResetStyles)({
++    display: 'inline-grid',
++    gridTemplateColumns: `1fr 24px`,
++    gridTemplateRows: '1fr 1fr',
++    columnGap: _reacttheme.tokens.spacingHorizontalXS,
++    rowGap: 0,
++    position: 'relative',
++    isolation: 'isolate',
++    backgroundColor: _reacttheme.tokens.colorNeutralBackground1,
++    minHeight: fieldHeights.medium,
++    padding: `0 0 0 ${_reacttheme.tokens.spacingHorizontalMNudge}`,
++    borderRadius: _reacttheme.tokens.borderRadiusMedium,
++    // Apply border styles on the ::before pseudo element.
++    // We cannot use ::after since that is used for selection.
++    // Using the pseudo element allows us to place the border
++    // above content in the component which ensures the buttons
++    // line up visually with the border as expected. Without this
++    // there is a bit of a gap which can become very noticeable
++    // at high zoom or when OS zoom levels are not divisible by 2
++    // (e.g., 150% on Windows in Firefox)
++    // This is most noticeable on the "outline" appearance which is
++    // also the default so it feels worth the extra ceremony to get right.
++    '::before': {
++        content: '""',
++        boxSizing: 'border-box',
++        position: 'absolute',
++        top: 0,
++        right: 0,
++        bottom: 0,
++        left: 0,
++        pointerEvents: 'none',
++        zIndex: 10,
++        border: `1px solid ${_reacttheme.tokens.colorNeutralStroke1}`,
++        borderBottomColor: _reacttheme.tokens.colorNeutralStrokeAccessible,
++        borderRadius: _reacttheme.tokens.borderRadiusMedium
++    },
++    '::after': {
++        boxSizing: 'border-box',
++        content: '""',
++        position: 'absolute',
++        right: 0,
++        bottom: 0,
++        left: 0,
++        zIndex: 20,
++        // Maintaining the correct corner radius:
++        // Use the whole border-radius as the height and only put radii on the bottom corners.
++        // (Otherwise the radius would be automatically reduced to fit available space.)
++        // max() ensures the focus border still shows up even if someone sets tokens.borderRadiusMedium to 0.
++        height: `max(2px, ${_reacttheme.tokens.borderRadiusMedium})`,
++        borderBottomLeftRadius: _reacttheme.tokens.borderRadiusMedium,
++        borderBottomRightRadius: _reacttheme.tokens.borderRadiusMedium,
++        // Flat 2px border:
++        // By default borderBottom will cause little "horns" on the ends. The clipPath trims them off.
++        // (This could be done without trimming using `background: linear-gradient(...)`, but using
++        // borderBottom makes it easier for people to override the color if needed.)
++        borderBottom: `2px solid ${_reacttheme.tokens.colorCompoundBrandStroke}`,
++        clipPath: 'inset(calc(100% - 2px) 0 0 0)',
++        // Animation for focus OUT
++        transform: 'scaleX(0)',
++        transitionProperty: 'transform',
++        transitionDuration: _reacttheme.tokens.durationUltraFast,
++        transitionDelay: _reacttheme.tokens.curveAccelerateMid,
++        '@media screen and (prefers-reduced-motion: reduce)': {
++            transitionDuration: '0.01ms',
++            transitionDelay: '0.01ms'
++        }
++    },
++    ':focus-within::after': {
++        // Animation for focus IN
++        transform: 'scaleX(1)',
++        transitionProperty: 'transform',
++        transitionDuration: _reacttheme.tokens.durationNormal,
++        transitionDelay: _reacttheme.tokens.curveDecelerateMid,
++        '@media screen and (prefers-reduced-motion: reduce)': {
++            transitionDuration: '0.01ms',
++            transitionDelay: '0.01ms'
++        }
++    },
++    ':focus-within:active::after': {
++        // This is if the user clicks the field again while it's already focused
++        borderBottomColor: _reacttheme.tokens.colorCompoundBrandStrokePressed
++    },
++    ':focus-within': {
++        outline: '2px solid transparent'
++    }
+ });
+-const useRootStyles = /*#__PURE__*/ (0, _react.__styles)({
++const useRootStyles = (0, _react.makeStyles)({
+     small: {
+-        sshi5w: "f1pha7fy",
+-        Bahqtrf: "fk6fouc",
+-        Be2twd7: "fy9rknc",
+-        Bhrd7zp: "figsok6",
+-        Bg96gwp: "fwrc4pm",
+-        uwmqm3: [
+-            "f1f5gg8d",
+-            "f1vdfbxk"
+-        ]
++        minHeight: fieldHeights.small,
++        ..._reacttheme.typographyStyles.caption1,
++        paddingLeft: _reacttheme.tokens.spacingHorizontalS
+     },
+     medium: {},
+     outline: {},
+     outlineInteractive: {
+-        Bo3r8zu: "f1w2y1rc",
+-        Hpvxnh: [
+-            "f1gofhvl",
+-            "f18htlvq"
+-        ],
+-        Bx11ytk: "ffcnd28",
+-        B1rg0w0: [
+-            "f18htlvq",
+-            "f1gofhvl"
+-        ],
+-        Bsg1tlv: "f6lmxco",
+-        Brjw370: [
+-            "fcoc0mf",
+-            "f15r4wkl"
+-        ],
+-        xcfy85: "f1ipdth8",
+-        Bcc6kan: [
+-            "f15r4wkl",
+-            "fcoc0mf"
+-        ]
++        ':hover::before': {
++            ..._react.shorthands.borderColor(_reacttheme.tokens.colorNeutralStroke1Hover),
++            borderBottomColor: _reacttheme.tokens.colorNeutralStrokeAccessibleHover
++        },
++        // DO NOT add a space between the selectors! It changes the behavior of make-styles.
++        ':active,:focus-within': {
++            '::before': {
++                ..._react.shorthands.borderColor(_reacttheme.tokens.colorNeutralStroke1Pressed),
++                borderBottomColor: _reacttheme.tokens.colorNeutralStrokeAccessiblePressed
++            }
++        }
+     },
+     underline: {
+-        B0qfbqy: "f1o236ok",
+-        B4f6apu: [
+-            "faeg28l",
+-            "f64aojp"
+-        ],
+-        y0oebl: "fdw6hkg",
+-        uvfttm: [
+-            "f64aojp",
+-            "faeg28l"
+-        ],
+-        Budzafs: [
+-            "f1vk4jnx",
+-            "f1v3v894"
+-        ],
+-        r59vdv: [
+-            "f1v3v894",
+-            "f1vk4jnx"
+-        ],
+-        n07z76: [
+-            "fzi2j54",
+-            "f1un0uoc"
+-        ],
+-        ck0cow: [
+-            "f1un0uoc",
+-            "fzi2j54"
+-        ]
++        '::before': {
++            ..._react.shorthands.borderWidth(0, 0, '1px', 0),
++            ..._react.shorthands.borderRadius(_reacttheme.tokens.borderRadiusNone)
++        }
+     },
+     underlineInteractive: {
+-        Bx11ytk: "ffcnd28",
+-        xcfy85: "f1ipdth8",
+-        B3778ie: [
+-            "f9pmbr4",
+-            "ffh3ws5"
+-        ],
+-        d9w3h3: [
+-            "ffh3ws5",
+-            "f9pmbr4"
+-        ],
+-        Bl18szs: [
+-            "f19438ov",
+-            "f1i9y5j"
+-        ],
+-        B4j8arr: [
+-            "f1i9y5j",
+-            "f19438ov"
+-        ]
++        ':hover::before': {
++            borderBottomColor: _reacttheme.tokens.colorNeutralStrokeAccessibleHover
++        },
++        // DO NOT add a space between the selectors! It changes the behavior of make-styles.
++        ':active,:focus-within': {
++            '::before': {
++                borderBottomColor: _reacttheme.tokens.colorNeutralStrokeAccessiblePressed
++            }
++        },
++        '::after': _react.shorthands.borderRadius(_reacttheme.tokens.borderRadiusNone)
+     },
+     filled: {
+-        B0qfbqy: "f1fjh9ub",
+-        B4f6apu: [
+-            "ff9c942",
+-            "f6rdg5o"
+-        ],
+-        y0oebl: "fdw6hkg",
+-        uvfttm: [
+-            "f6rdg5o",
+-            "ff9c942"
+-        ],
+-        Bdkvgpv: "f163fonl",
+-        m598lv: [
+-            "f1yq6w5o",
+-            "f1jpmc5p"
+-        ],
+-        qa3bma: "f11yjt3y",
+-        Bbv0w2i: [
+-            "f1jpmc5p",
+-            "f1yq6w5o"
+-        ],
+-        Bq4z7u6: "f7dgwnz",
+-        Bk5zm6e: [
+-            "f1edeodt",
+-            "fszsv3f"
+-        ],
+-        Bqjgrrk: "f1172wan",
+-        Bm6vgfq: [
+-            "fszsv3f",
+-            "f1edeodt"
+-        ]
++        '::before': {
++            ..._react.shorthands.border('1px', 'solid', _reacttheme.tokens.colorTransparentStroke)
++        }
+     },
+-    "filled-darker": {
+-        De3pzq: "f16xq7d1"
++    'filled-darker': {
++        backgroundColor: _reacttheme.tokens.colorNeutralBackground3
+     },
+-    "filled-lighter": {
+-        De3pzq: "fxugw4r"
++    'filled-lighter': {
++        backgroundColor: _reacttheme.tokens.colorNeutralBackground1
+     },
+     filledInteractive: {
+-        B05mzqr: "f1xqt08",
+-        tb9y6h: [
+-            "fzt5lgo",
+-            "f8tv3r9"
+-        ],
+-        jcehpj: "fyhrops",
+-        B23o0hn: [
+-            "f8tv3r9",
+-            "fzt5lgo"
+-        ]
++        // DO NOT add a space between the selectors! It changes the behavior of make-styles.
++        ':hover,:focus-within': {
++            '::before': {
++                // also handles pressed border color (:active)
++                ..._react.shorthands.borderColor(_reacttheme.tokens.colorTransparentStrokeInteractive)
++            }
++        }
+     },
+     invalid: {
+-        emecyz: "fl48pg9",
+-        lz0pba: [
+-            "f1a168p3",
+-            "f1pvdymy"
+-        ],
+-        Bo1k74p: "f11knvgl",
+-        Ba322q7: [
+-            "f1pvdymy",
+-            "f1a168p3"
+-        ]
++        ':not(:focus-within),:hover:not(:focus-within)': {
++            '::before': {
++                ..._react.shorthands.borderColor(_reacttheme.tokens.colorPaletteRedBorder2)
++            }
++        }
+     },
+     disabled: {
+-        Bceei9c: "fdrzuqr",
+-        De3pzq: "f1c21dwh",
+-        Bq4z7u6: "f1a0lfh7",
+-        Bk5zm6e: [
+-            "f1p2ejm6",
+-            "fmzytvz"
+-        ],
+-        Bqjgrrk: "fas2e61",
+-        Bm6vgfq: [
+-            "fmzytvz",
+-            "f1p2ejm6"
+-        ],
+-        Cffpyd: "flb8es4",
+-        hxi8he: [
+-            "f1lclws",
+-            "frjp63v"
+-        ],
+-        Bcuq369: "f1yv9wnt",
+-        Imo2if: [
+-            "frjp63v",
+-            "f1lclws"
+-        ]
+-    }
+-}, {
+-    d: [
+-        ".f1pha7fy{min-height:24px;}",
+-        ".fk6fouc{font-family:var(--fontFamilyBase);}",
+-        ".fy9rknc{font-size:var(--fontSizeBase200);}",
+-        ".figsok6{font-weight:var(--fontWeightRegular);}",
+-        ".fwrc4pm{line-height:var(--lineHeightBase200);}",
+-        ".f1f5gg8d{padding-left:var(--spacingHorizontalS);}",
+-        ".f1vdfbxk{padding-right:var(--spacingHorizontalS);}",
+-        ".f1o236ok::before{border-top-width:0;}",
+-        ".faeg28l::before{border-right-width:0;}",
+-        ".f64aojp::before{border-left-width:0;}",
+-        ".fdw6hkg::before{border-bottom-width:1px;}",
+-        ".f1vk4jnx::before{border-bottom-right-radius:var(--borderRadiusNone);}",
+-        ".f1v3v894::before{border-bottom-left-radius:var(--borderRadiusNone);}",
+-        ".fzi2j54::before{border-top-right-radius:var(--borderRadiusNone);}",
+-        ".f1un0uoc::before{border-top-left-radius:var(--borderRadiusNone);}",
+-        ".f9pmbr4::after{border-bottom-right-radius:var(--borderRadiusNone);}",
+-        ".ffh3ws5::after{border-bottom-left-radius:var(--borderRadiusNone);}",
+-        ".f19438ov::after{border-top-right-radius:var(--borderRadiusNone);}",
+-        ".f1i9y5j::after{border-top-left-radius:var(--borderRadiusNone);}",
+-        ".f1fjh9ub::before{border-top-width:1px;}",
+-        ".ff9c942::before{border-right-width:1px;}",
+-        ".f6rdg5o::before{border-left-width:1px;}",
+-        ".f163fonl::before{border-top-style:solid;}",
+-        ".f1yq6w5o::before{border-right-style:solid;}",
+-        ".f1jpmc5p::before{border-left-style:solid;}",
+-        ".f11yjt3y::before{border-bottom-style:solid;}",
+-        ".f7dgwnz::before{border-top-color:var(--colorTransparentStroke);}",
+-        ".f1edeodt::before{border-right-color:var(--colorTransparentStroke);}",
+-        ".fszsv3f::before{border-left-color:var(--colorTransparentStroke);}",
+-        ".f1172wan::before{border-bottom-color:var(--colorTransparentStroke);}",
+-        ".f16xq7d1{background-color:var(--colorNeutralBackground3);}",
+-        ".fxugw4r{background-color:var(--colorNeutralBackground1);}",
+-        ".fl48pg9:not(:focus-within)::before,.fl48pg9:hover:not(:focus-within)::before{border-top-color:var(--colorPaletteRedBorder2);}",
+-        ".f1a168p3:not(:focus-within)::before,.f1a168p3:hover:not(:focus-within)::before{border-right-color:var(--colorPaletteRedBorder2);}",
+-        ".f1pvdymy:not(:focus-within)::before,.f1pvdymy:hover:not(:focus-within)::before{border-left-color:var(--colorPaletteRedBorder2);}",
+-        ".f11knvgl:not(:focus-within)::before,.f11knvgl:hover:not(:focus-within)::before{border-bottom-color:var(--colorPaletteRedBorder2);}",
+-        ".fdrzuqr{cursor:not-allowed;}",
+-        ".f1c21dwh{background-color:var(--colorTransparentBackground);}",
+-        ".f1a0lfh7::before{border-top-color:var(--colorNeutralStrokeDisabled);}",
+-        ".f1p2ejm6::before{border-right-color:var(--colorNeutralStrokeDisabled);}",
+-        ".fmzytvz::before{border-left-color:var(--colorNeutralStrokeDisabled);}",
+-        ".fas2e61::before{border-bottom-color:var(--colorNeutralStrokeDisabled);}"
+-    ],
+-    h: [
+-        ".f1w2y1rc:hover::before{border-top-color:var(--colorNeutralStroke1Hover);}",
+-        ".f1gofhvl:hover::before{border-right-color:var(--colorNeutralStroke1Hover);}",
+-        ".f18htlvq:hover::before{border-left-color:var(--colorNeutralStroke1Hover);}",
+-        ".ffcnd28:hover::before{border-bottom-color:var(--colorNeutralStrokeAccessibleHover);}",
+-        ".f1xqt08:hover::before,.f1xqt08:focus-within::before{border-top-color:var(--colorTransparentStrokeInteractive);}",
+-        ".fzt5lgo:hover::before,.fzt5lgo:focus-within::before{border-right-color:var(--colorTransparentStrokeInteractive);}",
+-        ".f8tv3r9:hover::before,.f8tv3r9:focus-within::before{border-left-color:var(--colorTransparentStrokeInteractive);}",
+-        ".fyhrops:hover::before,.fyhrops:focus-within::before{border-bottom-color:var(--colorTransparentStrokeInteractive);}"
+-    ],
+-    a: [
+-        ".f6lmxco:active::before,.f6lmxco:focus-within::before{border-top-color:var(--colorNeutralStroke1Pressed);}",
+-        ".fcoc0mf:active::before,.fcoc0mf:focus-within::before{border-right-color:var(--colorNeutralStroke1Pressed);}",
+-        ".f15r4wkl:active::before,.f15r4wkl:focus-within::before{border-left-color:var(--colorNeutralStroke1Pressed);}",
+-        ".f1ipdth8:active::before,.f1ipdth8:focus-within::before{border-bottom-color:var(--colorNeutralStrokeAccessiblePressed);}"
+-    ],
+-    m: [
+-        [
+-            "@media (forced-colors: active){.flb8es4::before{border-top-color:GrayText;}}",
+-            {
+-                m: "(forced-colors: active)"
+-            }
+-        ],
+-        [
+-            "@media (forced-colors: active){.f1lclws::before{border-right-color:GrayText;}.frjp63v::before{border-left-color:GrayText;}}",
+-            {
+-                m: "(forced-colors: active)"
++        cursor: 'not-allowed',
++        backgroundColor: _reacttheme.tokens.colorTransparentBackground,
++        '::before': {
++            ..._react.shorthands.borderColor(_reacttheme.tokens.colorNeutralStrokeDisabled),
++            '@media (forced-colors: active)': {
++                ..._react.shorthands.borderColor('GrayText')
+             }
+-        ],
+-        [
+-            "@media (forced-colors: active){.f1yv9wnt::before{border-bottom-color:GrayText;}}",
+-            {
+-                m: "(forced-colors: active)"
+-            }
+-        ]
+-    ]
++        }
++    }
+ });
+-const useInputClassName = /*#__PURE__*/ (0, _react.__resetStyles)("r1ljrqje", null, [
+-    ".r1ljrqje{grid-column-start:1;grid-column-end:2;grid-row-start:1;grid-row-end:3;outline-style:none;border:0;padding:0;color:var(--colorNeutralForeground1);background-color:transparent;font-family:inherit;font-size:inherit;font-weight:inherit;line-height:inherit;width:100%;}",
+-    ".r1ljrqje::-webkit-input-placeholder{color:var(--colorNeutralForeground4);opacity:1;}",
+-    ".r1ljrqje::-moz-placeholder{color:var(--colorNeutralForeground4);opacity:1;}",
+-    ".r1ljrqje:-ms-input-placeholder{color:var(--colorNeutralForeground4);opacity:1;}",
+-    ".r1ljrqje::placeholder{color:var(--colorNeutralForeground4);opacity:1;}"
+-]);
+-const useInputStyles = /*#__PURE__*/ (0, _react.__styles)({
++const useInputClassName = (0, _react.makeResetStyles)({
++    gridColumnStart: '1',
++    gridColumnEnd: '2',
++    gridRowStart: '1',
++    gridRowEnd: '3',
++    outlineStyle: 'none',
++    border: '0',
++    padding: '0',
++    color: _reacttheme.tokens.colorNeutralForeground1,
++    // Use literal "transparent" (not from the theme) to always let the color from the root show through
++    backgroundColor: 'transparent',
++    fontFamily: 'inherit',
++    fontSize: 'inherit',
++    fontWeight: 'inherit',
++    lineHeight: 'inherit',
++    width: '100%',
++    '::placeholder': {
++        color: _reacttheme.tokens.colorNeutralForeground4,
++        opacity: 1
++    }
++});
++const useInputStyles = (0, _react.makeStyles)({
+     disabled: {
+-        sj55zd: "f1s2aq7o",
+-        Bceei9c: "fdrzuqr",
+-        De3pzq: "f1c21dwh",
+-        yvdlaj: "fahhnxm"
++        color: _reacttheme.tokens.colorNeutralForegroundDisabled,
++        cursor: 'not-allowed',
++        backgroundColor: _reacttheme.tokens.colorTransparentBackground,
++        '::placeholder': {
++            color: _reacttheme.tokens.colorNeutralForegroundDisabled
++        }
+     }
+-}, {
+-    d: [
+-        ".f1s2aq7o{color:var(--colorNeutralForegroundDisabled);}",
+-        ".fdrzuqr{cursor:not-allowed;}",
+-        ".f1c21dwh{background-color:var(--colorTransparentBackground);}",
+-        ".fahhnxm::-webkit-input-placeholder{color:var(--colorNeutralForegroundDisabled);}",
+-        ".fahhnxm::-moz-placeholder{color:var(--colorNeutralForegroundDisabled);}"
+-    ]
+ });
+-const useBaseButtonClassName = /*#__PURE__*/ (0, _react.__resetStyles)("r1g4chgs", null, [
+-    ".r1g4chgs{display:inline-flex;width:24px;align-items:center;justify-content:center;border:0;position:absolute;outline-style:none;height:16px;background-color:transparent;color:var(--colorNeutralForeground3);grid-column-start:2;border-radius:0;padding:0 5px 0 5px;}",
+-    ".r1g4chgs:active{outline-style:none;}",
+-    ".r1g4chgs:enabled:hover{cursor:pointer;color:var(--colorNeutralForeground3Hover);background-color:var(--colorSubtleBackgroundHover);}",
+-    ".r1g4chgs:enabled:active{color:var(--colorNeutralForeground3Pressed);background-color:var(--colorSubtleBackgroundPressed);}",
+-    ".r1g4chgs:enabled.fui-SpinButton__button_active{color:var(--colorNeutralForeground3Pressed);background-color:var(--colorSubtleBackgroundPressed);}",
+-    ".r1g4chgs:disabled{cursor:not-allowed;color:var(--colorNeutralForegroundDisabled);}"
+-]);
+-const useButtonStyles = /*#__PURE__*/ (0, _react.__styles)({
++const useBaseButtonClassName = (0, _react.makeResetStyles)({
++    display: 'inline-flex',
++    width: '24px',
++    alignItems: 'center',
++    justifyContent: 'center',
++    border: '0',
++    position: 'absolute',
++    outlineStyle: 'none',
++    height: '16px',
++    // Use literal "transparent" (not from the theme) to always let the color from the root show through
++    backgroundColor: 'transparent',
++    color: _reacttheme.tokens.colorNeutralForeground3,
++    // common button layout
++    gridColumnStart: '2',
++    borderRadius: '0',
++    padding: '0 5px 0 5px',
++    ':active': {
++        outlineStyle: 'none'
++    },
++    ':enabled': {
++        ':hover': {
++            cursor: 'pointer',
++            color: _reacttheme.tokens.colorNeutralForeground3Hover,
++            backgroundColor: _reacttheme.tokens.colorSubtleBackgroundHover
++        },
++        ':active': {
++            color: _reacttheme.tokens.colorNeutralForeground3Pressed,
++            backgroundColor: _reacttheme.tokens.colorSubtleBackgroundPressed
++        },
++        [`&.${spinButtonExtraClassNames.buttonActive}`]: {
++            color: _reacttheme.tokens.colorNeutralForeground3Pressed,
++            backgroundColor: _reacttheme.tokens.colorSubtleBackgroundPressed
++        }
++    },
++    ':disabled': {
++        cursor: 'not-allowed',
++        color: _reacttheme.tokens.colorNeutralForegroundDisabled
++    }
++});
++const useButtonStyles = (0, _react.makeStyles)({
+     increment: {
+-        Ijaq50: "f16hsg94",
+-        B7oj6ja: [
+-            "f1jar5jt",
+-            "fyu767a"
+-        ],
+-        z8tnut: "f10ra9hq",
+-        Byoj8tv: "f1brlhvm"
++        gridRowStart: '1',
++        borderTopRightRadius: _reacttheme.tokens.borderRadiusMedium,
++        paddingTop: '4px',
++        paddingBottom: '1px'
+     },
+     decrement: {
+-        Ijaq50: "faunodf",
+-        Bbmb7ep: [
+-            "f1aa9q02",
+-            "f16jpd5f"
+-        ],
+-        z8tnut: "f1sl3k7w",
+-        Byoj8tv: "f1y2xyjm"
++        gridRowStart: '2',
++        borderBottomRightRadius: _reacttheme.tokens.borderRadiusMedium,
++        paddingTop: '1px',
++        paddingBottom: '4px'
+     },
++    // Padding values numbers don't align with design specs
++    // but visually the padding aligns.
++    // The icons are set in a 16x16px square but the artwork is inset from that
++    // so these padding values are computed by hand.
++    // Additionally the design uses fractional values so these are
++    // rounded to the nearest integer.
+     incrementButtonSmall: {
+-        z8tnut: "f1khb0e9",
+-        z189sj: [
+-            "f1sgzk6v",
+-            "f1bg5zqg"
+-        ],
+-        Byoj8tv: "f1ov4xf1",
+-        uwmqm3: [
+-            "fycuoez",
+-            "f8wuabp"
+-        ],
+-        Bqenvij: "fvblgha"
++        ..._react.shorthands.padding('3px', '6px', '0px', '4px'),
++        height: '12px'
+     },
+     decrementButtonSmall: {
+-        z8tnut: "f1nbblvp",
+-        z189sj: [
+-            "f1sgzk6v",
+-            "f1bg5zqg"
+-        ],
+-        Byoj8tv: "f1jnq6q7",
+-        uwmqm3: [
+-            "fycuoez",
+-            "f8wuabp"
+-        ],
+-        Bqenvij: "fvblgha"
++        ..._react.shorthands.padding('0px', '6px', '3px', '4px'),
++        height: '12px'
+     },
+     outline: {},
+     underline: {
+-        De3pzq: "f3rmtva",
+-        sj55zd: "f11d4kpn",
+-        r4wkhp: "f1no7wuu",
+-        B95qlz1: "f1bifk9c",
+-        p743kt: "fp1zg4s",
+-        B7xitij: "fo6hitd",
+-        B6siaa6: "f1wiab75",
+-        Ba9qmo4: "fj9zm5z",
+-        Dyrjrp: "f1cqwcg4"
++        backgroundColor: 'transparent',
++        color: _reacttheme.tokens.colorNeutralForeground3,
++        ':enabled': {
++            ':hover': {
++                color: _reacttheme.tokens.colorNeutralForeground3Hover,
++                backgroundColor: _reacttheme.tokens.colorSubtleBackgroundHover
++            },
++            ':active': {
++                color: _reacttheme.tokens.colorNeutralForeground3Pressed,
++                backgroundColor: _reacttheme.tokens.colorSubtleBackgroundPressed
++            },
++            [`&.${spinButtonExtraClassNames.buttonActive}`]: {
++                color: _reacttheme.tokens.colorNeutralForeground3Pressed,
++                backgroundColor: _reacttheme.tokens.colorSubtleBackgroundPressed
++            }
++        },
++        ':disabled': {
++            color: _reacttheme.tokens.colorNeutralForegroundDisabled
++        }
+     },
+-    "filled-darker": {
+-        De3pzq: "f3rmtva",
+-        sj55zd: "f11d4kpn",
+-        r4wkhp: "f1no7wuu",
+-        B95qlz1: "fwwxidx",
+-        p743kt: "fp1zg4s",
+-        B7xitij: "f14i52sd",
+-        B6siaa6: "f1wiab75",
+-        Ba9qmo4: "fwry2ka",
+-        Dyrjrp: "f1cqwcg4"
++    'filled-darker': {
++        backgroundColor: 'transparent',
++        color: _reacttheme.tokens.colorNeutralForeground3,
++        ':enabled': {
++            ':hover': {
++                color: _reacttheme.tokens.colorNeutralForeground3Hover,
++                backgroundColor: _reacttheme.tokens.colorNeutralBackground3Hover
++            },
++            ':active': {
++                color: _reacttheme.tokens.colorNeutralForeground3Pressed,
++                backgroundColor: _reacttheme.tokens.colorNeutralBackground3Pressed
++            },
++            [`&.${spinButtonExtraClassNames.buttonActive}`]: {
++                color: _reacttheme.tokens.colorNeutralForeground3Pressed,
++                backgroundColor: _reacttheme.tokens.colorNeutralBackground3Pressed
++            }
++        },
++        ':disabled': {
++            color: _reacttheme.tokens.colorNeutralForegroundDisabled
++        }
+     },
+-    "filled-lighter": {
+-        De3pzq: "f3rmtva",
+-        sj55zd: "f11d4kpn",
+-        r4wkhp: "f1no7wuu",
+-        B95qlz1: "f1yywxnv",
+-        drw0cw: "fzaa11h",
+-        idzz8t: "f4fpmm9",
+-        Dyrjrp: "f1cqwcg4"
++    'filled-lighter': {
++        backgroundColor: 'transparent',
++        color: _reacttheme.tokens.colorNeutralForeground3,
++        ':enabled': {
++            ':hover': {
++                color: _reacttheme.tokens.colorNeutralForeground3Hover,
++                backgroundColor: _reacttheme.tokens.colorNeutralBackground1Hover
++            },
++            [`:active,&.${spinButtonExtraClassNames.buttonActive}`]: {
++                color: _reacttheme.tokens.colorNeutralForeground3Pressed,
++                backgroundColor: _reacttheme.tokens.colorNeutralBackground1Pressed
++            }
++        },
++        ':disabled': {
++            color: _reacttheme.tokens.colorNeutralForegroundDisabled
++        }
+     }
+-}, {
+-    d: [
+-        ".f16hsg94{grid-row-start:1;}",
+-        ".f1jar5jt{border-top-right-radius:var(--borderRadiusMedium);}",
+-        ".fyu767a{border-top-left-radius:var(--borderRadiusMedium);}",
+-        ".f10ra9hq{padding-top:4px;}",
+-        ".f1brlhvm{padding-bottom:1px;}",
+-        ".faunodf{grid-row-start:2;}",
+-        ".f1aa9q02{border-bottom-right-radius:var(--borderRadiusMedium);}",
+-        ".f16jpd5f{border-bottom-left-radius:var(--borderRadiusMedium);}",
+-        ".f1sl3k7w{padding-top:1px;}",
+-        ".f1y2xyjm{padding-bottom:4px;}",
+-        ".f1khb0e9{padding-top:3px;}",
+-        ".f1sgzk6v{padding-right:6px;}",
+-        ".f1bg5zqg{padding-left:6px;}",
+-        ".f1ov4xf1{padding-bottom:0px;}",
+-        ".fycuoez{padding-left:4px;}",
+-        ".f8wuabp{padding-right:4px;}",
+-        ".fvblgha{height:12px;}",
+-        ".f1nbblvp{padding-top:0px;}",
+-        ".f1jnq6q7{padding-bottom:3px;}",
+-        ".f3rmtva{background-color:transparent;}",
+-        ".f11d4kpn{color:var(--colorNeutralForeground3);}",
+-        ".f1no7wuu:enabled:hover{color:var(--colorNeutralForeground3Hover);}",
+-        ".f1bifk9c:enabled:hover{background-color:var(--colorSubtleBackgroundHover);}",
+-        ".fp1zg4s:enabled:active{color:var(--colorNeutralForeground3Pressed);}",
+-        ".fo6hitd:enabled:active{background-color:var(--colorSubtleBackgroundPressed);}",
+-        ".f1wiab75:enabled.fui-SpinButton__button_active{color:var(--colorNeutralForeground3Pressed);}",
+-        ".fj9zm5z:enabled.fui-SpinButton__button_active{background-color:var(--colorSubtleBackgroundPressed);}",
+-        ".f1cqwcg4:disabled{color:var(--colorNeutralForegroundDisabled);}",
+-        ".fwwxidx:enabled:hover{background-color:var(--colorNeutralBackground3Hover);}",
+-        ".f14i52sd:enabled:active{background-color:var(--colorNeutralBackground3Pressed);}",
+-        ".fwry2ka:enabled.fui-SpinButton__button_active{background-color:var(--colorNeutralBackground3Pressed);}",
+-        ".f1yywxnv:enabled:hover{background-color:var(--colorNeutralBackground1Hover);}",
+-        ".fzaa11h:enabled:active,.fzaa11h:enabled.fui-SpinButton__button_active{color:var(--colorNeutralForeground3Pressed);}",
+-        ".f4fpmm9:enabled:active,.f4fpmm9:enabled.fui-SpinButton__button_active{background-color:var(--colorNeutralBackground1Pressed);}"
+-    ]
+ });
+ // Cannot just disable button as they need to remain
+ // exposed to ATs like screen readers.
+-const useButtonDisabledStyles = /*#__PURE__*/ (0, _react.__styles)({
++const useButtonDisabledStyles = (0, _react.makeStyles)({
+     base: {
+-        Bceei9c: "fdrzuqr",
+-        eoavqd: "fphbwmw"
++        cursor: 'not-allowed',
++        ':hover': {
++            cursor: 'not-allowed'
++        }
+     },
+     outline: {
+-        sj55zd: "f1s2aq7o",
+-        r4wkhp: "few7wvn",
+-        B95qlz1: "f110wuh6",
+-        p743kt: "f9s4mys",
+-        B7xitij: "f10404rc",
+-        B6siaa6: "fwzu9cz",
+-        Ba9qmo4: "f1snwkb6"
++        color: _reacttheme.tokens.colorNeutralForegroundDisabled,
++        ':enabled': {
++            ':hover': {
++                color: _reacttheme.tokens.colorNeutralForegroundDisabled,
++                backgroundColor: 'transparent'
++            },
++            ':active': {
++                color: _reacttheme.tokens.colorNeutralForegroundDisabled,
++                backgroundColor: 'transparent'
++            },
++            [`&.${spinButtonExtraClassNames.buttonActive}`]: {
++                color: _reacttheme.tokens.colorNeutralForegroundDisabled,
++                backgroundColor: 'transparent'
++            }
++        }
+     },
+     underline: {
+-        sj55zd: "f1s2aq7o",
+-        r4wkhp: "few7wvn",
+-        B95qlz1: "f110wuh6",
+-        p743kt: "f9s4mys",
+-        B7xitij: "f10404rc",
+-        B6siaa6: "fwzu9cz",
+-        Ba9qmo4: "f1snwkb6"
++        color: _reacttheme.tokens.colorNeutralForegroundDisabled,
++        ':enabled': {
++            ':hover': {
++                color: _reacttheme.tokens.colorNeutralForegroundDisabled,
++                backgroundColor: 'transparent'
++            },
++            ':active': {
++                color: _reacttheme.tokens.colorNeutralForegroundDisabled,
++                backgroundColor: 'transparent'
++            },
++            [`&.${spinButtonExtraClassNames.buttonActive}`]: {
++                color: _reacttheme.tokens.colorNeutralForegroundDisabled,
++                backgroundColor: 'transparent'
++            }
++        }
+     },
+-    "filled-darker": {
+-        sj55zd: "f1s2aq7o",
+-        r4wkhp: "few7wvn",
+-        B95qlz1: "f110wuh6",
+-        p743kt: "f9s4mys",
+-        B7xitij: "f10404rc",
+-        B6siaa6: "fwzu9cz",
+-        Ba9qmo4: "f1snwkb6"
++    'filled-darker': {
++        color: _reacttheme.tokens.colorNeutralForegroundDisabled,
++        ':enabled': {
++            ':hover': {
++                color: _reacttheme.tokens.colorNeutralForegroundDisabled,
++                backgroundColor: 'transparent'
++            },
++            ':active': {
++                color: _reacttheme.tokens.colorNeutralForegroundDisabled,
++                backgroundColor: 'transparent'
++            },
++            [`&.${spinButtonExtraClassNames.buttonActive}`]: {
++                color: _reacttheme.tokens.colorNeutralForegroundDisabled,
++                backgroundColor: 'transparent'
++            }
++        }
+     },
+-    "filled-lighter": {
+-        sj55zd: "f1s2aq7o",
+-        r4wkhp: "few7wvn",
+-        B95qlz1: "f110wuh6",
+-        p743kt: "f9s4mys",
+-        B7xitij: "f10404rc",
+-        B6siaa6: "fwzu9cz",
+-        Ba9qmo4: "f1snwkb6"
++    'filled-lighter': {
++        color: _reacttheme.tokens.colorNeutralForegroundDisabled,
++        ':enabled': {
++            ':hover': {
++                color: _reacttheme.tokens.colorNeutralForegroundDisabled,
++                backgroundColor: 'transparent'
++            },
++            ':active': {
++                color: _reacttheme.tokens.colorNeutralForegroundDisabled,
++                backgroundColor: 'transparent'
++            },
++            [`&.${spinButtonExtraClassNames.buttonActive}`]: {
++                color: _reacttheme.tokens.colorNeutralForegroundDisabled,
++                backgroundColor: 'transparent'
++            }
++        }
+     }
+-}, {
+-    d: [
+-        ".fdrzuqr{cursor:not-allowed;}",
+-        ".f1s2aq7o{color:var(--colorNeutralForegroundDisabled);}",
+-        ".few7wvn:enabled:hover{color:var(--colorNeutralForegroundDisabled);}",
+-        ".f110wuh6:enabled:hover{background-color:transparent;}",
+-        ".f9s4mys:enabled:active{color:var(--colorNeutralForegroundDisabled);}",
+-        ".f10404rc:enabled:active{background-color:transparent;}",
+-        ".fwzu9cz:enabled.fui-SpinButton__button_active{color:var(--colorNeutralForegroundDisabled);}",
+-        ".f1snwkb6:enabled.fui-SpinButton__button_active{background-color:transparent;}"
+-    ],
+-    h: [
+-        ".fphbwmw:hover{cursor:not-allowed;}"
+-    ]
+ });
+ const useSpinButtonStyles_unstable = (state)=>{
+     const { appearance, atBound, spinState, size } = state;
+@@ -522,4 +444,4 @@ const useSpinButtonStyles_unstable = (state)=>{
+     state.decrementButton.className = (0, _react.mergeClasses)(spinButtonClassNames.decrementButton, spinState === 'down' && `${spinButtonExtraClassNames.buttonActive}`, useBaseButtonClassName(), buttonStyles.decrement, buttonStyles[appearance], size === 'small' && buttonStyles.decrementButtonSmall, (atBound === 'min' || atBound === 'both') && buttonDisabledStyles.base, (atBound === 'min' || atBound === 'both') && buttonDisabledStyles[appearance], state.decrementButton.className);
+     state.input.className = (0, _react.mergeClasses)(spinButtonClassNames.input, useInputClassName(), disabled && inputStyles.disabled, state.input.className);
+     return state;
+-}; //# sourceMappingURL=useSpinButtonStyles.styles.js.map
++};
+diff --git a/node_modules/@fluentui/react-spinbutton/lib-commonjs/components/SpinButton/useSpinButtonStyles.styles.js.map b/node_modules/@fluentui/react-spinbutton/lib-commonjs/components/SpinButton/useSpinButtonStyles.styles.js.map
+index 8b773c8..881d585 100644
+--- a/node_modules/@fluentui/react-spinbutton/lib-commonjs/components/SpinButton/useSpinButtonStyles.styles.js.map
++++ b/node_modules/@fluentui/react-spinbutton/lib-commonjs/components/SpinButton/useSpinButtonStyles.styles.js.map
+@@ -1 +1 @@
+-{"version":3,"sources":["useSpinButtonStyles.styles.js"],"sourcesContent":["import { __resetStyles, __styles, mergeClasses, shorthands } from '@griffel/react';\nimport { tokens, typographyStyles } from '@fluentui/react-theme';\nexport const spinButtonClassNames = {\n  root: 'fui-SpinButton',\n  input: 'fui-SpinButton__input',\n  incrementButton: 'fui-SpinButton__incrementButton',\n  decrementButton: 'fui-SpinButton__decrementButton'\n};\nconst spinButtonExtraClassNames = {\n  buttonActive: 'fui-SpinButton__button_active'\n};\nconst fieldHeights = {\n  small: '24px',\n  medium: '32px'\n};\nconst useRootClassName = /*#__PURE__*/__resetStyles(\"rkqmps4\", \"r1trw52p\", {\n  r: [\".rkqmps4{display:inline-grid;grid-template-columns:1fr 24px;grid-template-rows:1fr 1fr;column-gap:var(--spacingHorizontalXS);row-gap:0;position:relative;isolation:isolate;background-color:var(--colorNeutralBackground1);min-height:32px;padding:0 0 0 var(--spacingHorizontalMNudge);border-radius:var(--borderRadiusMedium);}\", \".rkqmps4::before{content:\\\"\\\";box-sizing:border-box;position:absolute;top:0;right:0;bottom:0;left:0;pointer-events:none;z-index:10;border:1px solid var(--colorNeutralStroke1);border-bottom-color:var(--colorNeutralStrokeAccessible);border-radius:var(--borderRadiusMedium);}\", \".rkqmps4::after{box-sizing:border-box;content:\\\"\\\";position:absolute;right:0;bottom:0;left:0;z-index:20;height:max(2px, var(--borderRadiusMedium));border-bottom-left-radius:var(--borderRadiusMedium);border-bottom-right-radius:var(--borderRadiusMedium);border-bottom:2px solid var(--colorCompoundBrandStroke);clip-path:inset(calc(100% - 2px) 0 0 0);transform:scaleX(0);transition-property:transform;transition-duration:var(--durationUltraFast);transition-delay:var(--curveAccelerateMid);}\", \".rkqmps4:focus-within::after{transform:scaleX(1);transition-property:transform;transition-duration:var(--durationNormal);transition-delay:var(--curveDecelerateMid);}\", \".rkqmps4:focus-within:active::after{border-bottom-color:var(--colorCompoundBrandStrokePressed);}\", \".rkqmps4:focus-within{outline:2px solid transparent;}\", \".r1trw52p{display:inline-grid;grid-template-columns:1fr 24px;grid-template-rows:1fr 1fr;column-gap:var(--spacingHorizontalXS);row-gap:0;position:relative;isolation:isolate;background-color:var(--colorNeutralBackground1);min-height:32px;padding:0 var(--spacingHorizontalMNudge) 0 0;border-radius:var(--borderRadiusMedium);}\", \".r1trw52p::before{content:\\\"\\\";box-sizing:border-box;position:absolute;top:0;left:0;bottom:0;right:0;pointer-events:none;z-index:10;border:1px solid var(--colorNeutralStroke1);border-bottom-color:var(--colorNeutralStrokeAccessible);border-radius:var(--borderRadiusMedium);}\", \".r1trw52p::after{box-sizing:border-box;content:\\\"\\\";position:absolute;left:0;bottom:0;right:0;z-index:20;height:max(2px, var(--borderRadiusMedium));border-bottom-right-radius:var(--borderRadiusMedium);border-bottom-left-radius:var(--borderRadiusMedium);border-bottom:2px solid var(--colorCompoundBrandStroke);clip-path:inset(calc(100% - 2px) 0 0 0);transform:scaleX(0);transition-property:transform;transition-duration:var(--durationUltraFast);transition-delay:var(--curveAccelerateMid);}\", \".r1trw52p:focus-within::after{transform:scaleX(1);transition-property:transform;transition-duration:var(--durationNormal);transition-delay:var(--curveDecelerateMid);}\", \".r1trw52p:focus-within:active::after{border-bottom-color:var(--colorCompoundBrandStrokePressed);}\", \".r1trw52p:focus-within{outline:2px solid transparent;}\"],\n  s: [\"@media screen and (prefers-reduced-motion: reduce){.rkqmps4::after{transition-duration:0.01ms;transition-delay:0.01ms;}}\", \"@media screen and (prefers-reduced-motion: reduce){.rkqmps4:focus-within::after{transition-duration:0.01ms;transition-delay:0.01ms;}}\", \"@media screen and (prefers-reduced-motion: reduce){.r1trw52p::after{transition-duration:0.01ms;transition-delay:0.01ms;}}\", \"@media screen and (prefers-reduced-motion: reduce){.r1trw52p:focus-within::after{transition-duration:0.01ms;transition-delay:0.01ms;}}\"]\n});\nconst useRootStyles = /*#__PURE__*/__styles({\n  small: {\n    sshi5w: \"f1pha7fy\",\n    Bahqtrf: \"fk6fouc\",\n    Be2twd7: \"fy9rknc\",\n    Bhrd7zp: \"figsok6\",\n    Bg96gwp: \"fwrc4pm\",\n    uwmqm3: [\"f1f5gg8d\", \"f1vdfbxk\"]\n  },\n  medium: {},\n  outline: {},\n  outlineInteractive: {\n    Bo3r8zu: \"f1w2y1rc\",\n    Hpvxnh: [\"f1gofhvl\", \"f18htlvq\"],\n    Bx11ytk: \"ffcnd28\",\n    B1rg0w0: [\"f18htlvq\", \"f1gofhvl\"],\n    Bsg1tlv: \"f6lmxco\",\n    Brjw370: [\"fcoc0mf\", \"f15r4wkl\"],\n    xcfy85: \"f1ipdth8\",\n    Bcc6kan: [\"f15r4wkl\", \"fcoc0mf\"]\n  },\n  underline: {\n    B0qfbqy: \"f1o236ok\",\n    B4f6apu: [\"faeg28l\", \"f64aojp\"],\n    y0oebl: \"fdw6hkg\",\n    uvfttm: [\"f64aojp\", \"faeg28l\"],\n    Budzafs: [\"f1vk4jnx\", \"f1v3v894\"],\n    r59vdv: [\"f1v3v894\", \"f1vk4jnx\"],\n    n07z76: [\"fzi2j54\", \"f1un0uoc\"],\n    ck0cow: [\"f1un0uoc\", \"fzi2j54\"]\n  },\n  underlineInteractive: {\n    Bx11ytk: \"ffcnd28\",\n    xcfy85: \"f1ipdth8\",\n    B3778ie: [\"f9pmbr4\", \"ffh3ws5\"],\n    d9w3h3: [\"ffh3ws5\", \"f9pmbr4\"],\n    Bl18szs: [\"f19438ov\", \"f1i9y5j\"],\n    B4j8arr: [\"f1i9y5j\", \"f19438ov\"]\n  },\n  filled: {\n    B0qfbqy: \"f1fjh9ub\",\n    B4f6apu: [\"ff9c942\", \"f6rdg5o\"],\n    y0oebl: \"fdw6hkg\",\n    uvfttm: [\"f6rdg5o\", \"ff9c942\"],\n    Bdkvgpv: \"f163fonl\",\n    m598lv: [\"f1yq6w5o\", \"f1jpmc5p\"],\n    qa3bma: \"f11yjt3y\",\n    Bbv0w2i: [\"f1jpmc5p\", \"f1yq6w5o\"],\n    Bq4z7u6: \"f7dgwnz\",\n    Bk5zm6e: [\"f1edeodt\", \"fszsv3f\"],\n    Bqjgrrk: \"f1172wan\",\n    Bm6vgfq: [\"fszsv3f\", \"f1edeodt\"]\n  },\n  \"filled-darker\": {\n    De3pzq: \"f16xq7d1\"\n  },\n  \"filled-lighter\": {\n    De3pzq: \"fxugw4r\"\n  },\n  filledInteractive: {\n    B05mzqr: \"f1xqt08\",\n    tb9y6h: [\"fzt5lgo\", \"f8tv3r9\"],\n    jcehpj: \"fyhrops\",\n    B23o0hn: [\"f8tv3r9\", \"fzt5lgo\"]\n  },\n  invalid: {\n    emecyz: \"fl48pg9\",\n    lz0pba: [\"f1a168p3\", \"f1pvdymy\"],\n    Bo1k74p: \"f11knvgl\",\n    Ba322q7: [\"f1pvdymy\", \"f1a168p3\"]\n  },\n  disabled: {\n    Bceei9c: \"fdrzuqr\",\n    De3pzq: \"f1c21dwh\",\n    Bq4z7u6: \"f1a0lfh7\",\n    Bk5zm6e: [\"f1p2ejm6\", \"fmzytvz\"],\n    Bqjgrrk: \"fas2e61\",\n    Bm6vgfq: [\"fmzytvz\", \"f1p2ejm6\"],\n    Cffpyd: \"flb8es4\",\n    hxi8he: [\"f1lclws\", \"frjp63v\"],\n    Bcuq369: \"f1yv9wnt\",\n    Imo2if: [\"frjp63v\", \"f1lclws\"]\n  }\n}, {\n  d: [\".f1pha7fy{min-height:24px;}\", \".fk6fouc{font-family:var(--fontFamilyBase);}\", \".fy9rknc{font-size:var(--fontSizeBase200);}\", \".figsok6{font-weight:var(--fontWeightRegular);}\", \".fwrc4pm{line-height:var(--lineHeightBase200);}\", \".f1f5gg8d{padding-left:var(--spacingHorizontalS);}\", \".f1vdfbxk{padding-right:var(--spacingHorizontalS);}\", \".f1o236ok::before{border-top-width:0;}\", \".faeg28l::before{border-right-width:0;}\", \".f64aojp::before{border-left-width:0;}\", \".fdw6hkg::before{border-bottom-width:1px;}\", \".f1vk4jnx::before{border-bottom-right-radius:var(--borderRadiusNone);}\", \".f1v3v894::before{border-bottom-left-radius:var(--borderRadiusNone);}\", \".fzi2j54::before{border-top-right-radius:var(--borderRadiusNone);}\", \".f1un0uoc::before{border-top-left-radius:var(--borderRadiusNone);}\", \".f9pmbr4::after{border-bottom-right-radius:var(--borderRadiusNone);}\", \".ffh3ws5::after{border-bottom-left-radius:var(--borderRadiusNone);}\", \".f19438ov::after{border-top-right-radius:var(--borderRadiusNone);}\", \".f1i9y5j::after{border-top-left-radius:var(--borderRadiusNone);}\", \".f1fjh9ub::before{border-top-width:1px;}\", \".ff9c942::before{border-right-width:1px;}\", \".f6rdg5o::before{border-left-width:1px;}\", \".f163fonl::before{border-top-style:solid;}\", \".f1yq6w5o::before{border-right-style:solid;}\", \".f1jpmc5p::before{border-left-style:solid;}\", \".f11yjt3y::before{border-bottom-style:solid;}\", \".f7dgwnz::before{border-top-color:var(--colorTransparentStroke);}\", \".f1edeodt::before{border-right-color:var(--colorTransparentStroke);}\", \".fszsv3f::before{border-left-color:var(--colorTransparentStroke);}\", \".f1172wan::before{border-bottom-color:var(--colorTransparentStroke);}\", \".f16xq7d1{background-color:var(--colorNeutralBackground3);}\", \".fxugw4r{background-color:var(--colorNeutralBackground1);}\", \".fl48pg9:not(:focus-within)::before,.fl48pg9:hover:not(:focus-within)::before{border-top-color:var(--colorPaletteRedBorder2);}\", \".f1a168p3:not(:focus-within)::before,.f1a168p3:hover:not(:focus-within)::before{border-right-color:var(--colorPaletteRedBorder2);}\", \".f1pvdymy:not(:focus-within)::before,.f1pvdymy:hover:not(:focus-within)::before{border-left-color:var(--colorPaletteRedBorder2);}\", \".f11knvgl:not(:focus-within)::before,.f11knvgl:hover:not(:focus-within)::before{border-bottom-color:var(--colorPaletteRedBorder2);}\", \".fdrzuqr{cursor:not-allowed;}\", \".f1c21dwh{background-color:var(--colorTransparentBackground);}\", \".f1a0lfh7::before{border-top-color:var(--colorNeutralStrokeDisabled);}\", \".f1p2ejm6::before{border-right-color:var(--colorNeutralStrokeDisabled);}\", \".fmzytvz::before{border-left-color:var(--colorNeutralStrokeDisabled);}\", \".fas2e61::before{border-bottom-color:var(--colorNeutralStrokeDisabled);}\"],\n  h: [\".f1w2y1rc:hover::before{border-top-color:var(--colorNeutralStroke1Hover);}\", \".f1gofhvl:hover::before{border-right-color:var(--colorNeutralStroke1Hover);}\", \".f18htlvq:hover::before{border-left-color:var(--colorNeutralStroke1Hover);}\", \".ffcnd28:hover::before{border-bottom-color:var(--colorNeutralStrokeAccessibleHover);}\", \".f1xqt08:hover::before,.f1xqt08:focus-within::before{border-top-color:var(--colorTransparentStrokeInteractive);}\", \".fzt5lgo:hover::before,.fzt5lgo:focus-within::before{border-right-color:var(--colorTransparentStrokeInteractive);}\", \".f8tv3r9:hover::before,.f8tv3r9:focus-within::before{border-left-color:var(--colorTransparentStrokeInteractive);}\", \".fyhrops:hover::before,.fyhrops:focus-within::before{border-bottom-color:var(--colorTransparentStrokeInteractive);}\"],\n  a: [\".f6lmxco:active::before,.f6lmxco:focus-within::before{border-top-color:var(--colorNeutralStroke1Pressed);}\", \".fcoc0mf:active::before,.fcoc0mf:focus-within::before{border-right-color:var(--colorNeutralStroke1Pressed);}\", \".f15r4wkl:active::before,.f15r4wkl:focus-within::before{border-left-color:var(--colorNeutralStroke1Pressed);}\", \".f1ipdth8:active::before,.f1ipdth8:focus-within::before{border-bottom-color:var(--colorNeutralStrokeAccessiblePressed);}\"],\n  m: [[\"@media (forced-colors: active){.flb8es4::before{border-top-color:GrayText;}}\", {\n    m: \"(forced-colors: active)\"\n  }], [\"@media (forced-colors: active){.f1lclws::before{border-right-color:GrayText;}.frjp63v::before{border-left-color:GrayText;}}\", {\n    m: \"(forced-colors: active)\"\n  }], [\"@media (forced-colors: active){.f1yv9wnt::before{border-bottom-color:GrayText;}}\", {\n    m: \"(forced-colors: active)\"\n  }]]\n});\nconst useInputClassName = /*#__PURE__*/__resetStyles(\"r1ljrqje\", null, [\".r1ljrqje{grid-column-start:1;grid-column-end:2;grid-row-start:1;grid-row-end:3;outline-style:none;border:0;padding:0;color:var(--colorNeutralForeground1);background-color:transparent;font-family:inherit;font-size:inherit;font-weight:inherit;line-height:inherit;width:100%;}\", \".r1ljrqje::-webkit-input-placeholder{color:var(--colorNeutralForeground4);opacity:1;}\", \".r1ljrqje::-moz-placeholder{color:var(--colorNeutralForeground4);opacity:1;}\", \".r1ljrqje:-ms-input-placeholder{color:var(--colorNeutralForeground4);opacity:1;}\", \".r1ljrqje::placeholder{color:var(--colorNeutralForeground4);opacity:1;}\"]);\nconst useInputStyles = /*#__PURE__*/__styles({\n  disabled: {\n    sj55zd: \"f1s2aq7o\",\n    Bceei9c: \"fdrzuqr\",\n    De3pzq: \"f1c21dwh\",\n    yvdlaj: \"fahhnxm\"\n  }\n}, {\n  d: [\".f1s2aq7o{color:var(--colorNeutralForegroundDisabled);}\", \".fdrzuqr{cursor:not-allowed;}\", \".f1c21dwh{background-color:var(--colorTransparentBackground);}\", \".fahhnxm::-webkit-input-placeholder{color:var(--colorNeutralForegroundDisabled);}\", \".fahhnxm::-moz-placeholder{color:var(--colorNeutralForegroundDisabled);}\"]\n});\nconst useBaseButtonClassName = /*#__PURE__*/__resetStyles(\"r1g4chgs\", null, [\".r1g4chgs{display:inline-flex;width:24px;align-items:center;justify-content:center;border:0;position:absolute;outline-style:none;height:16px;background-color:transparent;color:var(--colorNeutralForeground3);grid-column-start:2;border-radius:0;padding:0 5px 0 5px;}\", \".r1g4chgs:active{outline-style:none;}\", \".r1g4chgs:enabled:hover{cursor:pointer;color:var(--colorNeutralForeground3Hover);background-color:var(--colorSubtleBackgroundHover);}\", \".r1g4chgs:enabled:active{color:var(--colorNeutralForeground3Pressed);background-color:var(--colorSubtleBackgroundPressed);}\", \".r1g4chgs:enabled.fui-SpinButton__button_active{color:var(--colorNeutralForeground3Pressed);background-color:var(--colorSubtleBackgroundPressed);}\", \".r1g4chgs:disabled{cursor:not-allowed;color:var(--colorNeutralForegroundDisabled);}\"]);\nconst useButtonStyles = /*#__PURE__*/__styles({\n  increment: {\n    Ijaq50: \"f16hsg94\",\n    B7oj6ja: [\"f1jar5jt\", \"fyu767a\"],\n    z8tnut: \"f10ra9hq\",\n    Byoj8tv: \"f1brlhvm\"\n  },\n  decrement: {\n    Ijaq50: \"faunodf\",\n    Bbmb7ep: [\"f1aa9q02\", \"f16jpd5f\"],\n    z8tnut: \"f1sl3k7w\",\n    Byoj8tv: \"f1y2xyjm\"\n  },\n  incrementButtonSmall: {\n    z8tnut: \"f1khb0e9\",\n    z189sj: [\"f1sgzk6v\", \"f1bg5zqg\"],\n    Byoj8tv: \"f1ov4xf1\",\n    uwmqm3: [\"fycuoez\", \"f8wuabp\"],\n    Bqenvij: \"fvblgha\"\n  },\n  decrementButtonSmall: {\n    z8tnut: \"f1nbblvp\",\n    z189sj: [\"f1sgzk6v\", \"f1bg5zqg\"],\n    Byoj8tv: \"f1jnq6q7\",\n    uwmqm3: [\"fycuoez\", \"f8wuabp\"],\n    Bqenvij: \"fvblgha\"\n  },\n  outline: {},\n  underline: {\n    De3pzq: \"f3rmtva\",\n    sj55zd: \"f11d4kpn\",\n    r4wkhp: \"f1no7wuu\",\n    B95qlz1: \"f1bifk9c\",\n    p743kt: \"fp1zg4s\",\n    B7xitij: \"fo6hitd\",\n    B6siaa6: \"f1wiab75\",\n    Ba9qmo4: \"fj9zm5z\",\n    Dyrjrp: \"f1cqwcg4\"\n  },\n  \"filled-darker\": {\n    De3pzq: \"f3rmtva\",\n    sj55zd: \"f11d4kpn\",\n    r4wkhp: \"f1no7wuu\",\n    B95qlz1: \"fwwxidx\",\n    p743kt: \"fp1zg4s\",\n    B7xitij: \"f14i52sd\",\n    B6siaa6: \"f1wiab75\",\n    Ba9qmo4: \"fwry2ka\",\n    Dyrjrp: \"f1cqwcg4\"\n  },\n  \"filled-lighter\": {\n    De3pzq: \"f3rmtva\",\n    sj55zd: \"f11d4kpn\",\n    r4wkhp: \"f1no7wuu\",\n    B95qlz1: \"f1yywxnv\",\n    drw0cw: \"fzaa11h\",\n    idzz8t: \"f4fpmm9\",\n    Dyrjrp: \"f1cqwcg4\"\n  }\n}, {\n  d: [\".f16hsg94{grid-row-start:1;}\", \".f1jar5jt{border-top-right-radius:var(--borderRadiusMedium);}\", \".fyu767a{border-top-left-radius:var(--borderRadiusMedium);}\", \".f10ra9hq{padding-top:4px;}\", \".f1brlhvm{padding-bottom:1px;}\", \".faunodf{grid-row-start:2;}\", \".f1aa9q02{border-bottom-right-radius:var(--borderRadiusMedium);}\", \".f16jpd5f{border-bottom-left-radius:var(--borderRadiusMedium);}\", \".f1sl3k7w{padding-top:1px;}\", \".f1y2xyjm{padding-bottom:4px;}\", \".f1khb0e9{padding-top:3px;}\", \".f1sgzk6v{padding-right:6px;}\", \".f1bg5zqg{padding-left:6px;}\", \".f1ov4xf1{padding-bottom:0px;}\", \".fycuoez{padding-left:4px;}\", \".f8wuabp{padding-right:4px;}\", \".fvblgha{height:12px;}\", \".f1nbblvp{padding-top:0px;}\", \".f1jnq6q7{padding-bottom:3px;}\", \".f3rmtva{background-color:transparent;}\", \".f11d4kpn{color:var(--colorNeutralForeground3);}\", \".f1no7wuu:enabled:hover{color:var(--colorNeutralForeground3Hover);}\", \".f1bifk9c:enabled:hover{background-color:var(--colorSubtleBackgroundHover);}\", \".fp1zg4s:enabled:active{color:var(--colorNeutralForeground3Pressed);}\", \".fo6hitd:enabled:active{background-color:var(--colorSubtleBackgroundPressed);}\", \".f1wiab75:enabled.fui-SpinButton__button_active{color:var(--colorNeutralForeground3Pressed);}\", \".fj9zm5z:enabled.fui-SpinButton__button_active{background-color:var(--colorSubtleBackgroundPressed);}\", \".f1cqwcg4:disabled{color:var(--colorNeutralForegroundDisabled);}\", \".fwwxidx:enabled:hover{background-color:var(--colorNeutralBackground3Hover);}\", \".f14i52sd:enabled:active{background-color:var(--colorNeutralBackground3Pressed);}\", \".fwry2ka:enabled.fui-SpinButton__button_active{background-color:var(--colorNeutralBackground3Pressed);}\", \".f1yywxnv:enabled:hover{background-color:var(--colorNeutralBackground1Hover);}\", \".fzaa11h:enabled:active,.fzaa11h:enabled.fui-SpinButton__button_active{color:var(--colorNeutralForeground3Pressed);}\", \".f4fpmm9:enabled:active,.f4fpmm9:enabled.fui-SpinButton__button_active{background-color:var(--colorNeutralBackground1Pressed);}\"]\n});\n// Cannot just disable button as they need to remain\n// exposed to ATs like screen readers.\nconst useButtonDisabledStyles = /*#__PURE__*/__styles({\n  base: {\n    Bceei9c: \"fdrzuqr\",\n    eoavqd: \"fphbwmw\"\n  },\n  outline: {\n    sj55zd: \"f1s2aq7o\",\n    r4wkhp: \"few7wvn\",\n    B95qlz1: \"f110wuh6\",\n    p743kt: \"f9s4mys\",\n    B7xitij: \"f10404rc\",\n    B6siaa6: \"fwzu9cz\",\n    Ba9qmo4: \"f1snwkb6\"\n  },\n  underline: {\n    sj55zd: \"f1s2aq7o\",\n    r4wkhp: \"few7wvn\",\n    B95qlz1: \"f110wuh6\",\n    p743kt: \"f9s4mys\",\n    B7xitij: \"f10404rc\",\n    B6siaa6: \"fwzu9cz\",\n    Ba9qmo4: \"f1snwkb6\"\n  },\n  \"filled-darker\": {\n    sj55zd: \"f1s2aq7o\",\n    r4wkhp: \"few7wvn\",\n    B95qlz1: \"f110wuh6\",\n    p743kt: \"f9s4mys\",\n    B7xitij: \"f10404rc\",\n    B6siaa6: \"fwzu9cz\",\n    Ba9qmo4: \"f1snwkb6\"\n  },\n  \"filled-lighter\": {\n    sj55zd: \"f1s2aq7o\",\n    r4wkhp: \"few7wvn\",\n    B95qlz1: \"f110wuh6\",\n    p743kt: \"f9s4mys\",\n    B7xitij: \"f10404rc\",\n    B6siaa6: \"fwzu9cz\",\n    Ba9qmo4: \"f1snwkb6\"\n  }\n}, {\n  d: [\".fdrzuqr{cursor:not-allowed;}\", \".f1s2aq7o{color:var(--colorNeutralForegroundDisabled);}\", \".few7wvn:enabled:hover{color:var(--colorNeutralForegroundDisabled);}\", \".f110wuh6:enabled:hover{background-color:transparent;}\", \".f9s4mys:enabled:active{color:var(--colorNeutralForegroundDisabled);}\", \".f10404rc:enabled:active{background-color:transparent;}\", \".fwzu9cz:enabled.fui-SpinButton__button_active{color:var(--colorNeutralForegroundDisabled);}\", \".f1snwkb6:enabled.fui-SpinButton__button_active{background-color:transparent;}\"],\n  h: [\".fphbwmw:hover{cursor:not-allowed;}\"]\n});\n/**\n * Apply styling to the SpinButton slots based on the state\n */\nexport const useSpinButtonStyles_unstable = state => {\n  const {\n    appearance,\n    atBound,\n    spinState,\n    size\n  } = state;\n  const disabled = state.input.disabled;\n  const invalid = `${state.input['aria-invalid']}` === 'true';\n  const filled = appearance.startsWith('filled');\n  const rootStyles = useRootStyles();\n  const buttonStyles = useButtonStyles();\n  const buttonDisabledStyles = useButtonDisabledStyles();\n  const inputStyles = useInputStyles();\n  state.root.className = mergeClasses(spinButtonClassNames.root, useRootClassName(), rootStyles[size], rootStyles[appearance], filled && rootStyles.filled, !disabled && appearance === 'outline' && rootStyles.outlineInteractive, !disabled && appearance === 'underline' && rootStyles.underlineInteractive, !disabled && filled && rootStyles.filledInteractive, !disabled && invalid && rootStyles.invalid, disabled && rootStyles.disabled, state.root.className);\n  state.incrementButton.className = mergeClasses(spinButtonClassNames.incrementButton, spinState === 'up' && `${spinButtonExtraClassNames.buttonActive}`, useBaseButtonClassName(), buttonStyles.increment, buttonStyles[appearance], size === 'small' && buttonStyles.incrementButtonSmall, (atBound === 'max' || atBound === 'both') && buttonDisabledStyles.base, (atBound === 'max' || atBound === 'both') && buttonDisabledStyles[appearance], state.incrementButton.className);\n  state.decrementButton.className = mergeClasses(spinButtonClassNames.decrementButton, spinState === 'down' && `${spinButtonExtraClassNames.buttonActive}`, useBaseButtonClassName(), buttonStyles.decrement, buttonStyles[appearance], size === 'small' && buttonStyles.decrementButtonSmall, (atBound === 'min' || atBound === 'both') && buttonDisabledStyles.base, (atBound === 'min' || atBound === 'both') && buttonDisabledStyles[appearance], state.decrementButton.className);\n  state.input.className = mergeClasses(spinButtonClassNames.input, useInputClassName(), disabled && inputStyles.disabled, state.input.className);\n  return state;\n};\n//# sourceMappingURL=useSpinButtonStyles.styles.js.map"],"names":["spinButtonClassNames","useSpinButtonStyles_unstable","root","input","incrementButton","decrementButton","spinButtonExtraClassNames","buttonActive","fieldHeights","small","medium","useRootClassName","__resetStyles","r","s","useRootStyles","__styles","sshi5w","Bahqtrf","Be2twd7","Bhrd7zp","Bg96gwp","uwmqm3","outline","outlineInteractive","Bo3r8zu","Hpvxnh","Bx11ytk","B1rg0w0","Bsg1tlv","Brjw370","xcfy85","Bcc6kan","underline","B0qfbqy","B4f6apu","y0oebl","uvfttm","Budzafs","r59vdv","n07z76","ck0cow","underlineInteractive","B3778ie","d9w3h3","Bl18szs","B4j8arr","filled","Bdkvgpv","m598lv","qa3bma","Bbv0w2i","Bq4z7u6","Bk5zm6e","Bqjgrrk","Bm6vgfq","De3pzq","filledInteractive","B05mzqr","tb9y6h","jcehpj","B23o0hn","invalid","emecyz","lz0pba","Bo1k74p","Ba322q7","disabled","Bceei9c","Cffpyd","hxi8he","Bcuq369","Imo2if","d","h","a","m","useInputClassName","useInputStyles","sj55zd","yvdlaj","useBaseButtonClassName","useButtonStyles","increment","Ijaq50","B7oj6ja","z8tnut","Byoj8tv","decrement","Bbmb7ep","incrementButtonSmall","z189sj","Bqenvij","decrementButtonSmall","r4wkhp","B95qlz1","p743kt","B7xitij","B6siaa6","Ba9qmo4","Dyrjrp","drw0cw","idzz8t","useButtonDisabledStyles","base","eoavqd","state","appearance","atBound","spinState","size","startsWith","rootStyles","buttonStyles","buttonDisabledStyles","inputStyles","className","mergeClasses"],"mappings":"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"}
+\ No newline at end of file
++{"version":3,"sources":["useSpinButtonStyles.styles.js"],"sourcesContent":["import { makeResetStyles, makeStyles, mergeClasses, shorthands } from '@griffel/react';\nimport { tokens, typographyStyles } from '@fluentui/react-theme';\nexport const spinButtonClassNames = {\n    root: 'fui-SpinButton',\n    input: 'fui-SpinButton__input',\n    incrementButton: 'fui-SpinButton__incrementButton',\n    decrementButton: 'fui-SpinButton__decrementButton'\n};\nconst spinButtonExtraClassNames = {\n    buttonActive: 'fui-SpinButton__button_active'\n};\nconst fieldHeights = {\n    small: '24px',\n    medium: '32px'\n};\nconst useRootClassName = makeResetStyles({\n    display: 'inline-grid',\n    gridTemplateColumns: `1fr 24px`,\n    gridTemplateRows: '1fr 1fr',\n    columnGap: tokens.spacingHorizontalXS,\n    rowGap: 0,\n    position: 'relative',\n    isolation: 'isolate',\n    backgroundColor: tokens.colorNeutralBackground1,\n    minHeight: fieldHeights.medium,\n    padding: `0 0 0 ${tokens.spacingHorizontalMNudge}`,\n    borderRadius: tokens.borderRadiusMedium,\n    // Apply border styles on the ::before pseudo element.\n    // We cannot use ::after since that is used for selection.\n    // Using the pseudo element allows us to place the border\n    // above content in the component which ensures the buttons\n    // line up visually with the border as expected. Without this\n    // there is a bit of a gap which can become very noticeable\n    // at high zoom or when OS zoom levels are not divisible by 2\n    // (e.g., 150% on Windows in Firefox)\n    // This is most noticeable on the \"outline\" appearance which is\n    // also the default so it feels worth the extra ceremony to get right.\n    '::before': {\n        content: '\"\"',\n        boxSizing: 'border-box',\n        position: 'absolute',\n        top: 0,\n        right: 0,\n        bottom: 0,\n        left: 0,\n        pointerEvents: 'none',\n        zIndex: 10,\n        border: `1px solid ${tokens.colorNeutralStroke1}`,\n        borderBottomColor: tokens.colorNeutralStrokeAccessible,\n        borderRadius: tokens.borderRadiusMedium\n    },\n    '::after': {\n        boxSizing: 'border-box',\n        content: '\"\"',\n        position: 'absolute',\n        right: 0,\n        bottom: 0,\n        left: 0,\n        zIndex: 20,\n        // Maintaining the correct corner radius:\n        // Use the whole border-radius as the height and only put radii on the bottom corners.\n        // (Otherwise the radius would be automatically reduced to fit available space.)\n        // max() ensures the focus border still shows up even if someone sets tokens.borderRadiusMedium to 0.\n        height: `max(2px, ${tokens.borderRadiusMedium})`,\n        borderBottomLeftRadius: tokens.borderRadiusMedium,\n        borderBottomRightRadius: tokens.borderRadiusMedium,\n        // Flat 2px border:\n        // By default borderBottom will cause little \"horns\" on the ends. The clipPath trims them off.\n        // (This could be done without trimming using `background: linear-gradient(...)`, but using\n        // borderBottom makes it easier for people to override the color if needed.)\n        borderBottom: `2px solid ${tokens.colorCompoundBrandStroke}`,\n        clipPath: 'inset(calc(100% - 2px) 0 0 0)',\n        // Animation for focus OUT\n        transform: 'scaleX(0)',\n        transitionProperty: 'transform',\n        transitionDuration: tokens.durationUltraFast,\n        transitionDelay: tokens.curveAccelerateMid,\n        '@media screen and (prefers-reduced-motion: reduce)': {\n            transitionDuration: '0.01ms',\n            transitionDelay: '0.01ms'\n        }\n    },\n    ':focus-within::after': {\n        // Animation for focus IN\n        transform: 'scaleX(1)',\n        transitionProperty: 'transform',\n        transitionDuration: tokens.durationNormal,\n        transitionDelay: tokens.curveDecelerateMid,\n        '@media screen and (prefers-reduced-motion: reduce)': {\n            transitionDuration: '0.01ms',\n            transitionDelay: '0.01ms'\n        }\n    },\n    ':focus-within:active::after': {\n        // This is if the user clicks the field again while it's already focused\n        borderBottomColor: tokens.colorCompoundBrandStrokePressed\n    },\n    ':focus-within': {\n        outline: '2px solid transparent'\n    }\n});\nconst useRootStyles = makeStyles({\n    small: {\n        minHeight: fieldHeights.small,\n        ...typographyStyles.caption1,\n        paddingLeft: tokens.spacingHorizontalS\n    },\n    medium: {\n    },\n    outline: {\n    },\n    outlineInteractive: {\n        ':hover::before': {\n            ...shorthands.borderColor(tokens.colorNeutralStroke1Hover),\n            borderBottomColor: tokens.colorNeutralStrokeAccessibleHover\n        },\n        // DO NOT add a space between the selectors! It changes the behavior of make-styles.\n        ':active,:focus-within': {\n            '::before': {\n                ...shorthands.borderColor(tokens.colorNeutralStroke1Pressed),\n                borderBottomColor: tokens.colorNeutralStrokeAccessiblePressed\n            }\n        }\n    },\n    underline: {\n        '::before': {\n            ...shorthands.borderWidth(0, 0, '1px', 0),\n            ...shorthands.borderRadius(tokens.borderRadiusNone)\n        }\n    },\n    underlineInteractive: {\n        ':hover::before': {\n            borderBottomColor: tokens.colorNeutralStrokeAccessibleHover\n        },\n        // DO NOT add a space between the selectors! It changes the behavior of make-styles.\n        ':active,:focus-within': {\n            '::before': {\n                borderBottomColor: tokens.colorNeutralStrokeAccessiblePressed\n            }\n        },\n        '::after': shorthands.borderRadius(tokens.borderRadiusNone)\n    },\n    filled: {\n        '::before': {\n            ...shorthands.border('1px', 'solid', tokens.colorTransparentStroke)\n        }\n    },\n    'filled-darker': {\n        backgroundColor: tokens.colorNeutralBackground3\n    },\n    'filled-lighter': {\n        backgroundColor: tokens.colorNeutralBackground1\n    },\n    filledInteractive: {\n        // DO NOT add a space between the selectors! It changes the behavior of make-styles.\n        ':hover,:focus-within': {\n            '::before': {\n                // also handles pressed border color (:active)\n                ...shorthands.borderColor(tokens.colorTransparentStrokeInteractive)\n            }\n        }\n    },\n    invalid: {\n        ':not(:focus-within),:hover:not(:focus-within)': {\n            '::before': {\n                ...shorthands.borderColor(tokens.colorPaletteRedBorder2)\n            }\n        }\n    },\n    disabled: {\n        cursor: 'not-allowed',\n        backgroundColor: tokens.colorTransparentBackground,\n        '::before': {\n            ...shorthands.borderColor(tokens.colorNeutralStrokeDisabled),\n            '@media (forced-colors: active)': {\n                ...shorthands.borderColor('GrayText')\n            }\n        }\n    }\n});\nconst useInputClassName = makeResetStyles({\n    gridColumnStart: '1',\n    gridColumnEnd: '2',\n    gridRowStart: '1',\n    gridRowEnd: '3',\n    outlineStyle: 'none',\n    border: '0',\n    padding: '0',\n    color: tokens.colorNeutralForeground1,\n    // Use literal \"transparent\" (not from the theme) to always let the color from the root show through\n    backgroundColor: 'transparent',\n    fontFamily: 'inherit',\n    fontSize: 'inherit',\n    fontWeight: 'inherit',\n    lineHeight: 'inherit',\n    width: '100%',\n    '::placeholder': {\n        color: tokens.colorNeutralForeground4,\n        opacity: 1\n    }\n});\nconst useInputStyles = makeStyles({\n    disabled: {\n        color: tokens.colorNeutralForegroundDisabled,\n        cursor: 'not-allowed',\n        backgroundColor: tokens.colorTransparentBackground,\n        '::placeholder': {\n            color: tokens.colorNeutralForegroundDisabled\n        }\n    }\n});\nconst useBaseButtonClassName = makeResetStyles({\n    display: 'inline-flex',\n    width: '24px',\n    alignItems: 'center',\n    justifyContent: 'center',\n    border: '0',\n    position: 'absolute',\n    outlineStyle: 'none',\n    height: '16px',\n    // Use literal \"transparent\" (not from the theme) to always let the color from the root show through\n    backgroundColor: 'transparent',\n    color: tokens.colorNeutralForeground3,\n    // common button layout\n    gridColumnStart: '2',\n    borderRadius: '0',\n    padding: '0 5px 0 5px',\n    ':active': {\n        outlineStyle: 'none'\n    },\n    ':enabled': {\n        ':hover': {\n            cursor: 'pointer',\n            color: tokens.colorNeutralForeground3Hover,\n            backgroundColor: tokens.colorSubtleBackgroundHover\n        },\n        ':active': {\n            color: tokens.colorNeutralForeground3Pressed,\n            backgroundColor: tokens.colorSubtleBackgroundPressed\n        },\n        [`&.${spinButtonExtraClassNames.buttonActive}`]: {\n            color: tokens.colorNeutralForeground3Pressed,\n            backgroundColor: tokens.colorSubtleBackgroundPressed\n        }\n    },\n    ':disabled': {\n        cursor: 'not-allowed',\n        color: tokens.colorNeutralForegroundDisabled\n    }\n});\nconst useButtonStyles = makeStyles({\n    increment: {\n        gridRowStart: '1',\n        borderTopRightRadius: tokens.borderRadiusMedium,\n        paddingTop: '4px',\n        paddingBottom: '1px'\n    },\n    decrement: {\n        gridRowStart: '2',\n        borderBottomRightRadius: tokens.borderRadiusMedium,\n        paddingTop: '1px',\n        paddingBottom: '4px'\n    },\n    // Padding values numbers don't align with design specs\n    // but visually the padding aligns.\n    // The icons are set in a 16x16px square but the artwork is inset from that\n    // so these padding values are computed by hand.\n    // Additionally the design uses fractional values so these are\n    // rounded to the nearest integer.\n    incrementButtonSmall: {\n        ...shorthands.padding('3px', '6px', '0px', '4px'),\n        height: '12px'\n    },\n    decrementButtonSmall: {\n        ...shorthands.padding('0px', '6px', '3px', '4px'),\n        height: '12px'\n    },\n    outline: {\n    },\n    underline: {\n        backgroundColor: 'transparent',\n        color: tokens.colorNeutralForeground3,\n        ':enabled': {\n            ':hover': {\n                color: tokens.colorNeutralForeground3Hover,\n                backgroundColor: tokens.colorSubtleBackgroundHover\n            },\n            ':active': {\n                color: tokens.colorNeutralForeground3Pressed,\n                backgroundColor: tokens.colorSubtleBackgroundPressed\n            },\n            [`&.${spinButtonExtraClassNames.buttonActive}`]: {\n                color: tokens.colorNeutralForeground3Pressed,\n                backgroundColor: tokens.colorSubtleBackgroundPressed\n            }\n        },\n        ':disabled': {\n            color: tokens.colorNeutralForegroundDisabled\n        }\n    },\n    'filled-darker': {\n        backgroundColor: 'transparent',\n        color: tokens.colorNeutralForeground3,\n        ':enabled': {\n            ':hover': {\n                color: tokens.colorNeutralForeground3Hover,\n                backgroundColor: tokens.colorNeutralBackground3Hover\n            },\n            ':active': {\n                color: tokens.colorNeutralForeground3Pressed,\n                backgroundColor: tokens.colorNeutralBackground3Pressed\n            },\n            [`&.${spinButtonExtraClassNames.buttonActive}`]: {\n                color: tokens.colorNeutralForeground3Pressed,\n                backgroundColor: tokens.colorNeutralBackground3Pressed\n            }\n        },\n        ':disabled': {\n            color: tokens.colorNeutralForegroundDisabled\n        }\n    },\n    'filled-lighter': {\n        backgroundColor: 'transparent',\n        color: tokens.colorNeutralForeground3,\n        ':enabled': {\n            ':hover': {\n                color: tokens.colorNeutralForeground3Hover,\n                backgroundColor: tokens.colorNeutralBackground1Hover\n            },\n            [`:active,&.${spinButtonExtraClassNames.buttonActive}`]: {\n                color: tokens.colorNeutralForeground3Pressed,\n                backgroundColor: tokens.colorNeutralBackground1Pressed\n            }\n        },\n        ':disabled': {\n            color: tokens.colorNeutralForegroundDisabled\n        }\n    }\n});\n// Cannot just disable button as they need to remain\n// exposed to ATs like screen readers.\nconst useButtonDisabledStyles = makeStyles({\n    base: {\n        cursor: 'not-allowed',\n        ':hover': {\n            cursor: 'not-allowed'\n        }\n    },\n    outline: {\n        color: tokens.colorNeutralForegroundDisabled,\n        ':enabled': {\n            ':hover': {\n                color: tokens.colorNeutralForegroundDisabled,\n                backgroundColor: 'transparent'\n            },\n            ':active': {\n                color: tokens.colorNeutralForegroundDisabled,\n                backgroundColor: 'transparent'\n            },\n            [`&.${spinButtonExtraClassNames.buttonActive}`]: {\n                color: tokens.colorNeutralForegroundDisabled,\n                backgroundColor: 'transparent'\n            }\n        }\n    },\n    underline: {\n        color: tokens.colorNeutralForegroundDisabled,\n        ':enabled': {\n            ':hover': {\n                color: tokens.colorNeutralForegroundDisabled,\n                backgroundColor: 'transparent'\n            },\n            ':active': {\n                color: tokens.colorNeutralForegroundDisabled,\n                backgroundColor: 'transparent'\n            },\n            [`&.${spinButtonExtraClassNames.buttonActive}`]: {\n                color: tokens.colorNeutralForegroundDisabled,\n                backgroundColor: 'transparent'\n            }\n        }\n    },\n    'filled-darker': {\n        color: tokens.colorNeutralForegroundDisabled,\n        ':enabled': {\n            ':hover': {\n                color: tokens.colorNeutralForegroundDisabled,\n                backgroundColor: 'transparent'\n            },\n            ':active': {\n                color: tokens.colorNeutralForegroundDisabled,\n                backgroundColor: 'transparent'\n            },\n            [`&.${spinButtonExtraClassNames.buttonActive}`]: {\n                color: tokens.colorNeutralForegroundDisabled,\n                backgroundColor: 'transparent'\n            }\n        }\n    },\n    'filled-lighter': {\n        color: tokens.colorNeutralForegroundDisabled,\n        ':enabled': {\n            ':hover': {\n                color: tokens.colorNeutralForegroundDisabled,\n                backgroundColor: 'transparent'\n            },\n            ':active': {\n                color: tokens.colorNeutralForegroundDisabled,\n                backgroundColor: 'transparent'\n            },\n            [`&.${spinButtonExtraClassNames.buttonActive}`]: {\n                color: tokens.colorNeutralForegroundDisabled,\n                backgroundColor: 'transparent'\n            }\n        }\n    }\n});\n/**\n * Apply styling to the SpinButton slots based on the state\n */ export const useSpinButtonStyles_unstable = (state)=>{\n    const { appearance, atBound, spinState, size } = state;\n    const disabled = state.input.disabled;\n    const invalid = `${state.input['aria-invalid']}` === 'true';\n    const filled = appearance.startsWith('filled');\n    const rootStyles = useRootStyles();\n    const buttonStyles = useButtonStyles();\n    const buttonDisabledStyles = useButtonDisabledStyles();\n    const inputStyles = useInputStyles();\n    state.root.className = mergeClasses(spinButtonClassNames.root, useRootClassName(), rootStyles[size], rootStyles[appearance], filled && rootStyles.filled, !disabled && appearance === 'outline' && rootStyles.outlineInteractive, !disabled && appearance === 'underline' && rootStyles.underlineInteractive, !disabled && filled && rootStyles.filledInteractive, !disabled && invalid && rootStyles.invalid, disabled && rootStyles.disabled, state.root.className);\n    state.incrementButton.className = mergeClasses(spinButtonClassNames.incrementButton, spinState === 'up' && `${spinButtonExtraClassNames.buttonActive}`, useBaseButtonClassName(), buttonStyles.increment, buttonStyles[appearance], size === 'small' && buttonStyles.incrementButtonSmall, (atBound === 'max' || atBound === 'both') && buttonDisabledStyles.base, (atBound === 'max' || atBound === 'both') && buttonDisabledStyles[appearance], state.incrementButton.className);\n    state.decrementButton.className = mergeClasses(spinButtonClassNames.decrementButton, spinState === 'down' && `${spinButtonExtraClassNames.buttonActive}`, useBaseButtonClassName(), buttonStyles.decrement, buttonStyles[appearance], size === 'small' && buttonStyles.decrementButtonSmall, (atBound === 'min' || atBound === 'both') && buttonDisabledStyles.base, (atBound === 'min' || atBound === 'both') && buttonDisabledStyles[appearance], state.decrementButton.className);\n    state.input.className = mergeClasses(spinButtonClassNames.input, useInputClassName(), disabled && inputStyles.disabled, state.input.className);\n    return state;\n};\n"],"names":["spinButtonClassNames","useSpinButtonStyles_unstable","root","input","incrementButton","decrementButton","spinButtonExtraClassNames","buttonActive","fieldHeights","small","medium","useRootClassName","makeResetStyles","display","gridTemplateColumns","gridTemplateRows","columnGap","tokens","spacingHorizontalXS","rowGap","position","isolation","backgroundColor","colorNeutralBackground1","minHeight","padding","spacingHorizontalMNudge","borderRadius","borderRadiusMedium","content","boxSizing","top","right","bottom","left","pointerEvents","zIndex","border","colorNeutralStroke1","borderBottomColor","colorNeutralStrokeAccessible","height","borderBottomLeftRadius","borderBottomRightRadius","borderBottom","colorCompoundBrandStroke","clipPath","transform","transitionProperty","transitionDuration","durationUltraFast","transitionDelay","curveAccelerateMid","durationNormal","curveDecelerateMid","colorCompoundBrandStrokePressed","outline","useRootStyles","makeStyles","typographyStyles","caption1","paddingLeft","spacingHorizontalS","outlineInteractive","shorthands","borderColor","colorNeutralStroke1Hover","colorNeutralStrokeAccessibleHover","colorNeutralStroke1Pressed","colorNeutralStrokeAccessiblePressed","underline","borderWidth","borderRadiusNone","underlineInteractive","filled","colorTransparentStroke","colorNeutralBackground3","filledInteractive","colorTransparentStrokeInteractive","invalid","colorPaletteRedBorder2","disabled","cursor","colorTransparentBackground","colorNeutralStrokeDisabled","useInputClassName","gridColumnStart","gridColumnEnd","gridRowStart","gridRowEnd","outlineStyle","color","colorNeutralForeground1","fontFamily","fontSize","fontWeight","lineHeight","width","colorNeutralForeground4","opacity","useInputStyles","colorNeutralForegroundDisabled","useBaseButtonClassName","alignItems","justifyContent","colorNeutralForeground3","colorNeutralForeground3Hover","colorSubtleBackgroundHover","colorNeutralForeground3Pressed","colorSubtleBackgroundPressed","useButtonStyles","increment","borderTopRightRadius","paddingTop","paddingBottom","decrement","incrementButtonSmall","decrementButtonSmall","colorNeutralBackground3Hover","colorNeutralBackground3Pressed","colorNeutralBackground1Hover","colorNeutralBackground1Pressed","useButtonDisabledStyles","base","state","appearance","atBound","spinState","size","startsWith","rootStyles","buttonStyles","buttonDisabledStyles","inputStyles","className","mergeClasses"],"mappings":"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"}
+\ No newline at end of file
+diff --git a/node_modules/@fluentui/react-spinbutton/lib/components/SpinButton/useSpinButtonStyles.styles.js b/node_modules/@fluentui/react-spinbutton/lib/components/SpinButton/useSpinButtonStyles.styles.js
+index 33f46ea..172f719 100644
+--- a/node_modules/@fluentui/react-spinbutton/lib/components/SpinButton/useSpinButtonStyles.styles.js
++++ b/node_modules/@fluentui/react-spinbutton/lib/components/SpinButton/useSpinButtonStyles.styles.js
+@@ -1,259 +1,434 @@
+-import { __resetStyles, __styles, mergeClasses, shorthands } from '@griffel/react';
++import { makeResetStyles, makeStyles, mergeClasses, shorthands } from '@griffel/react';
+ import { tokens, typographyStyles } from '@fluentui/react-theme';
+ export const spinButtonClassNames = {
+-  root: 'fui-SpinButton',
+-  input: 'fui-SpinButton__input',
+-  incrementButton: 'fui-SpinButton__incrementButton',
+-  decrementButton: 'fui-SpinButton__decrementButton'
++    root: 'fui-SpinButton',
++    input: 'fui-SpinButton__input',
++    incrementButton: 'fui-SpinButton__incrementButton',
++    decrementButton: 'fui-SpinButton__decrementButton'
+ };
+ const spinButtonExtraClassNames = {
+-  buttonActive: 'fui-SpinButton__button_active'
++    buttonActive: 'fui-SpinButton__button_active'
+ };
+ const fieldHeights = {
+-  small: '24px',
+-  medium: '32px'
++    small: '24px',
++    medium: '32px'
+ };
+-const useRootClassName = /*#__PURE__*/__resetStyles("rkqmps4", "r1trw52p", {
+-  r: [".rkqmps4{display:inline-grid;grid-template-columns:1fr 24px;grid-template-rows:1fr 1fr;column-gap:var(--spacingHorizontalXS);row-gap:0;position:relative;isolation:isolate;background-color:var(--colorNeutralBackground1);min-height:32px;padding:0 0 0 var(--spacingHorizontalMNudge);border-radius:var(--borderRadiusMedium);}", ".rkqmps4::before{content:\"\";box-sizing:border-box;position:absolute;top:0;right:0;bottom:0;left:0;pointer-events:none;z-index:10;border:1px solid var(--colorNeutralStroke1);border-bottom-color:var(--colorNeutralStrokeAccessible);border-radius:var(--borderRadiusMedium);}", ".rkqmps4::after{box-sizing:border-box;content:\"\";position:absolute;right:0;bottom:0;left:0;z-index:20;height:max(2px, var(--borderRadiusMedium));border-bottom-left-radius:var(--borderRadiusMedium);border-bottom-right-radius:var(--borderRadiusMedium);border-bottom:2px solid var(--colorCompoundBrandStroke);clip-path:inset(calc(100% - 2px) 0 0 0);transform:scaleX(0);transition-property:transform;transition-duration:var(--durationUltraFast);transition-delay:var(--curveAccelerateMid);}", ".rkqmps4:focus-within::after{transform:scaleX(1);transition-property:transform;transition-duration:var(--durationNormal);transition-delay:var(--curveDecelerateMid);}", ".rkqmps4:focus-within:active::after{border-bottom-color:var(--colorCompoundBrandStrokePressed);}", ".rkqmps4:focus-within{outline:2px solid transparent;}", ".r1trw52p{display:inline-grid;grid-template-columns:1fr 24px;grid-template-rows:1fr 1fr;column-gap:var(--spacingHorizontalXS);row-gap:0;position:relative;isolation:isolate;background-color:var(--colorNeutralBackground1);min-height:32px;padding:0 var(--spacingHorizontalMNudge) 0 0;border-radius:var(--borderRadiusMedium);}", ".r1trw52p::before{content:\"\";box-sizing:border-box;position:absolute;top:0;left:0;bottom:0;right:0;pointer-events:none;z-index:10;border:1px solid var(--colorNeutralStroke1);border-bottom-color:var(--colorNeutralStrokeAccessible);border-radius:var(--borderRadiusMedium);}", ".r1trw52p::after{box-sizing:border-box;content:\"\";position:absolute;left:0;bottom:0;right:0;z-index:20;height:max(2px, var(--borderRadiusMedium));border-bottom-right-radius:var(--borderRadiusMedium);border-bottom-left-radius:var(--borderRadiusMedium);border-bottom:2px solid var(--colorCompoundBrandStroke);clip-path:inset(calc(100% - 2px) 0 0 0);transform:scaleX(0);transition-property:transform;transition-duration:var(--durationUltraFast);transition-delay:var(--curveAccelerateMid);}", ".r1trw52p:focus-within::after{transform:scaleX(1);transition-property:transform;transition-duration:var(--durationNormal);transition-delay:var(--curveDecelerateMid);}", ".r1trw52p:focus-within:active::after{border-bottom-color:var(--colorCompoundBrandStrokePressed);}", ".r1trw52p:focus-within{outline:2px solid transparent;}"],
+-  s: ["@media screen and (prefers-reduced-motion: reduce){.rkqmps4::after{transition-duration:0.01ms;transition-delay:0.01ms;}}", "@media screen and (prefers-reduced-motion: reduce){.rkqmps4:focus-within::after{transition-duration:0.01ms;transition-delay:0.01ms;}}", "@media screen and (prefers-reduced-motion: reduce){.r1trw52p::after{transition-duration:0.01ms;transition-delay:0.01ms;}}", "@media screen and (prefers-reduced-motion: reduce){.r1trw52p:focus-within::after{transition-duration:0.01ms;transition-delay:0.01ms;}}"]
++const useRootClassName = makeResetStyles({
++    display: 'inline-grid',
++    gridTemplateColumns: `1fr 24px`,
++    gridTemplateRows: '1fr 1fr',
++    columnGap: tokens.spacingHorizontalXS,
++    rowGap: 0,
++    position: 'relative',
++    isolation: 'isolate',
++    backgroundColor: tokens.colorNeutralBackground1,
++    minHeight: fieldHeights.medium,
++    padding: `0 0 0 ${tokens.spacingHorizontalMNudge}`,
++    borderRadius: tokens.borderRadiusMedium,
++    // Apply border styles on the ::before pseudo element.
++    // We cannot use ::after since that is used for selection.
++    // Using the pseudo element allows us to place the border
++    // above content in the component which ensures the buttons
++    // line up visually with the border as expected. Without this
++    // there is a bit of a gap which can become very noticeable
++    // at high zoom or when OS zoom levels are not divisible by 2
++    // (e.g., 150% on Windows in Firefox)
++    // This is most noticeable on the "outline" appearance which is
++    // also the default so it feels worth the extra ceremony to get right.
++    '::before': {
++        content: '""',
++        boxSizing: 'border-box',
++        position: 'absolute',
++        top: 0,
++        right: 0,
++        bottom: 0,
++        left: 0,
++        pointerEvents: 'none',
++        zIndex: 10,
++        border: `1px solid ${tokens.colorNeutralStroke1}`,
++        borderBottomColor: tokens.colorNeutralStrokeAccessible,
++        borderRadius: tokens.borderRadiusMedium
++    },
++    '::after': {
++        boxSizing: 'border-box',
++        content: '""',
++        position: 'absolute',
++        right: 0,
++        bottom: 0,
++        left: 0,
++        zIndex: 20,
++        // Maintaining the correct corner radius:
++        // Use the whole border-radius as the height and only put radii on the bottom corners.
++        // (Otherwise the radius would be automatically reduced to fit available space.)
++        // max() ensures the focus border still shows up even if someone sets tokens.borderRadiusMedium to 0.
++        height: `max(2px, ${tokens.borderRadiusMedium})`,
++        borderBottomLeftRadius: tokens.borderRadiusMedium,
++        borderBottomRightRadius: tokens.borderRadiusMedium,
++        // Flat 2px border:
++        // By default borderBottom will cause little "horns" on the ends. The clipPath trims them off.
++        // (This could be done without trimming using `background: linear-gradient(...)`, but using
++        // borderBottom makes it easier for people to override the color if needed.)
++        borderBottom: `2px solid ${tokens.colorCompoundBrandStroke}`,
++        clipPath: 'inset(calc(100% - 2px) 0 0 0)',
++        // Animation for focus OUT
++        transform: 'scaleX(0)',
++        transitionProperty: 'transform',
++        transitionDuration: tokens.durationUltraFast,
++        transitionDelay: tokens.curveAccelerateMid,
++        '@media screen and (prefers-reduced-motion: reduce)': {
++            transitionDuration: '0.01ms',
++            transitionDelay: '0.01ms'
++        }
++    },
++    ':focus-within::after': {
++        // Animation for focus IN
++        transform: 'scaleX(1)',
++        transitionProperty: 'transform',
++        transitionDuration: tokens.durationNormal,
++        transitionDelay: tokens.curveDecelerateMid,
++        '@media screen and (prefers-reduced-motion: reduce)': {
++            transitionDuration: '0.01ms',
++            transitionDelay: '0.01ms'
++        }
++    },
++    ':focus-within:active::after': {
++        // This is if the user clicks the field again while it's already focused
++        borderBottomColor: tokens.colorCompoundBrandStrokePressed
++    },
++    ':focus-within': {
++        outline: '2px solid transparent'
++    }
+ });
+-const useRootStyles = /*#__PURE__*/__styles({
+-  small: {
+-    sshi5w: "f1pha7fy",
+-    Bahqtrf: "fk6fouc",
+-    Be2twd7: "fy9rknc",
+-    Bhrd7zp: "figsok6",
+-    Bg96gwp: "fwrc4pm",
+-    uwmqm3: ["f1f5gg8d", "f1vdfbxk"]
+-  },
+-  medium: {},
+-  outline: {},
+-  outlineInteractive: {
+-    Bo3r8zu: "f1w2y1rc",
+-    Hpvxnh: ["f1gofhvl", "f18htlvq"],
+-    Bx11ytk: "ffcnd28",
+-    B1rg0w0: ["f18htlvq", "f1gofhvl"],
+-    Bsg1tlv: "f6lmxco",
+-    Brjw370: ["fcoc0mf", "f15r4wkl"],
+-    xcfy85: "f1ipdth8",
+-    Bcc6kan: ["f15r4wkl", "fcoc0mf"]
+-  },
+-  underline: {
+-    B0qfbqy: "f1o236ok",
+-    B4f6apu: ["faeg28l", "f64aojp"],
+-    y0oebl: "fdw6hkg",
+-    uvfttm: ["f64aojp", "faeg28l"],
+-    Budzafs: ["f1vk4jnx", "f1v3v894"],
+-    r59vdv: ["f1v3v894", "f1vk4jnx"],
+-    n07z76: ["fzi2j54", "f1un0uoc"],
+-    ck0cow: ["f1un0uoc", "fzi2j54"]
+-  },
+-  underlineInteractive: {
+-    Bx11ytk: "ffcnd28",
+-    xcfy85: "f1ipdth8",
+-    B3778ie: ["f9pmbr4", "ffh3ws5"],
+-    d9w3h3: ["ffh3ws5", "f9pmbr4"],
+-    Bl18szs: ["f19438ov", "f1i9y5j"],
+-    B4j8arr: ["f1i9y5j", "f19438ov"]
+-  },
+-  filled: {
+-    B0qfbqy: "f1fjh9ub",
+-    B4f6apu: ["ff9c942", "f6rdg5o"],
+-    y0oebl: "fdw6hkg",
+-    uvfttm: ["f6rdg5o", "ff9c942"],
+-    Bdkvgpv: "f163fonl",
+-    m598lv: ["f1yq6w5o", "f1jpmc5p"],
+-    qa3bma: "f11yjt3y",
+-    Bbv0w2i: ["f1jpmc5p", "f1yq6w5o"],
+-    Bq4z7u6: "f7dgwnz",
+-    Bk5zm6e: ["f1edeodt", "fszsv3f"],
+-    Bqjgrrk: "f1172wan",
+-    Bm6vgfq: ["fszsv3f", "f1edeodt"]
+-  },
+-  "filled-darker": {
+-    De3pzq: "f16xq7d1"
+-  },
+-  "filled-lighter": {
+-    De3pzq: "fxugw4r"
+-  },
+-  filledInteractive: {
+-    B05mzqr: "f1xqt08",
+-    tb9y6h: ["fzt5lgo", "f8tv3r9"],
+-    jcehpj: "fyhrops",
+-    B23o0hn: ["f8tv3r9", "fzt5lgo"]
+-  },
+-  invalid: {
+-    emecyz: "fl48pg9",
+-    lz0pba: ["f1a168p3", "f1pvdymy"],
+-    Bo1k74p: "f11knvgl",
+-    Ba322q7: ["f1pvdymy", "f1a168p3"]
+-  },
+-  disabled: {
+-    Bceei9c: "fdrzuqr",
+-    De3pzq: "f1c21dwh",
+-    Bq4z7u6: "f1a0lfh7",
+-    Bk5zm6e: ["f1p2ejm6", "fmzytvz"],
+-    Bqjgrrk: "fas2e61",
+-    Bm6vgfq: ["fmzytvz", "f1p2ejm6"],
+-    Cffpyd: "flb8es4",
+-    hxi8he: ["f1lclws", "frjp63v"],
+-    Bcuq369: "f1yv9wnt",
+-    Imo2if: ["frjp63v", "f1lclws"]
+-  }
+-}, {
+-  d: [".f1pha7fy{min-height:24px;}", ".fk6fouc{font-family:var(--fontFamilyBase);}", ".fy9rknc{font-size:var(--fontSizeBase200);}", ".figsok6{font-weight:var(--fontWeightRegular);}", ".fwrc4pm{line-height:var(--lineHeightBase200);}", ".f1f5gg8d{padding-left:var(--spacingHorizontalS);}", ".f1vdfbxk{padding-right:var(--spacingHorizontalS);}", ".f1o236ok::before{border-top-width:0;}", ".faeg28l::before{border-right-width:0;}", ".f64aojp::before{border-left-width:0;}", ".fdw6hkg::before{border-bottom-width:1px;}", ".f1vk4jnx::before{border-bottom-right-radius:var(--borderRadiusNone);}", ".f1v3v894::before{border-bottom-left-radius:var(--borderRadiusNone);}", ".fzi2j54::before{border-top-right-radius:var(--borderRadiusNone);}", ".f1un0uoc::before{border-top-left-radius:var(--borderRadiusNone);}", ".f9pmbr4::after{border-bottom-right-radius:var(--borderRadiusNone);}", ".ffh3ws5::after{border-bottom-left-radius:var(--borderRadiusNone);}", ".f19438ov::after{border-top-right-radius:var(--borderRadiusNone);}", ".f1i9y5j::after{border-top-left-radius:var(--borderRadiusNone);}", ".f1fjh9ub::before{border-top-width:1px;}", ".ff9c942::before{border-right-width:1px;}", ".f6rdg5o::before{border-left-width:1px;}", ".f163fonl::before{border-top-style:solid;}", ".f1yq6w5o::before{border-right-style:solid;}", ".f1jpmc5p::before{border-left-style:solid;}", ".f11yjt3y::before{border-bottom-style:solid;}", ".f7dgwnz::before{border-top-color:var(--colorTransparentStroke);}", ".f1edeodt::before{border-right-color:var(--colorTransparentStroke);}", ".fszsv3f::before{border-left-color:var(--colorTransparentStroke);}", ".f1172wan::before{border-bottom-color:var(--colorTransparentStroke);}", ".f16xq7d1{background-color:var(--colorNeutralBackground3);}", ".fxugw4r{background-color:var(--colorNeutralBackground1);}", ".fl48pg9:not(:focus-within)::before,.fl48pg9:hover:not(:focus-within)::before{border-top-color:var(--colorPaletteRedBorder2);}", ".f1a168p3:not(:focus-within)::before,.f1a168p3:hover:not(:focus-within)::before{border-right-color:var(--colorPaletteRedBorder2);}", ".f1pvdymy:not(:focus-within)::before,.f1pvdymy:hover:not(:focus-within)::before{border-left-color:var(--colorPaletteRedBorder2);}", ".f11knvgl:not(:focus-within)::before,.f11knvgl:hover:not(:focus-within)::before{border-bottom-color:var(--colorPaletteRedBorder2);}", ".fdrzuqr{cursor:not-allowed;}", ".f1c21dwh{background-color:var(--colorTransparentBackground);}", ".f1a0lfh7::before{border-top-color:var(--colorNeutralStrokeDisabled);}", ".f1p2ejm6::before{border-right-color:var(--colorNeutralStrokeDisabled);}", ".fmzytvz::before{border-left-color:var(--colorNeutralStrokeDisabled);}", ".fas2e61::before{border-bottom-color:var(--colorNeutralStrokeDisabled);}"],
+-  h: [".f1w2y1rc:hover::before{border-top-color:var(--colorNeutralStroke1Hover);}", ".f1gofhvl:hover::before{border-right-color:var(--colorNeutralStroke1Hover);}", ".f18htlvq:hover::before{border-left-color:var(--colorNeutralStroke1Hover);}", ".ffcnd28:hover::before{border-bottom-color:var(--colorNeutralStrokeAccessibleHover);}", ".f1xqt08:hover::before,.f1xqt08:focus-within::before{border-top-color:var(--colorTransparentStrokeInteractive);}", ".fzt5lgo:hover::before,.fzt5lgo:focus-within::before{border-right-color:var(--colorTransparentStrokeInteractive);}", ".f8tv3r9:hover::before,.f8tv3r9:focus-within::before{border-left-color:var(--colorTransparentStrokeInteractive);}", ".fyhrops:hover::before,.fyhrops:focus-within::before{border-bottom-color:var(--colorTransparentStrokeInteractive);}"],
+-  a: [".f6lmxco:active::before,.f6lmxco:focus-within::before{border-top-color:var(--colorNeutralStroke1Pressed);}", ".fcoc0mf:active::before,.fcoc0mf:focus-within::before{border-right-color:var(--colorNeutralStroke1Pressed);}", ".f15r4wkl:active::before,.f15r4wkl:focus-within::before{border-left-color:var(--colorNeutralStroke1Pressed);}", ".f1ipdth8:active::before,.f1ipdth8:focus-within::before{border-bottom-color:var(--colorNeutralStrokeAccessiblePressed);}"],
+-  m: [["@media (forced-colors: active){.flb8es4::before{border-top-color:GrayText;}}", {
+-    m: "(forced-colors: active)"
+-  }], ["@media (forced-colors: active){.f1lclws::before{border-right-color:GrayText;}.frjp63v::before{border-left-color:GrayText;}}", {
+-    m: "(forced-colors: active)"
+-  }], ["@media (forced-colors: active){.f1yv9wnt::before{border-bottom-color:GrayText;}}", {
+-    m: "(forced-colors: active)"
+-  }]]
++const useRootStyles = makeStyles({
++    small: {
++        minHeight: fieldHeights.small,
++        ...typographyStyles.caption1,
++        paddingLeft: tokens.spacingHorizontalS
++    },
++    medium: {
++    },
++    outline: {
++    },
++    outlineInteractive: {
++        ':hover::before': {
++            ...shorthands.borderColor(tokens.colorNeutralStroke1Hover),
++            borderBottomColor: tokens.colorNeutralStrokeAccessibleHover
++        },
++        // DO NOT add a space between the selectors! It changes the behavior of make-styles.
++        ':active,:focus-within': {
++            '::before': {
++                ...shorthands.borderColor(tokens.colorNeutralStroke1Pressed),
++                borderBottomColor: tokens.colorNeutralStrokeAccessiblePressed
++            }
++        }
++    },
++    underline: {
++        '::before': {
++            ...shorthands.borderWidth(0, 0, '1px', 0),
++            ...shorthands.borderRadius(tokens.borderRadiusNone)
++        }
++    },
++    underlineInteractive: {
++        ':hover::before': {
++            borderBottomColor: tokens.colorNeutralStrokeAccessibleHover
++        },
++        // DO NOT add a space between the selectors! It changes the behavior of make-styles.
++        ':active,:focus-within': {
++            '::before': {
++                borderBottomColor: tokens.colorNeutralStrokeAccessiblePressed
++            }
++        },
++        '::after': shorthands.borderRadius(tokens.borderRadiusNone)
++    },
++    filled: {
++        '::before': {
++            ...shorthands.border('1px', 'solid', tokens.colorTransparentStroke)
++        }
++    },
++    'filled-darker': {
++        backgroundColor: tokens.colorNeutralBackground3
++    },
++    'filled-lighter': {
++        backgroundColor: tokens.colorNeutralBackground1
++    },
++    filledInteractive: {
++        // DO NOT add a space between the selectors! It changes the behavior of make-styles.
++        ':hover,:focus-within': {
++            '::before': {
++                // also handles pressed border color (:active)
++                ...shorthands.borderColor(tokens.colorTransparentStrokeInteractive)
++            }
++        }
++    },
++    invalid: {
++        ':not(:focus-within),:hover:not(:focus-within)': {
++            '::before': {
++                ...shorthands.borderColor(tokens.colorPaletteRedBorder2)
++            }
++        }
++    },
++    disabled: {
++        cursor: 'not-allowed',
++        backgroundColor: tokens.colorTransparentBackground,
++        '::before': {
++            ...shorthands.borderColor(tokens.colorNeutralStrokeDisabled),
++            '@media (forced-colors: active)': {
++                ...shorthands.borderColor('GrayText')
++            }
++        }
++    }
+ });
+-const useInputClassName = /*#__PURE__*/__resetStyles("r1ljrqje", null, [".r1ljrqje{grid-column-start:1;grid-column-end:2;grid-row-start:1;grid-row-end:3;outline-style:none;border:0;padding:0;color:var(--colorNeutralForeground1);background-color:transparent;font-family:inherit;font-size:inherit;font-weight:inherit;line-height:inherit;width:100%;}", ".r1ljrqje::-webkit-input-placeholder{color:var(--colorNeutralForeground4);opacity:1;}", ".r1ljrqje::-moz-placeholder{color:var(--colorNeutralForeground4);opacity:1;}", ".r1ljrqje:-ms-input-placeholder{color:var(--colorNeutralForeground4);opacity:1;}", ".r1ljrqje::placeholder{color:var(--colorNeutralForeground4);opacity:1;}"]);
+-const useInputStyles = /*#__PURE__*/__styles({
+-  disabled: {
+-    sj55zd: "f1s2aq7o",
+-    Bceei9c: "fdrzuqr",
+-    De3pzq: "f1c21dwh",
+-    yvdlaj: "fahhnxm"
+-  }
+-}, {
+-  d: [".f1s2aq7o{color:var(--colorNeutralForegroundDisabled);}", ".fdrzuqr{cursor:not-allowed;}", ".f1c21dwh{background-color:var(--colorTransparentBackground);}", ".fahhnxm::-webkit-input-placeholder{color:var(--colorNeutralForegroundDisabled);}", ".fahhnxm::-moz-placeholder{color:var(--colorNeutralForegroundDisabled);}"]
++const useInputClassName = makeResetStyles({
++    gridColumnStart: '1',
++    gridColumnEnd: '2',
++    gridRowStart: '1',
++    gridRowEnd: '3',
++    outlineStyle: 'none',
++    border: '0',
++    padding: '0',
++    color: tokens.colorNeutralForeground1,
++    // Use literal "transparent" (not from the theme) to always let the color from the root show through
++    backgroundColor: 'transparent',
++    fontFamily: 'inherit',
++    fontSize: 'inherit',
++    fontWeight: 'inherit',
++    lineHeight: 'inherit',
++    width: '100%',
++    '::placeholder': {
++        color: tokens.colorNeutralForeground4,
++        opacity: 1
++    }
+ });
+-const useBaseButtonClassName = /*#__PURE__*/__resetStyles("r1g4chgs", null, [".r1g4chgs{display:inline-flex;width:24px;align-items:center;justify-content:center;border:0;position:absolute;outline-style:none;height:16px;background-color:transparent;color:var(--colorNeutralForeground3);grid-column-start:2;border-radius:0;padding:0 5px 0 5px;}", ".r1g4chgs:active{outline-style:none;}", ".r1g4chgs:enabled:hover{cursor:pointer;color:var(--colorNeutralForeground3Hover);background-color:var(--colorSubtleBackgroundHover);}", ".r1g4chgs:enabled:active{color:var(--colorNeutralForeground3Pressed);background-color:var(--colorSubtleBackgroundPressed);}", ".r1g4chgs:enabled.fui-SpinButton__button_active{color:var(--colorNeutralForeground3Pressed);background-color:var(--colorSubtleBackgroundPressed);}", ".r1g4chgs:disabled{cursor:not-allowed;color:var(--colorNeutralForegroundDisabled);}"]);
+-const useButtonStyles = /*#__PURE__*/__styles({
+-  increment: {
+-    Ijaq50: "f16hsg94",
+-    B7oj6ja: ["f1jar5jt", "fyu767a"],
+-    z8tnut: "f10ra9hq",
+-    Byoj8tv: "f1brlhvm"
+-  },
+-  decrement: {
+-    Ijaq50: "faunodf",
+-    Bbmb7ep: ["f1aa9q02", "f16jpd5f"],
+-    z8tnut: "f1sl3k7w",
+-    Byoj8tv: "f1y2xyjm"
+-  },
+-  incrementButtonSmall: {
+-    z8tnut: "f1khb0e9",
+-    z189sj: ["f1sgzk6v", "f1bg5zqg"],
+-    Byoj8tv: "f1ov4xf1",
+-    uwmqm3: ["fycuoez", "f8wuabp"],
+-    Bqenvij: "fvblgha"
+-  },
+-  decrementButtonSmall: {
+-    z8tnut: "f1nbblvp",
+-    z189sj: ["f1sgzk6v", "f1bg5zqg"],
+-    Byoj8tv: "f1jnq6q7",
+-    uwmqm3: ["fycuoez", "f8wuabp"],
+-    Bqenvij: "fvblgha"
+-  },
+-  outline: {},
+-  underline: {
+-    De3pzq: "f3rmtva",
+-    sj55zd: "f11d4kpn",
+-    r4wkhp: "f1no7wuu",
+-    B95qlz1: "f1bifk9c",
+-    p743kt: "fp1zg4s",
+-    B7xitij: "fo6hitd",
+-    B6siaa6: "f1wiab75",
+-    Ba9qmo4: "fj9zm5z",
+-    Dyrjrp: "f1cqwcg4"
+-  },
+-  "filled-darker": {
+-    De3pzq: "f3rmtva",
+-    sj55zd: "f11d4kpn",
+-    r4wkhp: "f1no7wuu",
+-    B95qlz1: "fwwxidx",
+-    p743kt: "fp1zg4s",
+-    B7xitij: "f14i52sd",
+-    B6siaa6: "f1wiab75",
+-    Ba9qmo4: "fwry2ka",
+-    Dyrjrp: "f1cqwcg4"
+-  },
+-  "filled-lighter": {
+-    De3pzq: "f3rmtva",
+-    sj55zd: "f11d4kpn",
+-    r4wkhp: "f1no7wuu",
+-    B95qlz1: "f1yywxnv",
+-    drw0cw: "fzaa11h",
+-    idzz8t: "f4fpmm9",
+-    Dyrjrp: "f1cqwcg4"
+-  }
+-}, {
+-  d: [".f16hsg94{grid-row-start:1;}", ".f1jar5jt{border-top-right-radius:var(--borderRadiusMedium);}", ".fyu767a{border-top-left-radius:var(--borderRadiusMedium);}", ".f10ra9hq{padding-top:4px;}", ".f1brlhvm{padding-bottom:1px;}", ".faunodf{grid-row-start:2;}", ".f1aa9q02{border-bottom-right-radius:var(--borderRadiusMedium);}", ".f16jpd5f{border-bottom-left-radius:var(--borderRadiusMedium);}", ".f1sl3k7w{padding-top:1px;}", ".f1y2xyjm{padding-bottom:4px;}", ".f1khb0e9{padding-top:3px;}", ".f1sgzk6v{padding-right:6px;}", ".f1bg5zqg{padding-left:6px;}", ".f1ov4xf1{padding-bottom:0px;}", ".fycuoez{padding-left:4px;}", ".f8wuabp{padding-right:4px;}", ".fvblgha{height:12px;}", ".f1nbblvp{padding-top:0px;}", ".f1jnq6q7{padding-bottom:3px;}", ".f3rmtva{background-color:transparent;}", ".f11d4kpn{color:var(--colorNeutralForeground3);}", ".f1no7wuu:enabled:hover{color:var(--colorNeutralForeground3Hover);}", ".f1bifk9c:enabled:hover{background-color:var(--colorSubtleBackgroundHover);}", ".fp1zg4s:enabled:active{color:var(--colorNeutralForeground3Pressed);}", ".fo6hitd:enabled:active{background-color:var(--colorSubtleBackgroundPressed);}", ".f1wiab75:enabled.fui-SpinButton__button_active{color:var(--colorNeutralForeground3Pressed);}", ".fj9zm5z:enabled.fui-SpinButton__button_active{background-color:var(--colorSubtleBackgroundPressed);}", ".f1cqwcg4:disabled{color:var(--colorNeutralForegroundDisabled);}", ".fwwxidx:enabled:hover{background-color:var(--colorNeutralBackground3Hover);}", ".f14i52sd:enabled:active{background-color:var(--colorNeutralBackground3Pressed);}", ".fwry2ka:enabled.fui-SpinButton__button_active{background-color:var(--colorNeutralBackground3Pressed);}", ".f1yywxnv:enabled:hover{background-color:var(--colorNeutralBackground1Hover);}", ".fzaa11h:enabled:active,.fzaa11h:enabled.fui-SpinButton__button_active{color:var(--colorNeutralForeground3Pressed);}", ".f4fpmm9:enabled:active,.f4fpmm9:enabled.fui-SpinButton__button_active{background-color:var(--colorNeutralBackground1Pressed);}"]
++const useInputStyles = makeStyles({
++    disabled: {
++        color: tokens.colorNeutralForegroundDisabled,
++        cursor: 'not-allowed',
++        backgroundColor: tokens.colorTransparentBackground,
++        '::placeholder': {
++            color: tokens.colorNeutralForegroundDisabled
++        }
++    }
++});
++const useBaseButtonClassName = makeResetStyles({
++    display: 'inline-flex',
++    width: '24px',
++    alignItems: 'center',
++    justifyContent: 'center',
++    border: '0',
++    position: 'absolute',
++    outlineStyle: 'none',
++    height: '16px',
++    // Use literal "transparent" (not from the theme) to always let the color from the root show through
++    backgroundColor: 'transparent',
++    color: tokens.colorNeutralForeground3,
++    // common button layout
++    gridColumnStart: '2',
++    borderRadius: '0',
++    padding: '0 5px 0 5px',
++    ':active': {
++        outlineStyle: 'none'
++    },
++    ':enabled': {
++        ':hover': {
++            cursor: 'pointer',
++            color: tokens.colorNeutralForeground3Hover,
++            backgroundColor: tokens.colorSubtleBackgroundHover
++        },
++        ':active': {
++            color: tokens.colorNeutralForeground3Pressed,
++            backgroundColor: tokens.colorSubtleBackgroundPressed
++        },
++        [`&.${spinButtonExtraClassNames.buttonActive}`]: {
++            color: tokens.colorNeutralForeground3Pressed,
++            backgroundColor: tokens.colorSubtleBackgroundPressed
++        }
++    },
++    ':disabled': {
++        cursor: 'not-allowed',
++        color: tokens.colorNeutralForegroundDisabled
++    }
++});
++const useButtonStyles = makeStyles({
++    increment: {
++        gridRowStart: '1',
++        borderTopRightRadius: tokens.borderRadiusMedium,
++        paddingTop: '4px',
++        paddingBottom: '1px'
++    },
++    decrement: {
++        gridRowStart: '2',
++        borderBottomRightRadius: tokens.borderRadiusMedium,
++        paddingTop: '1px',
++        paddingBottom: '4px'
++    },
++    // Padding values numbers don't align with design specs
++    // but visually the padding aligns.
++    // The icons are set in a 16x16px square but the artwork is inset from that
++    // so these padding values are computed by hand.
++    // Additionally the design uses fractional values so these are
++    // rounded to the nearest integer.
++    incrementButtonSmall: {
++        ...shorthands.padding('3px', '6px', '0px', '4px'),
++        height: '12px'
++    },
++    decrementButtonSmall: {
++        ...shorthands.padding('0px', '6px', '3px', '4px'),
++        height: '12px'
++    },
++    outline: {
++    },
++    underline: {
++        backgroundColor: 'transparent',
++        color: tokens.colorNeutralForeground3,
++        ':enabled': {
++            ':hover': {
++                color: tokens.colorNeutralForeground3Hover,
++                backgroundColor: tokens.colorSubtleBackgroundHover
++            },
++            ':active': {
++                color: tokens.colorNeutralForeground3Pressed,
++                backgroundColor: tokens.colorSubtleBackgroundPressed
++            },
++            [`&.${spinButtonExtraClassNames.buttonActive}`]: {
++                color: tokens.colorNeutralForeground3Pressed,
++                backgroundColor: tokens.colorSubtleBackgroundPressed
++            }
++        },
++        ':disabled': {
++            color: tokens.colorNeutralForegroundDisabled
++        }
++    },
++    'filled-darker': {
++        backgroundColor: 'transparent',
++        color: tokens.colorNeutralForeground3,
++        ':enabled': {
++            ':hover': {
++                color: tokens.colorNeutralForeground3Hover,
++                backgroundColor: tokens.colorNeutralBackground3Hover
++            },
++            ':active': {
++                color: tokens.colorNeutralForeground3Pressed,
++                backgroundColor: tokens.colorNeutralBackground3Pressed
++            },
++            [`&.${spinButtonExtraClassNames.buttonActive}`]: {
++                color: tokens.colorNeutralForeground3Pressed,
++                backgroundColor: tokens.colorNeutralBackground3Pressed
++            }
++        },
++        ':disabled': {
++            color: tokens.colorNeutralForegroundDisabled
++        }
++    },
++    'filled-lighter': {
++        backgroundColor: 'transparent',
++        color: tokens.colorNeutralForeground3,
++        ':enabled': {
++            ':hover': {
++                color: tokens.colorNeutralForeground3Hover,
++                backgroundColor: tokens.colorNeutralBackground1Hover
++            },
++            [`:active,&.${spinButtonExtraClassNames.buttonActive}`]: {
++                color: tokens.colorNeutralForeground3Pressed,
++                backgroundColor: tokens.colorNeutralBackground1Pressed
++            }
++        },
++        ':disabled': {
++            color: tokens.colorNeutralForegroundDisabled
++        }
++    }
+ });
+ // Cannot just disable button as they need to remain
+ // exposed to ATs like screen readers.
+-const useButtonDisabledStyles = /*#__PURE__*/__styles({
+-  base: {
+-    Bceei9c: "fdrzuqr",
+-    eoavqd: "fphbwmw"
+-  },
+-  outline: {
+-    sj55zd: "f1s2aq7o",
+-    r4wkhp: "few7wvn",
+-    B95qlz1: "f110wuh6",
+-    p743kt: "f9s4mys",
+-    B7xitij: "f10404rc",
+-    B6siaa6: "fwzu9cz",
+-    Ba9qmo4: "f1snwkb6"
+-  },
+-  underline: {
+-    sj55zd: "f1s2aq7o",
+-    r4wkhp: "few7wvn",
+-    B95qlz1: "f110wuh6",
+-    p743kt: "f9s4mys",
+-    B7xitij: "f10404rc",
+-    B6siaa6: "fwzu9cz",
+-    Ba9qmo4: "f1snwkb6"
+-  },
+-  "filled-darker": {
+-    sj55zd: "f1s2aq7o",
+-    r4wkhp: "few7wvn",
+-    B95qlz1: "f110wuh6",
+-    p743kt: "f9s4mys",
+-    B7xitij: "f10404rc",
+-    B6siaa6: "fwzu9cz",
+-    Ba9qmo4: "f1snwkb6"
+-  },
+-  "filled-lighter": {
+-    sj55zd: "f1s2aq7o",
+-    r4wkhp: "few7wvn",
+-    B95qlz1: "f110wuh6",
+-    p743kt: "f9s4mys",
+-    B7xitij: "f10404rc",
+-    B6siaa6: "fwzu9cz",
+-    Ba9qmo4: "f1snwkb6"
+-  }
+-}, {
+-  d: [".fdrzuqr{cursor:not-allowed;}", ".f1s2aq7o{color:var(--colorNeutralForegroundDisabled);}", ".few7wvn:enabled:hover{color:var(--colorNeutralForegroundDisabled);}", ".f110wuh6:enabled:hover{background-color:transparent;}", ".f9s4mys:enabled:active{color:var(--colorNeutralForegroundDisabled);}", ".f10404rc:enabled:active{background-color:transparent;}", ".fwzu9cz:enabled.fui-SpinButton__button_active{color:var(--colorNeutralForegroundDisabled);}", ".f1snwkb6:enabled.fui-SpinButton__button_active{background-color:transparent;}"],
+-  h: [".fphbwmw:hover{cursor:not-allowed;}"]
++const useButtonDisabledStyles = makeStyles({
++    base: {
++        cursor: 'not-allowed',
++        ':hover': {
++            cursor: 'not-allowed'
++        }
++    },
++    outline: {
++        color: tokens.colorNeutralForegroundDisabled,
++        ':enabled': {
++            ':hover': {
++                color: tokens.colorNeutralForegroundDisabled,
++                backgroundColor: 'transparent'
++            },
++            ':active': {
++                color: tokens.colorNeutralForegroundDisabled,
++                backgroundColor: 'transparent'
++            },
++            [`&.${spinButtonExtraClassNames.buttonActive}`]: {
++                color: tokens.colorNeutralForegroundDisabled,
++                backgroundColor: 'transparent'
++            }
++        }
++    },
++    underline: {
++        color: tokens.colorNeutralForegroundDisabled,
++        ':enabled': {
++            ':hover': {
++                color: tokens.colorNeutralForegroundDisabled,
++                backgroundColor: 'transparent'
++            },
++            ':active': {
++                color: tokens.colorNeutralForegroundDisabled,
++                backgroundColor: 'transparent'
++            },
++            [`&.${spinButtonExtraClassNames.buttonActive}`]: {
++                color: tokens.colorNeutralForegroundDisabled,
++                backgroundColor: 'transparent'
++            }
++        }
++    },
++    'filled-darker': {
++        color: tokens.colorNeutralForegroundDisabled,
++        ':enabled': {
++            ':hover': {
++                color: tokens.colorNeutralForegroundDisabled,
++                backgroundColor: 'transparent'
++            },
++            ':active': {
++                color: tokens.colorNeutralForegroundDisabled,
++                backgroundColor: 'transparent'
++            },
++            [`&.${spinButtonExtraClassNames.buttonActive}`]: {
++                color: tokens.colorNeutralForegroundDisabled,
++                backgroundColor: 'transparent'
++            }
++        }
++    },
++    'filled-lighter': {
++        color: tokens.colorNeutralForegroundDisabled,
++        ':enabled': {
++            ':hover': {
++                color: tokens.colorNeutralForegroundDisabled,
++                backgroundColor: 'transparent'
++            },
++            ':active': {
++                color: tokens.colorNeutralForegroundDisabled,
++                backgroundColor: 'transparent'
++            },
++            [`&.${spinButtonExtraClassNames.buttonActive}`]: {
++                color: tokens.colorNeutralForegroundDisabled,
++                backgroundColor: 'transparent'
++            }
++        }
++    }
+ });
+ /**
+  * Apply styling to the SpinButton slots based on the state
+- */
+-export const useSpinButtonStyles_unstable = state => {
+-  const {
+-    appearance,
+-    atBound,
+-    spinState,
+-    size
+-  } = state;
+-  const disabled = state.input.disabled;
+-  const invalid = `${state.input['aria-invalid']}` === 'true';
+-  const filled = appearance.startsWith('filled');
+-  const rootStyles = useRootStyles();
+-  const buttonStyles = useButtonStyles();
+-  const buttonDisabledStyles = useButtonDisabledStyles();
+-  const inputStyles = useInputStyles();
+-  state.root.className = mergeClasses(spinButtonClassNames.root, useRootClassName(), rootStyles[size], rootStyles[appearance], filled && rootStyles.filled, !disabled && appearance === 'outline' && rootStyles.outlineInteractive, !disabled && appearance === 'underline' && rootStyles.underlineInteractive, !disabled && filled && rootStyles.filledInteractive, !disabled && invalid && rootStyles.invalid, disabled && rootStyles.disabled, state.root.className);
+-  state.incrementButton.className = mergeClasses(spinButtonClassNames.incrementButton, spinState === 'up' && `${spinButtonExtraClassNames.buttonActive}`, useBaseButtonClassName(), buttonStyles.increment, buttonStyles[appearance], size === 'small' && buttonStyles.incrementButtonSmall, (atBound === 'max' || atBound === 'both') && buttonDisabledStyles.base, (atBound === 'max' || atBound === 'both') && buttonDisabledStyles[appearance], state.incrementButton.className);
+-  state.decrementButton.className = mergeClasses(spinButtonClassNames.decrementButton, spinState === 'down' && `${spinButtonExtraClassNames.buttonActive}`, useBaseButtonClassName(), buttonStyles.decrement, buttonStyles[appearance], size === 'small' && buttonStyles.decrementButtonSmall, (atBound === 'min' || atBound === 'both') && buttonDisabledStyles.base, (atBound === 'min' || atBound === 'both') && buttonDisabledStyles[appearance], state.decrementButton.className);
+-  state.input.className = mergeClasses(spinButtonClassNames.input, useInputClassName(), disabled && inputStyles.disabled, state.input.className);
+-  return state;
++ */ export const useSpinButtonStyles_unstable = (state)=>{
++    const { appearance, atBound, spinState, size } = state;
++    const disabled = state.input.disabled;
++    const invalid = `${state.input['aria-invalid']}` === 'true';
++    const filled = appearance.startsWith('filled');
++    const rootStyles = useRootStyles();
++    const buttonStyles = useButtonStyles();
++    const buttonDisabledStyles = useButtonDisabledStyles();
++    const inputStyles = useInputStyles();
++    state.root.className = mergeClasses(spinButtonClassNames.root, useRootClassName(), rootStyles[size], rootStyles[appearance], filled && rootStyles.filled, !disabled && appearance === 'outline' && rootStyles.outlineInteractive, !disabled && appearance === 'underline' && rootStyles.underlineInteractive, !disabled && filled && rootStyles.filledInteractive, !disabled && invalid && rootStyles.invalid, disabled && rootStyles.disabled, state.root.className);
++    state.incrementButton.className = mergeClasses(spinButtonClassNames.incrementButton, spinState === 'up' && `${spinButtonExtraClassNames.buttonActive}`, useBaseButtonClassName(), buttonStyles.increment, buttonStyles[appearance], size === 'small' && buttonStyles.incrementButtonSmall, (atBound === 'max' || atBound === 'both') && buttonDisabledStyles.base, (atBound === 'max' || atBound === 'both') && buttonDisabledStyles[appearance], state.incrementButton.className);
++    state.decrementButton.className = mergeClasses(spinButtonClassNames.decrementButton, spinState === 'down' && `${spinButtonExtraClassNames.buttonActive}`, useBaseButtonClassName(), buttonStyles.decrement, buttonStyles[appearance], size === 'small' && buttonStyles.decrementButtonSmall, (atBound === 'min' || atBound === 'both') && buttonDisabledStyles.base, (atBound === 'min' || atBound === 'both') && buttonDisabledStyles[appearance], state.decrementButton.className);
++    state.input.className = mergeClasses(spinButtonClassNames.input, useInputClassName(), disabled && inputStyles.disabled, state.input.className);
++    return state;
+ };
+-//# sourceMappingURL=useSpinButtonStyles.styles.js.map
+\ No newline at end of file
+diff --git a/node_modules/@fluentui/react-spinbutton/lib/components/SpinButton/useSpinButtonStyles.styles.js.map b/node_modules/@fluentui/react-spinbutton/lib/components/SpinButton/useSpinButtonStyles.styles.js.map
+index b71d97b..d901a6a 100644
+--- a/node_modules/@fluentui/react-spinbutton/lib/components/SpinButton/useSpinButtonStyles.styles.js.map
++++ b/node_modules/@fluentui/react-spinbutton/lib/components/SpinButton/useSpinButtonStyles.styles.js.map
+@@ -1 +1 @@
+-{"version":3,"names":["__resetStyles","__styles","mergeClasses","shorthands","tokens","typographyStyles","spinButtonClassNames","root","input","incrementButton","decrementButton","spinButtonExtraClassNames","buttonActive","fieldHeights","small","medium","useRootClassName","r","s","useRootStyles","sshi5w","Bahqtrf","Be2twd7","Bhrd7zp","Bg96gwp","uwmqm3","outline","outlineInteractive","Bo3r8zu","Hpvxnh","Bx11ytk","B1rg0w0","Bsg1tlv","Brjw370","xcfy85","Bcc6kan","underline","B0qfbqy","B4f6apu","y0oebl","uvfttm","Budzafs","r59vdv","n07z76","ck0cow","underlineInteractive","B3778ie","d9w3h3","Bl18szs","B4j8arr","filled","Bdkvgpv","m598lv","qa3bma","Bbv0w2i","Bq4z7u6","Bk5zm6e","Bqjgrrk","Bm6vgfq","De3pzq","filledInteractive","B05mzqr","tb9y6h","jcehpj","B23o0hn","invalid","emecyz","lz0pba","Bo1k74p","Ba322q7","disabled","Bceei9c","Cffpyd","hxi8he","Bcuq369","Imo2if","d","h","a","m","useInputClassName","useInputStyles","sj55zd","yvdlaj","useBaseButtonClassName","useButtonStyles","increment","Ijaq50","B7oj6ja","z8tnut","Byoj8tv","decrement","Bbmb7ep","incrementButtonSmall","z189sj","Bqenvij","decrementButtonSmall","r4wkhp","B95qlz1","p743kt","B7xitij","B6siaa6","Ba9qmo4","Dyrjrp","drw0cw","idzz8t","useButtonDisabledStyles","base","eoavqd","useSpinButtonStyles_unstable","state","appearance","atBound","spinState","size","startsWith","rootStyles","buttonStyles","buttonDisabledStyles","inputStyles","className"],"sources":["useSpinButtonStyles.styles.js"],"sourcesContent":["import { makeResetStyles, makeStyles, mergeClasses, shorthands } from '@griffel/react';\nimport { tokens, typographyStyles } from '@fluentui/react-theme';\nexport const spinButtonClassNames = {\n    root: 'fui-SpinButton',\n    input: 'fui-SpinButton__input',\n    incrementButton: 'fui-SpinButton__incrementButton',\n    decrementButton: 'fui-SpinButton__decrementButton'\n};\nconst spinButtonExtraClassNames = {\n    buttonActive: 'fui-SpinButton__button_active'\n};\nconst fieldHeights = {\n    small: '24px',\n    medium: '32px'\n};\nconst useRootClassName = makeResetStyles({\n    display: 'inline-grid',\n    gridTemplateColumns: `1fr 24px`,\n    gridTemplateRows: '1fr 1fr',\n    columnGap: tokens.spacingHorizontalXS,\n    rowGap: 0,\n    position: 'relative',\n    isolation: 'isolate',\n    backgroundColor: tokens.colorNeutralBackground1,\n    minHeight: fieldHeights.medium,\n    padding: `0 0 0 ${tokens.spacingHorizontalMNudge}`,\n    borderRadius: tokens.borderRadiusMedium,\n    // Apply border styles on the ::before pseudo element.\n    // We cannot use ::after since that is used for selection.\n    // Using the pseudo element allows us to place the border\n    // above content in the component which ensures the buttons\n    // line up visually with the border as expected. Without this\n    // there is a bit of a gap which can become very noticeable\n    // at high zoom or when OS zoom levels are not divisible by 2\n    // (e.g., 150% on Windows in Firefox)\n    // This is most noticeable on the \"outline\" appearance which is\n    // also the default so it feels worth the extra ceremony to get right.\n    '::before': {\n        content: '\"\"',\n        boxSizing: 'border-box',\n        position: 'absolute',\n        top: 0,\n        right: 0,\n        bottom: 0,\n        left: 0,\n        pointerEvents: 'none',\n        zIndex: 10,\n        border: `1px solid ${tokens.colorNeutralStroke1}`,\n        borderBottomColor: tokens.colorNeutralStrokeAccessible,\n        borderRadius: tokens.borderRadiusMedium\n    },\n    '::after': {\n        boxSizing: 'border-box',\n        content: '\"\"',\n        position: 'absolute',\n        right: 0,\n        bottom: 0,\n        left: 0,\n        zIndex: 20,\n        // Maintaining the correct corner radius:\n        // Use the whole border-radius as the height and only put radii on the bottom corners.\n        // (Otherwise the radius would be automatically reduced to fit available space.)\n        // max() ensures the focus border still shows up even if someone sets tokens.borderRadiusMedium to 0.\n        height: `max(2px, ${tokens.borderRadiusMedium})`,\n        borderBottomLeftRadius: tokens.borderRadiusMedium,\n        borderBottomRightRadius: tokens.borderRadiusMedium,\n        // Flat 2px border:\n        // By default borderBottom will cause little \"horns\" on the ends. The clipPath trims them off.\n        // (This could be done without trimming using `background: linear-gradient(...)`, but using\n        // borderBottom makes it easier for people to override the color if needed.)\n        borderBottom: `2px solid ${tokens.colorCompoundBrandStroke}`,\n        clipPath: 'inset(calc(100% - 2px) 0 0 0)',\n        // Animation for focus OUT\n        transform: 'scaleX(0)',\n        transitionProperty: 'transform',\n        transitionDuration: tokens.durationUltraFast,\n        transitionDelay: tokens.curveAccelerateMid,\n        '@media screen and (prefers-reduced-motion: reduce)': {\n            transitionDuration: '0.01ms',\n            transitionDelay: '0.01ms'\n        }\n    },\n    ':focus-within::after': {\n        // Animation for focus IN\n        transform: 'scaleX(1)',\n        transitionProperty: 'transform',\n        transitionDuration: tokens.durationNormal,\n        transitionDelay: tokens.curveDecelerateMid,\n        '@media screen and (prefers-reduced-motion: reduce)': {\n            transitionDuration: '0.01ms',\n            transitionDelay: '0.01ms'\n        }\n    },\n    ':focus-within:active::after': {\n        // This is if the user clicks the field again while it's already focused\n        borderBottomColor: tokens.colorCompoundBrandStrokePressed\n    },\n    ':focus-within': {\n        outline: '2px solid transparent'\n    }\n});\nconst useRootStyles = makeStyles({\n    small: {\n        minHeight: fieldHeights.small,\n        ...typographyStyles.caption1,\n        paddingLeft: tokens.spacingHorizontalS\n    },\n    medium: {\n    },\n    outline: {\n    },\n    outlineInteractive: {\n        ':hover::before': {\n            ...shorthands.borderColor(tokens.colorNeutralStroke1Hover),\n            borderBottomColor: tokens.colorNeutralStrokeAccessibleHover\n        },\n        // DO NOT add a space between the selectors! It changes the behavior of make-styles.\n        ':active,:focus-within': {\n            '::before': {\n                ...shorthands.borderColor(tokens.colorNeutralStroke1Pressed),\n                borderBottomColor: tokens.colorNeutralStrokeAccessiblePressed\n            }\n        }\n    },\n    underline: {\n        '::before': {\n            ...shorthands.borderWidth(0, 0, '1px', 0),\n            ...shorthands.borderRadius(tokens.borderRadiusNone)\n        }\n    },\n    underlineInteractive: {\n        ':hover::before': {\n            borderBottomColor: tokens.colorNeutralStrokeAccessibleHover\n        },\n        // DO NOT add a space between the selectors! It changes the behavior of make-styles.\n        ':active,:focus-within': {\n            '::before': {\n                borderBottomColor: tokens.colorNeutralStrokeAccessiblePressed\n            }\n        },\n        '::after': shorthands.borderRadius(tokens.borderRadiusNone)\n    },\n    filled: {\n        '::before': {\n            ...shorthands.border('1px', 'solid', tokens.colorTransparentStroke)\n        }\n    },\n    'filled-darker': {\n        backgroundColor: tokens.colorNeutralBackground3\n    },\n    'filled-lighter': {\n        backgroundColor: tokens.colorNeutralBackground1\n    },\n    filledInteractive: {\n        // DO NOT add a space between the selectors! It changes the behavior of make-styles.\n        ':hover,:focus-within': {\n            '::before': {\n                // also handles pressed border color (:active)\n                ...shorthands.borderColor(tokens.colorTransparentStrokeInteractive)\n            }\n        }\n    },\n    invalid: {\n        ':not(:focus-within),:hover:not(:focus-within)': {\n            '::before': {\n                ...shorthands.borderColor(tokens.colorPaletteRedBorder2)\n            }\n        }\n    },\n    disabled: {\n        cursor: 'not-allowed',\n        backgroundColor: tokens.colorTransparentBackground,\n        '::before': {\n            ...shorthands.borderColor(tokens.colorNeutralStrokeDisabled),\n            '@media (forced-colors: active)': {\n                ...shorthands.borderColor('GrayText')\n            }\n        }\n    }\n});\nconst useInputClassName = makeResetStyles({\n    gridColumnStart: '1',\n    gridColumnEnd: '2',\n    gridRowStart: '1',\n    gridRowEnd: '3',\n    outlineStyle: 'none',\n    border: '0',\n    padding: '0',\n    color: tokens.colorNeutralForeground1,\n    // Use literal \"transparent\" (not from the theme) to always let the color from the root show through\n    backgroundColor: 'transparent',\n    fontFamily: 'inherit',\n    fontSize: 'inherit',\n    fontWeight: 'inherit',\n    lineHeight: 'inherit',\n    width: '100%',\n    '::placeholder': {\n        color: tokens.colorNeutralForeground4,\n        opacity: 1\n    }\n});\nconst useInputStyles = makeStyles({\n    disabled: {\n        color: tokens.colorNeutralForegroundDisabled,\n        cursor: 'not-allowed',\n        backgroundColor: tokens.colorTransparentBackground,\n        '::placeholder': {\n            color: tokens.colorNeutralForegroundDisabled\n        }\n    }\n});\nconst useBaseButtonClassName = makeResetStyles({\n    display: 'inline-flex',\n    width: '24px',\n    alignItems: 'center',\n    justifyContent: 'center',\n    border: '0',\n    position: 'absolute',\n    outlineStyle: 'none',\n    height: '16px',\n    // Use literal \"transparent\" (not from the theme) to always let the color from the root show through\n    backgroundColor: 'transparent',\n    color: tokens.colorNeutralForeground3,\n    // common button layout\n    gridColumnStart: '2',\n    borderRadius: '0',\n    padding: '0 5px 0 5px',\n    ':active': {\n        outlineStyle: 'none'\n    },\n    ':enabled': {\n        ':hover': {\n            cursor: 'pointer',\n            color: tokens.colorNeutralForeground3Hover,\n            backgroundColor: tokens.colorSubtleBackgroundHover\n        },\n        ':active': {\n            color: tokens.colorNeutralForeground3Pressed,\n            backgroundColor: tokens.colorSubtleBackgroundPressed\n        },\n        [`&.${spinButtonExtraClassNames.buttonActive}`]: {\n            color: tokens.colorNeutralForeground3Pressed,\n            backgroundColor: tokens.colorSubtleBackgroundPressed\n        }\n    },\n    ':disabled': {\n        cursor: 'not-allowed',\n        color: tokens.colorNeutralForegroundDisabled\n    }\n});\nconst useButtonStyles = makeStyles({\n    increment: {\n        gridRowStart: '1',\n        borderTopRightRadius: tokens.borderRadiusMedium,\n        paddingTop: '4px',\n        paddingBottom: '1px'\n    },\n    decrement: {\n        gridRowStart: '2',\n        borderBottomRightRadius: tokens.borderRadiusMedium,\n        paddingTop: '1px',\n        paddingBottom: '4px'\n    },\n    // Padding values numbers don't align with design specs\n    // but visually the padding aligns.\n    // The icons are set in a 16x16px square but the artwork is inset from that\n    // so these padding values are computed by hand.\n    // Additionally the design uses fractional values so these are\n    // rounded to the nearest integer.\n    incrementButtonSmall: {\n        ...shorthands.padding('3px', '6px', '0px', '4px'),\n        height: '12px'\n    },\n    decrementButtonSmall: {\n        ...shorthands.padding('0px', '6px', '3px', '4px'),\n        height: '12px'\n    },\n    outline: {\n    },\n    underline: {\n        backgroundColor: 'transparent',\n        color: tokens.colorNeutralForeground3,\n        ':enabled': {\n            ':hover': {\n                color: tokens.colorNeutralForeground3Hover,\n                backgroundColor: tokens.colorSubtleBackgroundHover\n            },\n            ':active': {\n                color: tokens.colorNeutralForeground3Pressed,\n                backgroundColor: tokens.colorSubtleBackgroundPressed\n            },\n            [`&.${spinButtonExtraClassNames.buttonActive}`]: {\n                color: tokens.colorNeutralForeground3Pressed,\n                backgroundColor: tokens.colorSubtleBackgroundPressed\n            }\n        },\n        ':disabled': {\n            color: tokens.colorNeutralForegroundDisabled\n        }\n    },\n    'filled-darker': {\n        backgroundColor: 'transparent',\n        color: tokens.colorNeutralForeground3,\n        ':enabled': {\n            ':hover': {\n                color: tokens.colorNeutralForeground3Hover,\n                backgroundColor: tokens.colorNeutralBackground3Hover\n            },\n            ':active': {\n                color: tokens.colorNeutralForeground3Pressed,\n                backgroundColor: tokens.colorNeutralBackground3Pressed\n            },\n            [`&.${spinButtonExtraClassNames.buttonActive}`]: {\n                color: tokens.colorNeutralForeground3Pressed,\n                backgroundColor: tokens.colorNeutralBackground3Pressed\n            }\n        },\n        ':disabled': {\n            color: tokens.colorNeutralForegroundDisabled\n        }\n    },\n    'filled-lighter': {\n        backgroundColor: 'transparent',\n        color: tokens.colorNeutralForeground3,\n        ':enabled': {\n            ':hover': {\n                color: tokens.colorNeutralForeground3Hover,\n                backgroundColor: tokens.colorNeutralBackground1Hover\n            },\n            [`:active,&.${spinButtonExtraClassNames.buttonActive}`]: {\n                color: tokens.colorNeutralForeground3Pressed,\n                backgroundColor: tokens.colorNeutralBackground1Pressed\n            }\n        },\n        ':disabled': {\n            color: tokens.colorNeutralForegroundDisabled\n        }\n    }\n});\n// Cannot just disable button as they need to remain\n// exposed to ATs like screen readers.\nconst useButtonDisabledStyles = makeStyles({\n    base: {\n        cursor: 'not-allowed',\n        ':hover': {\n            cursor: 'not-allowed'\n        }\n    },\n    outline: {\n        color: tokens.colorNeutralForegroundDisabled,\n        ':enabled': {\n            ':hover': {\n                color: tokens.colorNeutralForegroundDisabled,\n                backgroundColor: 'transparent'\n            },\n            ':active': {\n                color: tokens.colorNeutralForegroundDisabled,\n                backgroundColor: 'transparent'\n            },\n            [`&.${spinButtonExtraClassNames.buttonActive}`]: {\n                color: tokens.colorNeutralForegroundDisabled,\n                backgroundColor: 'transparent'\n            }\n        }\n    },\n    underline: {\n        color: tokens.colorNeutralForegroundDisabled,\n        ':enabled': {\n            ':hover': {\n                color: tokens.colorNeutralForegroundDisabled,\n                backgroundColor: 'transparent'\n            },\n            ':active': {\n                color: tokens.colorNeutralForegroundDisabled,\n                backgroundColor: 'transparent'\n            },\n            [`&.${spinButtonExtraClassNames.buttonActive}`]: {\n                color: tokens.colorNeutralForegroundDisabled,\n                backgroundColor: 'transparent'\n            }\n        }\n    },\n    'filled-darker': {\n        color: tokens.colorNeutralForegroundDisabled,\n        ':enabled': {\n            ':hover': {\n                color: tokens.colorNeutralForegroundDisabled,\n                backgroundColor: 'transparent'\n            },\n            ':active': {\n                color: tokens.colorNeutralForegroundDisabled,\n                backgroundColor: 'transparent'\n            },\n            [`&.${spinButtonExtraClassNames.buttonActive}`]: {\n                color: tokens.colorNeutralForegroundDisabled,\n                backgroundColor: 'transparent'\n            }\n        }\n    },\n    'filled-lighter': {\n        color: tokens.colorNeutralForegroundDisabled,\n        ':enabled': {\n            ':hover': {\n                color: tokens.colorNeutralForegroundDisabled,\n                backgroundColor: 'transparent'\n            },\n            ':active': {\n                color: tokens.colorNeutralForegroundDisabled,\n                backgroundColor: 'transparent'\n            },\n            [`&.${spinButtonExtraClassNames.buttonActive}`]: {\n                color: tokens.colorNeutralForegroundDisabled,\n                backgroundColor: 'transparent'\n            }\n        }\n    }\n});\n/**\n * Apply styling to the SpinButton slots based on the state\n */ export const useSpinButtonStyles_unstable = (state)=>{\n    const { appearance, atBound, spinState, size } = state;\n    const disabled = state.input.disabled;\n    const invalid = `${state.input['aria-invalid']}` === 'true';\n    const filled = appearance.startsWith('filled');\n    const rootStyles = useRootStyles();\n    const buttonStyles = useButtonStyles();\n    const buttonDisabledStyles = useButtonDisabledStyles();\n    const inputStyles = useInputStyles();\n    state.root.className = mergeClasses(spinButtonClassNames.root, useRootClassName(), rootStyles[size], rootStyles[appearance], filled && rootStyles.filled, !disabled && appearance === 'outline' && rootStyles.outlineInteractive, !disabled && appearance === 'underline' && rootStyles.underlineInteractive, !disabled && filled && rootStyles.filledInteractive, !disabled && invalid && rootStyles.invalid, disabled && rootStyles.disabled, state.root.className);\n    state.incrementButton.className = mergeClasses(spinButtonClassNames.incrementButton, spinState === 'up' && `${spinButtonExtraClassNames.buttonActive}`, useBaseButtonClassName(), buttonStyles.increment, buttonStyles[appearance], size === 'small' && buttonStyles.incrementButtonSmall, (atBound === 'max' || atBound === 'both') && buttonDisabledStyles.base, (atBound === 'max' || atBound === 'both') && buttonDisabledStyles[appearance], state.incrementButton.className);\n    state.decrementButton.className = mergeClasses(spinButtonClassNames.decrementButton, spinState === 'down' && `${spinButtonExtraClassNames.buttonActive}`, useBaseButtonClassName(), buttonStyles.decrement, buttonStyles[appearance], size === 'small' && buttonStyles.decrementButtonSmall, (atBound === 'min' || atBound === 'both') && buttonDisabledStyles.base, (atBound === 'min' || atBound === 'both') && buttonDisabledStyles[appearance], state.decrementButton.className);\n    state.input.className = mergeClasses(spinButtonClassNames.input, useInputClassName(), disabled && inputStyles.disabled, state.input.className);\n    return state;\n};\n"],"mappings":"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"}
+\ No newline at end of file
++{"version":3,"sources":["useSpinButtonStyles.styles.ts"],"sourcesContent":["import { SlotClassNames } from '@fluentui/react-utilities';\nimport { makeResetStyles, makeStyles, mergeClasses, shorthands } from '@griffel/react';\nimport type { SpinButtonSlots, SpinButtonState } from './SpinButton.types';\nimport { tokens, typographyStyles } from '@fluentui/react-theme';\n\nexport const spinButtonClassNames: SlotClassNames<SpinButtonSlots> = {\n  root: 'fui-SpinButton',\n  input: 'fui-SpinButton__input',\n  incrementButton: 'fui-SpinButton__incrementButton',\n  decrementButton: 'fui-SpinButton__decrementButton',\n};\n\nconst spinButtonExtraClassNames = {\n  buttonActive: 'fui-SpinButton__button_active',\n};\n\nconst fieldHeights = {\n  small: '24px',\n  medium: '32px',\n};\n\nconst useRootClassName = makeResetStyles({\n  display: 'inline-grid',\n  gridTemplateColumns: `1fr 24px`,\n  gridTemplateRows: '1fr 1fr',\n  columnGap: tokens.spacingHorizontalXS,\n  rowGap: 0,\n  position: 'relative',\n  isolation: 'isolate',\n\n  backgroundColor: tokens.colorNeutralBackground1,\n  minHeight: fieldHeights.medium,\n  padding: `0 0 0 ${tokens.spacingHorizontalMNudge}`,\n  borderRadius: tokens.borderRadiusMedium,\n\n  // Apply border styles on the ::before pseudo element.\n  // We cannot use ::after since that is used for selection.\n  // Using the pseudo element allows us to place the border\n  // above content in the component which ensures the buttons\n  // line up visually with the border as expected. Without this\n  // there is a bit of a gap which can become very noticeable\n  // at high zoom or when OS zoom levels are not divisible by 2\n  // (e.g., 150% on Windows in Firefox)\n  // This is most noticeable on the \"outline\" appearance which is\n  // also the default so it feels worth the extra ceremony to get right.\n  '::before': {\n    content: '\"\"',\n    boxSizing: 'border-box',\n    position: 'absolute',\n    top: 0,\n    right: 0,\n    bottom: 0,\n    left: 0,\n    pointerEvents: 'none',\n    zIndex: 10,\n    border: `1px solid ${tokens.colorNeutralStroke1}`,\n    borderBottomColor: tokens.colorNeutralStrokeAccessible,\n    borderRadius: tokens.borderRadiusMedium,\n  },\n\n  '::after': {\n    boxSizing: 'border-box',\n    content: '\"\"',\n    position: 'absolute',\n    right: 0,\n    bottom: 0,\n    left: 0,\n    zIndex: 20,\n\n    // Maintaining the correct corner radius:\n    // Use the whole border-radius as the height and only put radii on the bottom corners.\n    // (Otherwise the radius would be automatically reduced to fit available space.)\n    // max() ensures the focus border still shows up even if someone sets tokens.borderRadiusMedium to 0.\n    height: `max(2px, ${tokens.borderRadiusMedium})`,\n    borderBottomLeftRadius: tokens.borderRadiusMedium,\n    borderBottomRightRadius: tokens.borderRadiusMedium,\n\n    // Flat 2px border:\n    // By default borderBottom will cause little \"horns\" on the ends. The clipPath trims them off.\n    // (This could be done without trimming using `background: linear-gradient(...)`, but using\n    // borderBottom makes it easier for people to override the color if needed.)\n    borderBottom: `2px solid ${tokens.colorCompoundBrandStroke}`,\n    clipPath: 'inset(calc(100% - 2px) 0 0 0)',\n\n    // Animation for focus OUT\n    transform: 'scaleX(0)',\n    transitionProperty: 'transform',\n    transitionDuration: tokens.durationUltraFast,\n    transitionDelay: tokens.curveAccelerateMid,\n\n    '@media screen and (prefers-reduced-motion: reduce)': {\n      transitionDuration: '0.01ms',\n      transitionDelay: '0.01ms',\n    },\n  },\n\n  ':focus-within::after': {\n    // Animation for focus IN\n    transform: 'scaleX(1)',\n    transitionProperty: 'transform',\n    transitionDuration: tokens.durationNormal,\n    transitionDelay: tokens.curveDecelerateMid,\n\n    '@media screen and (prefers-reduced-motion: reduce)': {\n      transitionDuration: '0.01ms',\n      transitionDelay: '0.01ms',\n    },\n  },\n  ':focus-within:active::after': {\n    // This is if the user clicks the field again while it's already focused\n    borderBottomColor: tokens.colorCompoundBrandStrokePressed,\n  },\n  ':focus-within': {\n    outline: '2px solid transparent',\n  },\n});\n\nconst useRootStyles = makeStyles({\n  small: {\n    minHeight: fieldHeights.small,\n    ...typographyStyles.caption1,\n    paddingLeft: tokens.spacingHorizontalS,\n  },\n\n  medium: {\n    // set by useRootClassName\n  },\n\n  outline: {\n    // set by useRootClassName\n  },\n\n  outlineInteractive: {\n    ':hover::before': {\n      ...shorthands.borderColor(tokens.colorNeutralStroke1Hover),\n      borderBottomColor: tokens.colorNeutralStrokeAccessibleHover,\n    },\n    // DO NOT add a space between the selectors! It changes the behavior of make-styles.\n    ':active,:focus-within': {\n      '::before': {\n        ...shorthands.borderColor(tokens.colorNeutralStroke1Pressed),\n        borderBottomColor: tokens.colorNeutralStrokeAccessiblePressed,\n      },\n    },\n  },\n\n  underline: {\n    '::before': {\n      ...shorthands.borderWidth(0, 0, '1px', 0),\n      ...shorthands.borderRadius(tokens.borderRadiusNone), // corners look strange if rounded\n    },\n  },\n\n  underlineInteractive: {\n    ':hover::before': {\n      borderBottomColor: tokens.colorNeutralStrokeAccessibleHover,\n    },\n    // DO NOT add a space between the selectors! It changes the behavior of make-styles.\n    ':active,:focus-within': {\n      '::before': {\n        borderBottomColor: tokens.colorNeutralStrokeAccessiblePressed,\n      },\n    },\n    '::after': shorthands.borderRadius(tokens.borderRadiusNone), // remove rounded corners from focus underline\n  },\n\n  filled: {\n    '::before': {\n      ...shorthands.border('1px', 'solid', tokens.colorTransparentStroke),\n    },\n  },\n\n  'filled-darker': {\n    backgroundColor: tokens.colorNeutralBackground3,\n  },\n  'filled-lighter': {\n    backgroundColor: tokens.colorNeutralBackground1,\n  },\n\n  filledInteractive: {\n    // DO NOT add a space between the selectors! It changes the behavior of make-styles.\n    ':hover,:focus-within': {\n      '::before': {\n        // also handles pressed border color (:active)\n        ...shorthands.borderColor(tokens.colorTransparentStrokeInteractive),\n      },\n    },\n  },\n\n  invalid: {\n    ':not(:focus-within),:hover:not(:focus-within)': {\n      '::before': {\n        ...shorthands.borderColor(tokens.colorPaletteRedBorder2),\n      },\n    },\n  },\n\n  disabled: {\n    cursor: 'not-allowed',\n    backgroundColor: tokens.colorTransparentBackground,\n    '::before': {\n      ...shorthands.borderColor(tokens.colorNeutralStrokeDisabled),\n\n      '@media (forced-colors: active)': {\n        ...shorthands.borderColor('GrayText'),\n      },\n    },\n  },\n});\n\nconst useInputClassName = makeResetStyles({\n  gridColumnStart: '1',\n  gridColumnEnd: '2',\n  gridRowStart: '1',\n  gridRowEnd: '3',\n  outlineStyle: 'none',\n  border: '0',\n  padding: '0',\n  color: tokens.colorNeutralForeground1,\n  // Use literal \"transparent\" (not from the theme) to always let the color from the root show through\n  backgroundColor: 'transparent',\n  fontFamily: 'inherit',\n  fontSize: 'inherit',\n  fontWeight: 'inherit',\n  lineHeight: 'inherit',\n  width: '100%',\n\n  '::placeholder': {\n    color: tokens.colorNeutralForeground4,\n    opacity: 1, // browser style override\n  },\n});\n\nconst useInputStyles = makeStyles({\n  disabled: {\n    color: tokens.colorNeutralForegroundDisabled,\n    cursor: 'not-allowed',\n    backgroundColor: tokens.colorTransparentBackground,\n    '::placeholder': {\n      color: tokens.colorNeutralForegroundDisabled,\n    },\n  },\n});\n\nconst useBaseButtonClassName = makeResetStyles({\n  display: 'inline-flex',\n  width: '24px',\n  alignItems: 'center',\n  justifyContent: 'center',\n  border: '0',\n  position: 'absolute',\n\n  outlineStyle: 'none',\n  height: '16px',\n\n  // Use literal \"transparent\" (not from the theme) to always let the color from the root show through\n  backgroundColor: 'transparent',\n  color: tokens.colorNeutralForeground3,\n\n  // common button layout\n  gridColumnStart: '2',\n  borderRadius: '0',\n  padding: '0 5px 0 5px',\n\n  ':active': {\n    outlineStyle: 'none',\n  },\n\n  ':enabled': {\n    ':hover': {\n      cursor: 'pointer',\n      color: tokens.colorNeutralForeground3Hover,\n      backgroundColor: tokens.colorSubtleBackgroundHover,\n    },\n    ':active': {\n      color: tokens.colorNeutralForeground3Pressed,\n      backgroundColor: tokens.colorSubtleBackgroundPressed,\n    },\n    [`&.${spinButtonExtraClassNames.buttonActive}`]: {\n      color: tokens.colorNeutralForeground3Pressed,\n      backgroundColor: tokens.colorSubtleBackgroundPressed,\n    },\n  },\n\n  ':disabled': {\n    cursor: 'not-allowed',\n    color: tokens.colorNeutralForegroundDisabled,\n  },\n});\n\nconst useButtonStyles = makeStyles({\n  increment: {\n    gridRowStart: '1',\n    borderTopRightRadius: tokens.borderRadiusMedium,\n    paddingTop: '4px',\n    paddingBottom: '1px',\n  },\n  decrement: {\n    gridRowStart: '2',\n    borderBottomRightRadius: tokens.borderRadiusMedium,\n    paddingTop: '1px',\n    paddingBottom: '4px',\n  },\n  // Padding values numbers don't align with design specs\n  // but visually the padding aligns.\n  // The icons are set in a 16x16px square but the artwork is inset from that\n  // so these padding values are computed by hand.\n  // Additionally the design uses fractional values so these are\n  // rounded to the nearest integer.\n  incrementButtonSmall: {\n    ...shorthands.padding('3px', '6px', '0px', '4px'),\n    height: '12px',\n  },\n\n  decrementButtonSmall: {\n    ...shorthands.padding('0px', '6px', '3px', '4px'),\n    height: '12px',\n  },\n\n  outline: {\n    // set by useButtonClassName\n  },\n\n  underline: {\n    backgroundColor: 'transparent',\n    color: tokens.colorNeutralForeground3,\n    ':enabled': {\n      ':hover': {\n        color: tokens.colorNeutralForeground3Hover,\n        backgroundColor: tokens.colorSubtleBackgroundHover,\n      },\n      ':active': {\n        color: tokens.colorNeutralForeground3Pressed,\n        backgroundColor: tokens.colorSubtleBackgroundPressed,\n      },\n      [`&.${spinButtonExtraClassNames.buttonActive}`]: {\n        color: tokens.colorNeutralForeground3Pressed,\n        backgroundColor: tokens.colorSubtleBackgroundPressed,\n      },\n    },\n    ':disabled': {\n      color: tokens.colorNeutralForegroundDisabled,\n    },\n  },\n  'filled-darker': {\n    backgroundColor: 'transparent',\n    color: tokens.colorNeutralForeground3,\n\n    ':enabled': {\n      ':hover': {\n        color: tokens.colorNeutralForeground3Hover,\n        backgroundColor: tokens.colorNeutralBackground3Hover,\n      },\n      ':active': {\n        color: tokens.colorNeutralForeground3Pressed,\n        backgroundColor: tokens.colorNeutralBackground3Pressed,\n      },\n      [`&.${spinButtonExtraClassNames.buttonActive}`]: {\n        color: tokens.colorNeutralForeground3Pressed,\n        backgroundColor: tokens.colorNeutralBackground3Pressed,\n      },\n    },\n    ':disabled': {\n      color: tokens.colorNeutralForegroundDisabled,\n    },\n  },\n  'filled-lighter': {\n    backgroundColor: 'transparent',\n    color: tokens.colorNeutralForeground3,\n\n    ':enabled': {\n      ':hover': {\n        color: tokens.colorNeutralForeground3Hover,\n        backgroundColor: tokens.colorNeutralBackground1Hover,\n      },\n      [`:active,&.${spinButtonExtraClassNames.buttonActive}`]: {\n        color: tokens.colorNeutralForeground3Pressed,\n        backgroundColor: tokens.colorNeutralBackground1Pressed,\n      },\n    },\n    ':disabled': {\n      color: tokens.colorNeutralForegroundDisabled,\n    },\n  },\n});\n\n// Cannot just disable button as they need to remain\n// exposed to ATs like screen readers.\nconst useButtonDisabledStyles = makeStyles({\n  base: {\n    cursor: 'not-allowed',\n\n    ':hover': {\n      cursor: 'not-allowed',\n    },\n  },\n\n  outline: {\n    color: tokens.colorNeutralForegroundDisabled,\n    ':enabled': {\n      ':hover': {\n        color: tokens.colorNeutralForegroundDisabled,\n        backgroundColor: 'transparent',\n      },\n      ':active': {\n        color: tokens.colorNeutralForegroundDisabled,\n        backgroundColor: 'transparent',\n      },\n      [`&.${spinButtonExtraClassNames.buttonActive}`]: {\n        color: tokens.colorNeutralForegroundDisabled,\n        backgroundColor: 'transparent',\n      },\n    },\n  },\n\n  underline: {\n    color: tokens.colorNeutralForegroundDisabled,\n    ':enabled': {\n      ':hover': {\n        color: tokens.colorNeutralForegroundDisabled,\n        backgroundColor: 'transparent',\n      },\n      ':active': {\n        color: tokens.colorNeutralForegroundDisabled,\n        backgroundColor: 'transparent',\n      },\n      [`&.${spinButtonExtraClassNames.buttonActive}`]: {\n        color: tokens.colorNeutralForegroundDisabled,\n        backgroundColor: 'transparent',\n      },\n    },\n  },\n\n  'filled-darker': {\n    color: tokens.colorNeutralForegroundDisabled,\n    ':enabled': {\n      ':hover': {\n        color: tokens.colorNeutralForegroundDisabled,\n        backgroundColor: 'transparent',\n      },\n      ':active': {\n        color: tokens.colorNeutralForegroundDisabled,\n        backgroundColor: 'transparent',\n      },\n      [`&.${spinButtonExtraClassNames.buttonActive}`]: {\n        color: tokens.colorNeutralForegroundDisabled,\n        backgroundColor: 'transparent',\n      },\n    },\n  },\n\n  'filled-lighter': {\n    color: tokens.colorNeutralForegroundDisabled,\n    ':enabled': {\n      ':hover': {\n        color: tokens.colorNeutralForegroundDisabled,\n        backgroundColor: 'transparent',\n      },\n      ':active': {\n        color: tokens.colorNeutralForegroundDisabled,\n        backgroundColor: 'transparent',\n      },\n      [`&.${spinButtonExtraClassNames.buttonActive}`]: {\n        color: tokens.colorNeutralForegroundDisabled,\n        backgroundColor: 'transparent',\n      },\n    },\n  },\n});\n\n/**\n * Apply styling to the SpinButton slots based on the state\n */\nexport const useSpinButtonStyles_unstable = (state: SpinButtonState): SpinButtonState => {\n  const { appearance, atBound, spinState, size } = state;\n  const disabled = state.input.disabled;\n  const invalid = `${state.input['aria-invalid']}` === 'true';\n  const filled = appearance.startsWith('filled');\n\n  const rootStyles = useRootStyles();\n  const buttonStyles = useButtonStyles();\n  const buttonDisabledStyles = useButtonDisabledStyles();\n  const inputStyles = useInputStyles();\n\n  state.root.className = mergeClasses(\n    spinButtonClassNames.root,\n    useRootClassName(),\n    rootStyles[size],\n    rootStyles[appearance],\n    filled && rootStyles.filled,\n    !disabled && appearance === 'outline' && rootStyles.outlineInteractive,\n    !disabled && appearance === 'underline' && rootStyles.underlineInteractive,\n    !disabled && filled && rootStyles.filledInteractive,\n    !disabled && invalid && rootStyles.invalid,\n    disabled && rootStyles.disabled,\n    state.root.className,\n  );\n\n  state.incrementButton.className = mergeClasses(\n    spinButtonClassNames.incrementButton,\n    spinState === 'up' && `${spinButtonExtraClassNames.buttonActive}`,\n    useBaseButtonClassName(),\n    buttonStyles.increment,\n    buttonStyles[appearance],\n    size === 'small' && buttonStyles.incrementButtonSmall,\n    (atBound === 'max' || atBound === 'both') && buttonDisabledStyles.base,\n    (atBound === 'max' || atBound === 'both') && buttonDisabledStyles[appearance],\n    state.incrementButton.className,\n  );\n  state.decrementButton.className = mergeClasses(\n    spinButtonClassNames.decrementButton,\n    spinState === 'down' && `${spinButtonExtraClassNames.buttonActive}`,\n    useBaseButtonClassName(),\n    buttonStyles.decrement,\n    buttonStyles[appearance],\n    size === 'small' && buttonStyles.decrementButtonSmall,\n    (atBound === 'min' || atBound === 'both') && buttonDisabledStyles.base,\n    (atBound === 'min' || atBound === 'both') && buttonDisabledStyles[appearance],\n    state.decrementButton.className,\n  );\n\n  state.input.className = mergeClasses(\n    spinButtonClassNames.input,\n    useInputClassName(),\n    disabled && inputStyles.disabled,\n    state.input.className,\n  );\n\n  return state;\n};\n"],"names":["makeResetStyles","makeStyles","mergeClasses","shorthands","tokens","typographyStyles","spinButtonClassNames","root","input","incrementButton","decrementButton","spinButtonExtraClassNames","buttonActive","fieldHeights","small","medium","useRootClassName","display","gridTemplateColumns","gridTemplateRows","columnGap","spacingHorizontalXS","rowGap","position","isolation","backgroundColor","colorNeutralBackground1","minHeight","padding","spacingHorizontalMNudge","borderRadius","borderRadiusMedium","content","boxSizing","top","right","bottom","left","pointerEvents","zIndex","border","colorNeutralStroke1","borderBottomColor","colorNeutralStrokeAccessible","height","borderBottomLeftRadius","borderBottomRightRadius","borderBottom","colorCompoundBrandStroke","clipPath","transform","transitionProperty","transitionDuration","durationUltraFast","transitionDelay","curveAccelerateMid","durationNormal","curveDecelerateMid","colorCompoundBrandStrokePressed","outline","useRootStyles","caption1","paddingLeft","spacingHorizontalS","outlineInteractive","borderColor","colorNeutralStroke1Hover","colorNeutralStrokeAccessibleHover","colorNeutralStroke1Pressed","colorNeutralStrokeAccessiblePressed","underline","borderWidth","borderRadiusNone","underlineInteractive","filled","colorTransparentStroke","colorNeutralBackground3","filledInteractive","colorTransparentStrokeInteractive","invalid","colorPaletteRedBorder2","disabled","cursor","colorTransparentBackground","colorNeutralStrokeDisabled","useInputClassName","gridColumnStart","gridColumnEnd","gridRowStart","gridRowEnd","outlineStyle","color","colorNeutralForeground1","fontFamily","fontSize","fontWeight","lineHeight","width","colorNeutralForeground4","opacity","useInputStyles","colorNeutralForegroundDisabled","useBaseButtonClassName","alignItems","justifyContent","colorNeutralForeground3","colorNeutralForeground3Hover","colorSubtleBackgroundHover","colorNeutralForeground3Pressed","colorSubtleBackgroundPressed","useButtonStyles","increment","borderTopRightRadius","paddingTop","paddingBottom","decrement","incrementButtonSmall","decrementButtonSmall","colorNeutralBackground3Hover","colorNeutralBackground3Pressed","colorNeutralBackground1Hover","colorNeutralBackground1Pressed","useButtonDisabledStyles","base","useSpinButtonStyles_unstable","state","appearance","atBound","spinState","size","startsWith","rootStyles","buttonStyles","buttonDisabledStyles","inputStyles","className"],"mappings":"AACA,SAASA,eAAe,EAAEC,UAAU,EAAEC,YAAY,EAAEC,UAAU,QAAQ,iBAAiB;AAEvF,SAASC,MAAM,EAAEC,gBAAgB,QAAQ,wBAAwB;AAEjE,OAAO,MAAMC,uBAAwD;IACnEC,MAAM;IACNC,OAAO;IACPC,iBAAiB;IACjBC,iBAAiB;AACnB,EAAE;AAEF,MAAMC,4BAA4B;IAChCC,cAAc;AAChB;AAEA,MAAMC,eAAe;IACnBC,OAAO;IACPC,QAAQ;AACV;AAEA,MAAMC,mBAAmBhB,gBAAgB;IACvCiB,SAAS;IACTC,qBAAqB,CAAC,QAAQ,CAAC;IAC/BC,kBAAkB;IAClBC,WAAWhB,OAAOiB,mBAAmB;IACrCC,QAAQ;IACRC,UAAU;IACVC,WAAW;IAEXC,iBAAiBrB,OAAOsB,uBAAuB;IAC/CC,WAAWd,aAAaE,MAAM;IAC9Ba,SAAS,CAAC,MAAM,EAAExB,OAAOyB,uBAAuB,CAAC,CAAC;IAClDC,cAAc1B,OAAO2B,kBAAkB;IAEvC,sDAAsD;IACtD,0DAA0D;IAC1D,yDAAyD;IACzD,2DAA2D;IAC3D,6DAA6D;IAC7D,2DAA2D;IAC3D,6DAA6D;IAC7D,qCAAqC;IACrC,+DAA+D;IAC/D,sEAAsE;IACtE,YAAY;QACVC,SAAS;QACTC,WAAW;QACXV,UAAU;QACVW,KAAK;QACLC,OAAO;QACPC,QAAQ;QACRC,MAAM;QACNC,eAAe;QACfC,QAAQ;QACRC,QAAQ,CAAC,UAAU,EAAEpC,OAAOqC,mBAAmB,CAAC,CAAC;QACjDC,mBAAmBtC,OAAOuC,4BAA4B;QACtDb,cAAc1B,OAAO2B,kBAAkB;IACzC;IAEA,WAAW;QACTE,WAAW;QACXD,SAAS;QACTT,UAAU;QACVY,OAAO;QACPC,QAAQ;QACRC,MAAM;QACNE,QAAQ;QAER,yCAAyC;QACzC,sFAAsF;QACtF,gFAAgF;QAChF,qGAAqG;QACrGK,QAAQ,CAAC,SAAS,EAAExC,OAAO2B,kBAAkB,CAAC,CAAC,CAAC;QAChDc,wBAAwBzC,OAAO2B,kBAAkB;QACjDe,yBAAyB1C,OAAO2B,kBAAkB;QAElD,mBAAmB;QACnB,8FAA8F;QAC9F,2FAA2F;QAC3F,4EAA4E;QAC5EgB,cAAc,CAAC,UAAU,EAAE3C,OAAO4C,wBAAwB,CAAC,CAAC;QAC5DC,UAAU;QAEV,0BAA0B;QAC1BC,WAAW;QACXC,oBAAoB;QACpBC,oBAAoBhD,OAAOiD,iBAAiB;QAC5CC,iBAAiBlD,OAAOmD,kBAAkB;QAE1C,sDAAsD;YACpDH,oBAAoB;YACpBE,iBAAiB;QACnB;IACF;IAEA,wBAAwB;QACtB,yBAAyB;QACzBJ,WAAW;QACXC,oBAAoB;QACpBC,oBAAoBhD,OAAOoD,cAAc;QACzCF,iBAAiBlD,OAAOqD,kBAAkB;QAE1C,sDAAsD;YACpDL,oBAAoB;YACpBE,iBAAiB;QACnB;IACF;IACA,+BAA+B;QAC7B,wEAAwE;QACxEZ,mBAAmBtC,OAAOsD,+BAA+B;IAC3D;IACA,iBAAiB;QACfC,SAAS;IACX;AACF;AAEA,MAAMC,gBAAgB3D,WAAW;IAC/Ba,OAAO;QACLa,WAAWd,aAAaC,KAAK;QAC7B,GAAGT,iBAAiBwD,QAAQ;QAC5BC,aAAa1D,OAAO2D,kBAAkB;IACxC;IAEAhD,QAAQ;IAER;IAEA4C,SAAS;IAET;IAEAK,oBAAoB;QAClB,kBAAkB;YAChB,GAAG7D,WAAW8D,WAAW,CAAC7D,OAAO8D,wBAAwB,CAAC;YAC1DxB,mBAAmBtC,OAAO+D,iCAAiC;QAC7D;QACA,oFAAoF;QACpF,yBAAyB;YACvB,YAAY;gBACV,GAAGhE,WAAW8D,WAAW,CAAC7D,OAAOgE,0BAA0B,CAAC;gBAC5D1B,mBAAmBtC,OAAOiE,mCAAmC;YAC/D;QACF;IACF;IAEAC,WAAW;QACT,YAAY;YACV,GAAGnE,WAAWoE,WAAW,CAAC,GAAG,GAAG,OAAO,EAAE;YACzC,GAAGpE,WAAW2B,YAAY,CAAC1B,OAAOoE,gBAAgB,CAAC;QACrD;IACF;IAEAC,sBAAsB;QACpB,kBAAkB;YAChB/B,mBAAmBtC,OAAO+D,iCAAiC;QAC7D;QACA,oFAAoF;QACpF,yBAAyB;YACvB,YAAY;gBACVzB,mBAAmBtC,OAAOiE,mCAAmC;YAC/D;QACF;QACA,WAAWlE,WAAW2B,YAAY,CAAC1B,OAAOoE,gBAAgB;IAC5D;IAEAE,QAAQ;QACN,YAAY;YACV,GAAGvE,WAAWqC,MAAM,CAAC,OAAO,SAASpC,OAAOuE,sBAAsB,CAAC;QACrE;IACF;IAEA,iBAAiB;QACflD,iBAAiBrB,OAAOwE,uBAAuB;IACjD;IACA,kBAAkB;QAChBnD,iBAAiBrB,OAAOsB,uBAAuB;IACjD;IAEAmD,mBAAmB;QACjB,oFAAoF;QACpF,wBAAwB;YACtB,YAAY;gBACV,8CAA8C;gBAC9C,GAAG1E,WAAW8D,WAAW,CAAC7D,OAAO0E,iCAAiC,CAAC;YACrE;QACF;IACF;IAEAC,SAAS;QACP,iDAAiD;YAC/C,YAAY;gBACV,GAAG5E,WAAW8D,WAAW,CAAC7D,OAAO4E,sBAAsB,CAAC;YAC1D;QACF;IACF;IAEAC,UAAU;QACRC,QAAQ;QACRzD,iBAAiBrB,OAAO+E,0BAA0B;QAClD,YAAY;YACV,GAAGhF,WAAW8D,WAAW,CAAC7D,OAAOgF,0BAA0B,CAAC;YAE5D,kCAAkC;gBAChC,GAAGjF,WAAW8D,WAAW,CAAC,WAAW;YACvC;QACF;IACF;AACF;AAEA,MAAMoB,oBAAoBrF,gBAAgB;IACxCsF,iBAAiB;IACjBC,eAAe;IACfC,cAAc;IACdC,YAAY;IACZC,cAAc;IACdlD,QAAQ;IACRZ,SAAS;IACT+D,OAAOvF,OAAOwF,uBAAuB;IACrC,oGAAoG;IACpGnE,iBAAiB;IACjBoE,YAAY;IACZC,UAAU;IACVC,YAAY;IACZC,YAAY;IACZC,OAAO;IAEP,iBAAiB;QACfN,OAAOvF,OAAO8F,uBAAuB;QACrCC,SAAS;IACX;AACF;AAEA,MAAMC,iBAAiBnG,WAAW;IAChCgF,UAAU;QACRU,OAAOvF,OAAOiG,8BAA8B;QAC5CnB,QAAQ;QACRzD,iBAAiBrB,OAAO+E,0BAA0B;QAClD,iBAAiB;YACfQ,OAAOvF,OAAOiG,8BAA8B;QAC9C;IACF;AACF;AAEA,MAAMC,yBAAyBtG,gBAAgB;IAC7CiB,SAAS;IACTgF,OAAO;IACPM,YAAY;IACZC,gBAAgB;IAChBhE,QAAQ;IACRjB,UAAU;IAEVmE,cAAc;IACd9C,QAAQ;IAER,oGAAoG;IACpGnB,iBAAiB;IACjBkE,OAAOvF,OAAOqG,uBAAuB;IAErC,uBAAuB;IACvBnB,iBAAiB;IACjBxD,cAAc;IACdF,SAAS;IAET,WAAW;QACT8D,cAAc;IAChB;IAEA,YAAY;QACV,UAAU;YACRR,QAAQ;YACRS,OAAOvF,OAAOsG,4BAA4B;YAC1CjF,iBAAiBrB,OAAOuG,0BAA0B;QACpD;QACA,WAAW;YACThB,OAAOvF,OAAOwG,8BAA8B;YAC5CnF,iBAAiBrB,OAAOyG,4BAA4B;QACtD;QACA,CAAC,CAAC,EAAE,EAAElG,0BAA0BC,YAAY,CAAC,CAAC,CAAC,EAAE;YAC/C+E,OAAOvF,OAAOwG,8BAA8B;YAC5CnF,iBAAiBrB,OAAOyG,4BAA4B;QACtD;IACF;IAEA,aAAa;QACX3B,QAAQ;QACRS,OAAOvF,OAAOiG,8BAA8B;IAC9C;AACF;AAEA,MAAMS,kBAAkB7G,WAAW;IACjC8G,WAAW;QACTvB,cAAc;QACdwB,sBAAsB5G,OAAO2B,kBAAkB;QAC/CkF,YAAY;QACZC,eAAe;IACjB;IACAC,WAAW;QACT3B,cAAc;QACd1C,yBAAyB1C,OAAO2B,kBAAkB;QAClDkF,YAAY;QACZC,eAAe;IACjB;IACA,uDAAuD;IACvD,mCAAmC;IACnC,2EAA2E;IAC3E,gDAAgD;IAChD,8DAA8D;IAC9D,kCAAkC;IAClCE,sBAAsB;QACpB,GAAGjH,WAAWyB,OAAO,CAAC,OAAO,OAAO,OAAO,MAAM;QACjDgB,QAAQ;IACV;IAEAyE,sBAAsB;QACpB,GAAGlH,WAAWyB,OAAO,CAAC,OAAO,OAAO,OAAO,MAAM;QACjDgB,QAAQ;IACV;IAEAe,SAAS;IAET;IAEAW,WAAW;QACT7C,iBAAiB;QACjBkE,OAAOvF,OAAOqG,uBAAuB;QACrC,YAAY;YACV,UAAU;gBACRd,OAAOvF,OAAOsG,4BAA4B;gBAC1CjF,iBAAiBrB,OAAOuG,0BAA0B;YACpD;YACA,WAAW;gBACThB,OAAOvF,OAAOwG,8BAA8B;gBAC5CnF,iBAAiBrB,OAAOyG,4BAA4B;YACtD;YACA,CAAC,CAAC,EAAE,EAAElG,0BAA0BC,YAAY,CAAC,CAAC,CAAC,EAAE;gBAC/C+E,OAAOvF,OAAOwG,8BAA8B;gBAC5CnF,iBAAiBrB,OAAOyG,4BAA4B;YACtD;QACF;QACA,aAAa;YACXlB,OAAOvF,OAAOiG,8BAA8B;QAC9C;IACF;IACA,iBAAiB;QACf5E,iBAAiB;QACjBkE,OAAOvF,OAAOqG,uBAAuB;QAErC,YAAY;YACV,UAAU;gBACRd,OAAOvF,OAAOsG,4BAA4B;gBAC1CjF,iBAAiBrB,OAAOkH,4BAA4B;YACtD;YACA,WAAW;gBACT3B,OAAOvF,OAAOwG,8BAA8B;gBAC5CnF,iBAAiBrB,OAAOmH,8BAA8B;YACxD;YACA,CAAC,CAAC,EAAE,EAAE5G,0BAA0BC,YAAY,CAAC,CAAC,CAAC,EAAE;gBAC/C+E,OAAOvF,OAAOwG,8BAA8B;gBAC5CnF,iBAAiBrB,OAAOmH,8BAA8B;YACxD;QACF;QACA,aAAa;YACX5B,OAAOvF,OAAOiG,8BAA8B;QAC9C;IACF;IACA,kBAAkB;QAChB5E,iBAAiB;QACjBkE,OAAOvF,OAAOqG,uBAAuB;QAErC,YAAY;YACV,UAAU;gBACRd,OAAOvF,OAAOsG,4BAA4B;gBAC1CjF,iBAAiBrB,OAAOoH,4BAA4B;YACtD;YACA,CAAC,CAAC,UAAU,EAAE7G,0BAA0BC,YAAY,CAAC,CAAC,CAAC,EAAE;gBACvD+E,OAAOvF,OAAOwG,8BAA8B;gBAC5CnF,iBAAiBrB,OAAOqH,8BAA8B;YACxD;QACF;QACA,aAAa;YACX9B,OAAOvF,OAAOiG,8BAA8B;QAC9C;IACF;AACF;AAEA,oDAAoD;AACpD,sCAAsC;AACtC,MAAMqB,0BAA0BzH,WAAW;IACzC0H,MAAM;QACJzC,QAAQ;QAER,UAAU;YACRA,QAAQ;QACV;IACF;IAEAvB,SAAS;QACPgC,OAAOvF,OAAOiG,8BAA8B;QAC5C,YAAY;YACV,UAAU;gBACRV,OAAOvF,OAAOiG,8BAA8B;gBAC5C5E,iBAAiB;YACnB;YACA,WAAW;gBACTkE,OAAOvF,OAAOiG,8BAA8B;gBAC5C5E,iBAAiB;YACnB;YACA,CAAC,CAAC,EAAE,EAAEd,0BAA0BC,YAAY,CAAC,CAAC,CAAC,EAAE;gBAC/C+E,OAAOvF,OAAOiG,8BAA8B;gBAC5C5E,iBAAiB;YACnB;QACF;IACF;IAEA6C,WAAW;QACTqB,OAAOvF,OAAOiG,8BAA8B;QAC5C,YAAY;YACV,UAAU;gBACRV,OAAOvF,OAAOiG,8BAA8B;gBAC5C5E,iBAAiB;YACnB;YACA,WAAW;gBACTkE,OAAOvF,OAAOiG,8BAA8B;gBAC5C5E,iBAAiB;YACnB;YACA,CAAC,CAAC,EAAE,EAAEd,0BAA0BC,YAAY,CAAC,CAAC,CAAC,EAAE;gBAC/C+E,OAAOvF,OAAOiG,8BAA8B;gBAC5C5E,iBAAiB;YACnB;QACF;IACF;IAEA,iBAAiB;QACfkE,OAAOvF,OAAOiG,8BAA8B;QAC5C,YAAY;YACV,UAAU;gBACRV,OAAOvF,OAAOiG,8BAA8B;gBAC5C5E,iBAAiB;YACnB;YACA,WAAW;gBACTkE,OAAOvF,OAAOiG,8BAA8B;gBAC5C5E,iBAAiB;YACnB;YACA,CAAC,CAAC,EAAE,EAAEd,0BAA0BC,YAAY,CAAC,CAAC,CAAC,EAAE;gBAC/C+E,OAAOvF,OAAOiG,8BAA8B;gBAC5C5E,iBAAiB;YACnB;QACF;IACF;IAEA,kBAAkB;QAChBkE,OAAOvF,OAAOiG,8BAA8B;QAC5C,YAAY;YACV,UAAU;gBACRV,OAAOvF,OAAOiG,8BAA8B;gBAC5C5E,iBAAiB;YACnB;YACA,WAAW;gBACTkE,OAAOvF,OAAOiG,8BAA8B;gBAC5C5E,iBAAiB;YACnB;YACA,CAAC,CAAC,EAAE,EAAEd,0BAA0BC,YAAY,CAAC,CAAC,CAAC,EAAE;gBAC/C+E,OAAOvF,OAAOiG,8BAA8B;gBAC5C5E,iBAAiB;YACnB;QACF;IACF;AACF;AAEA;;CAEC,GACD,OAAO,MAAMmG,+BAA+B,CAACC;IAC3C,MAAM,EAAEC,UAAU,EAAEC,OAAO,EAAEC,SAAS,EAAEC,IAAI,EAAE,GAAGJ;IACjD,MAAM5C,WAAW4C,MAAMrH,KAAK,CAACyE,QAAQ;IACrC,MAAMF,UAAU,CAAC,EAAE8C,MAAMrH,KAAK,CAAC,eAAe,CAAC,CAAC,KAAK;IACrD,MAAMkE,SAASoD,WAAWI,UAAU,CAAC;IAErC,MAAMC,aAAavE;IACnB,MAAMwE,eAAetB;IACrB,MAAMuB,uBAAuBX;IAC7B,MAAMY,cAAclC;IAEpByB,MAAMtH,IAAI,CAACgI,SAAS,GAAGrI,aACrBI,qBAAqBC,IAAI,EACzBS,oBACAmH,UAAU,CAACF,KAAK,EAChBE,UAAU,CAACL,WAAW,EACtBpD,UAAUyD,WAAWzD,MAAM,EAC3B,CAACO,YAAY6C,eAAe,aAAaK,WAAWnE,kBAAkB,EACtE,CAACiB,YAAY6C,eAAe,eAAeK,WAAW1D,oBAAoB,EAC1E,CAACQ,YAAYP,UAAUyD,WAAWtD,iBAAiB,EACnD,CAACI,YAAYF,WAAWoD,WAAWpD,OAAO,EAC1CE,YAAYkD,WAAWlD,QAAQ,EAC/B4C,MAAMtH,IAAI,CAACgI,SAAS;IAGtBV,MAAMpH,eAAe,CAAC8H,SAAS,GAAGrI,aAChCI,qBAAqBG,eAAe,EACpCuH,cAAc,QAAQ,CAAC,EAAErH,0BAA0BC,YAAY,CAAC,CAAC,EACjE0F,0BACA8B,aAAarB,SAAS,EACtBqB,YAAY,CAACN,WAAW,EACxBG,SAAS,WAAWG,aAAahB,oBAAoB,EACrD,AAACW,CAAAA,YAAY,SAASA,YAAY,MAAK,KAAMM,qBAAqBV,IAAI,EACtE,AAACI,CAAAA,YAAY,SAASA,YAAY,MAAK,KAAMM,oBAAoB,CAACP,WAAW,EAC7ED,MAAMpH,eAAe,CAAC8H,SAAS;IAEjCV,MAAMnH,eAAe,CAAC6H,SAAS,GAAGrI,aAChCI,qBAAqBI,eAAe,EACpCsH,cAAc,UAAU,CAAC,EAAErH,0BAA0BC,YAAY,CAAC,CAAC,EACnE0F,0BACA8B,aAAajB,SAAS,EACtBiB,YAAY,CAACN,WAAW,EACxBG,SAAS,WAAWG,aAAaf,oBAAoB,EACrD,AAACU,CAAAA,YAAY,SAASA,YAAY,MAAK,KAAMM,qBAAqBV,IAAI,EACtE,AAACI,CAAAA,YAAY,SAASA,YAAY,MAAK,KAAMM,oBAAoB,CAACP,WAAW,EAC7ED,MAAMnH,eAAe,CAAC6H,SAAS;IAGjCV,MAAMrH,KAAK,CAAC+H,SAAS,GAAGrI,aACtBI,qBAAqBE,KAAK,EAC1B6E,qBACAJ,YAAYqD,YAAYrD,QAAQ,EAChC4C,MAAMrH,KAAK,CAAC+H,SAAS;IAGvB,OAAOV;AACT,EAAE"}
+\ No newline at end of file

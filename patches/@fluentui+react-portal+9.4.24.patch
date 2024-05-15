@@ -1,0 +1,92 @@
+diff --git a/node_modules/@fluentui/react-portal/lib-commonjs/components/Portal/usePortalMountNodeStyles.styles.js b/node_modules/@fluentui/react-portal/lib-commonjs/components/Portal/usePortalMountNodeStyles.styles.js
+index 6162858..d66bda0 100644
+--- a/node_modules/@fluentui/react-portal/lib-commonjs/components/Portal/usePortalMountNodeStyles.styles.js
++++ b/node_modules/@fluentui/react-portal/lib-commonjs/components/Portal/usePortalMountNodeStyles.styles.js
+@@ -9,26 +9,16 @@ Object.defineProperty(exports, "usePortalMountNodeStylesStyles", {
+     }
+ });
+ const _react = require("@griffel/react");
+-const usePortalMountNodeStylesStyles = /*#__PURE__*/ (0, _react.__styles)({
++const usePortalMountNodeStylesStyles = (0, _react.makeStyles)({
+     root: {
+-        qhf8xq: "f1euv43f",
+-        Bhzewxz: "f15twtuk",
+-        oyh7mz: [
+-            "f1vgc2s3",
+-            "f1e31b4d"
+-        ],
+-        j35jbq: [
+-            "f1e31b4d",
+-            "f1vgc2s3"
+-        ],
+-        Bj3rh1h: "f494woh"
++        // Creates new stacking context to prevent z-index issues
++        // https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_positioned_layout/Understanding_z-index/Stacking_context
++        //
++        // Also keeps a portal on top of a page to prevent scrollbars from appearing
++        position: 'absolute',
++        top: 0,
++        left: 0,
++        right: 0,
++        zIndex: 1000000
+     }
+-}, {
+-    d: [
+-        ".f1euv43f{position:absolute;}",
+-        ".f15twtuk{top:0;}",
+-        ".f1vgc2s3{left:0;}",
+-        ".f1e31b4d{right:0;}",
+-        ".f494woh{z-index:1000000;}"
+-    ]
+-}); //# sourceMappingURL=usePortalMountNodeStyles.styles.js.map
++});
+diff --git a/node_modules/@fluentui/react-portal/lib-commonjs/components/Portal/usePortalMountNodeStyles.styles.js.map b/node_modules/@fluentui/react-portal/lib-commonjs/components/Portal/usePortalMountNodeStyles.styles.js.map
+index f1852e7..7f24154 100644
+--- a/node_modules/@fluentui/react-portal/lib-commonjs/components/Portal/usePortalMountNodeStyles.styles.js.map
++++ b/node_modules/@fluentui/react-portal/lib-commonjs/components/Portal/usePortalMountNodeStyles.styles.js.map
+@@ -1 +1 @@
+-{"version":3,"sources":["usePortalMountNodeStyles.styles.js"],"sourcesContent":["import { __styles } from '@griffel/react';\nexport const usePortalMountNodeStylesStyles = /*#__PURE__*/__styles({\n  root: {\n    qhf8xq: \"f1euv43f\",\n    Bhzewxz: \"f15twtuk\",\n    oyh7mz: [\"f1vgc2s3\", \"f1e31b4d\"],\n    j35jbq: [\"f1e31b4d\", \"f1vgc2s3\"],\n    Bj3rh1h: \"f494woh\"\n  }\n}, {\n  d: [\".f1euv43f{position:absolute;}\", \".f15twtuk{top:0;}\", \".f1vgc2s3{left:0;}\", \".f1e31b4d{right:0;}\", \".f494woh{z-index:1000000;}\"]\n});\n//# sourceMappingURL=usePortalMountNodeStyles.styles.js.map"],"names":["usePortalMountNodeStylesStyles","__styles","root","qhf8xq","Bhzewxz","oyh7mz","j35jbq","Bj3rh1h","d"],"mappings":";;;;+BACaA;;;eAAAA;;;uBADY;AAClB,MAAMA,iCAAiC,WAAW,GAAEC,IAAAA,eAAQ,EAAC;IAClEC,MAAM;QACJC,QAAQ;QACRC,SAAS;QACTC,QAAQ;YAAC;YAAY;SAAW;QAChCC,QAAQ;YAAC;YAAY;SAAW;QAChCC,SAAS;IACX;AACF,GAAG;IACDC,GAAG;QAAC;QAAiC;QAAqB;QAAsB;QAAuB;KAA6B;AACtI,IACA,2DAA2D"}
+\ No newline at end of file
++{"version":3,"sources":["usePortalMountNodeStyles.styles.js"],"sourcesContent":["import { makeStyles } from '@griffel/react';\nexport const usePortalMountNodeStylesStyles = makeStyles({\n    root: {\n        // Creates new stacking context to prevent z-index issues\n        // https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_positioned_layout/Understanding_z-index/Stacking_context\n        //\n        // Also keeps a portal on top of a page to prevent scrollbars from appearing\n        position: 'absolute',\n        top: 0,\n        left: 0,\n        right: 0,\n        zIndex: 1000000\n    }\n});\n"],"names":["usePortalMountNodeStylesStyles","makeStyles","root","position","top","left","right","zIndex"],"mappings":";;;;+BACaA;;;eAAAA;;;uBADc;AACpB,MAAMA,iCAAiCC,IAAAA,iBAAU,EAAC;IACrDC,MAAM;QACF,yDAAyD;QACzD,gHAAgH;QAChH,EAAE;QACF,4EAA4E;QAC5EC,UAAU;QACVC,KAAK;QACLC,MAAM;QACNC,OAAO;QACPC,QAAQ;IACZ;AACJ"}
+\ No newline at end of file
+diff --git a/node_modules/@fluentui/react-portal/lib/components/Portal/usePortalMountNodeStyles.styles.js b/node_modules/@fluentui/react-portal/lib/components/Portal/usePortalMountNodeStyles.styles.js
+index eaca3b3..7561668 100644
+--- a/node_modules/@fluentui/react-portal/lib/components/Portal/usePortalMountNodeStyles.styles.js
++++ b/node_modules/@fluentui/react-portal/lib/components/Portal/usePortalMountNodeStyles.styles.js
+@@ -1,13 +1,14 @@
+-import { __styles } from '@griffel/react';
+-export const usePortalMountNodeStylesStyles = /*#__PURE__*/__styles({
+-  root: {
+-    qhf8xq: "f1euv43f",
+-    Bhzewxz: "f15twtuk",
+-    oyh7mz: ["f1vgc2s3", "f1e31b4d"],
+-    j35jbq: ["f1e31b4d", "f1vgc2s3"],
+-    Bj3rh1h: "f494woh"
+-  }
+-}, {
+-  d: [".f1euv43f{position:absolute;}", ".f15twtuk{top:0;}", ".f1vgc2s3{left:0;}", ".f1e31b4d{right:0;}", ".f494woh{z-index:1000000;}"]
++import { makeStyles } from '@griffel/react';
++export const usePortalMountNodeStylesStyles = makeStyles({
++    root: {
++        // Creates new stacking context to prevent z-index issues
++        // https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_positioned_layout/Understanding_z-index/Stacking_context
++        //
++        // Also keeps a portal on top of a page to prevent scrollbars from appearing
++        position: 'absolute',
++        top: 0,
++        left: 0,
++        right: 0,
++        zIndex: 1000000
++    }
+ });
+-//# sourceMappingURL=usePortalMountNodeStyles.styles.js.map
+\ No newline at end of file
+diff --git a/node_modules/@fluentui/react-portal/lib/components/Portal/usePortalMountNodeStyles.styles.js.map b/node_modules/@fluentui/react-portal/lib/components/Portal/usePortalMountNodeStyles.styles.js.map
+index 310c953..c23d987 100644
+--- a/node_modules/@fluentui/react-portal/lib/components/Portal/usePortalMountNodeStyles.styles.js.map
++++ b/node_modules/@fluentui/react-portal/lib/components/Portal/usePortalMountNodeStyles.styles.js.map
+@@ -1 +1 @@
+-{"version":3,"names":["__styles","usePortalMountNodeStylesStyles","root","qhf8xq","Bhzewxz","oyh7mz","j35jbq","Bj3rh1h","d"],"sources":["usePortalMountNodeStyles.styles.js"],"sourcesContent":["import { makeStyles } from '@griffel/react';\nexport const usePortalMountNodeStylesStyles = makeStyles({\n    root: {\n        // Creates new stacking context to prevent z-index issues\n        // https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_positioned_layout/Understanding_z-index/Stacking_context\n        //\n        // Also keeps a portal on top of a page to prevent scrollbars from appearing\n        position: 'absolute',\n        top: 0,\n        left: 0,\n        right: 0,\n        zIndex: 1000000\n    }\n});\n"],"mappings":"AAAA,SAAAA,QAAA,QAA2B,gBAAgB;AAC3C,OAAO,MAAMC,8BAA8B,gBAAGD,QAAA;EAAAE,IAAA;IAAAC,MAAA;IAAAC,OAAA;IAAAC,MAAA;IAAAC,MAAA;IAAAC,OAAA;EAAA;AAAA;EAAAC,CAAA;AAAA,CAY7C,CAAC"}
+\ No newline at end of file
++{"version":3,"sources":["usePortalMountNodeStyles.styles.ts"],"sourcesContent":["import { makeStyles } from '@griffel/react';\n\nexport const usePortalMountNodeStylesStyles = makeStyles({\n  root: {\n    // Creates new stacking context to prevent z-index issues\n    // https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_positioned_layout/Understanding_z-index/Stacking_context\n    //\n    // Also keeps a portal on top of a page to prevent scrollbars from appearing\n    position: 'absolute',\n    top: 0,\n    left: 0,\n    right: 0,\n\n    zIndex: 1000000,\n  },\n});\n"],"names":["makeStyles","usePortalMountNodeStylesStyles","root","position","top","left","right","zIndex"],"mappings":"AAAA,SAASA,UAAU,QAAQ,iBAAiB;AAE5C,OAAO,MAAMC,iCAAiCD,WAAW;IACvDE,MAAM;QACJ,yDAAyD;QACzD,gHAAgH;QAChH,EAAE;QACF,4EAA4E;QAC5EC,UAAU;QACVC,KAAK;QACLC,MAAM;QACNC,OAAO;QAEPC,QAAQ;IACV;AACF,GAAG"}
+\ No newline at end of file
